@@ -1,0 +1,238 @@
+//DS
+9
+circle
+moon
+diamond
+hex
+plus
+squere
+star
+triangle
+slash
+//Colors
+4
+red
+blue
+green
+yellow
+//Limits Players Gates MomstArc MonstOut
+8
+1 8 4 7
+2 8 5 6
+3 7 6 5 
+4 7 7 4
+5 6 8 3
+6 6 9 2 
+7 5 10 1
+8 5 11 0
+
+//Ows
+8
+RLyeh 2 red  yellow -3
+Plat 2 red green -1
+Dream 4 red green yellow blue +1
+Hall 2 blue green -1
+Yug 2 yellow blue -2
+City 2 green yellow 0
+Abyss 2 blue red -2
+Dim 4 red green yellow blue 0
+
+//gates
+16
+RLyeh plus
+RLyeh plus
+Plat  diamond
+Plat  diamond
+Dream slash
+Dream slash
+Hall star
+Hall star
+Yug circle
+Yug circle
+City triangle
+City triangle
+Abyss hex
+Abyss hex
+Dim squere
+Dim squere
+
+//mapRows
+4
+//Archem Map- names
+35
+street northside 0 L
+stab curShop
+stab newspaper
+stab train
+street downtown 0 M
+stab bank
+stab asylium
+unstab indSqr
+street easttown 0 R
+unstab road
+stab dinner
+stab police
+street rivertown 1 R
+unstab graveyard
+unstab cave
+stab genStore
+street merchDis 1 LM
+unstab isle
+stab docks
+unstab unnable
+street hill 2 R
+unstab witchHouse
+stab stl
+street univer 2 L
+unstab scienceBild
+stab admin
+stab library
+street southside 3 R
+stab maHouse
+stab church
+unstab historical
+street uptown 3 L
+unstab woods
+stab magicShop
+stab hospital
+0 white downtown black  merchDis end
+0
+0
+0
+1  black northside white easttown  other  merchDis end
+1
+1
+1
+2 black downtown white rivertown end
+2
+2
+2
+3  black easttown white hill other merchDis end
+3
+3
+3
+4  white northside black univer other rivertown other downtown end
+4
+4
+4
+5 black rivertown white southside other univer   end
+5
+5
+6 white merchDis black uptown other hill end
+6
+6
+6
+7 black hill white uptown end
+7
+7
+7
+8 black southside white univer end
+8
+8
+8
+
+
+//inveswtigators
+//count
+1
+//indiv-ent-start( Harvy Waters)
+//max-san
+7
+//max-sta
+3
+//start_locathion
+admin
+//start_clues
+1
+//start $
+5
+//number and codenames of other fix posseshion
+0
+//draw_common
+0
+//draw_unice
+2
+//draw_spells
+2
+//draw_skills
+1
+//focus
+2
+//speed
+0 1 2 3
+//sneak
+5 4 3 2
+//fight
+0 1 2 3
+//will
+3 2 1 0
+//lore
+3 4 5 6
+//luck
+4 3 2 1
+//number and descriptrhion of s.a.
+0
+//indiv-ent-end
+
+
+
+//monsters
+2
+
+
+cultist
+moon Normal
+-3
+none
++1 1
+1
+0
+0
+4
+
+
+test
+hex Fly
+-1
+none
++1 1
+2
+0
+0
+4
+
+
+
+
+
+//number of district
+9
+0 curShop newspaper train 0
+1 bank asylium indSqr 0
+2 road dinner police 0
+3 graveyard cave genStore 0
+4 isle docks unnable 0
+5 stl stl witchHouse  0
+6 scienceBild admin library 1
+SANlose 2  no no
+
+7 maHouse church historical 0
+8 woods magicShop hospital 0
+
+
+
+//mythos
+1
+head scienceBild  witchHouse 0 0 
+
+
+
+
+
+
+
+
+
+
+
+

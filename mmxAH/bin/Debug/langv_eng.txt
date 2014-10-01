@@ -1,0 +1,299 @@
+Not Multi Name
+//SS
+Resume Game
+New Game
+Load Game
+Save Game
+Preference
+Exit
+Main Menu 
+Archem Horror
+Gate to
+DS
+Monster Encounter: 
+Choose your acthion
+Do this!
+Move to
+move to
+Area
+End movement
+Remain Movement Points: 
+begin encounter with 
+now has
+There are 
+in your locathion. How many of them do you want to get?
+Get
+get
+Status
+Log
+Investegitors
+Anchient One
+Monsters
+Other Worlds
+Archem
+First player
+Speed
+Sneak
+Fight
+Will
+Lore
+Luck
+Evade
+Combat
+Horror
+Spellcast
+Skill check
+Stamina
+Sanity
+Focus
+Reroll( once per turn)
+=>
+sucsess total.
+is pass
+is fail
+Discard
+discard
+remain
+End skill check
+has
+Turn
+Setup
+Upkeep phase
+Movement phase
+Archem Encounters Phase
+Other World phase
+Mythos phase
+is end. New
+gain
+lose
+is placed to
+Set your Slider: 
+Setup sliders
+Movement Points:
+is delayed.
+is no longer delayed.
+Delayed
+closed
+sealed
+Awerness:
+Horror check:
+Sanity Demage: 
+Nightmarish
+Combat Check:
+Combat Demage:
+Overwhelming
+Special
+Tougness:
+Magic Imunity.
+Magic Resistance.
+Physical Imunity.
+Phisical Resistance.
+Movement:
+Normal
+Fast
+Fly
+Special
+Dont Move
+Do your want evade 
+or fight 
+Evade
+Fight
+Ambush
+Endless
+Special Cards:
+Monster Trofies:
+Gate Trofies
+Gate cannot be open
+becouse it is {i} sealed {i}.
+Step 1 ( Gate and Monsters)
+Step 2( Clue)
+Step 3( Monster movement)
+Step 4 ( Mythos text) 
+drawn through the gate to
+opens 
+is placed
+added to the Doom track.
+removed from the doom track.
+Doom track:
+Open Gates:
+Teror track is incrised.
+Teror track: 
+Monsters in Archem:
+is placed to outscirts.
+Monster in outscirts:
+Sealed locathions:
+
+
+
+
+ 
+
+//tokens
+clue token
+clue tokens
+doom token
+doom tokens
+
+//DS
+circle
+moon
+diamond
+hextagon
+plus
+squere
+star
+triangle
+slash
+
+//Colors
+red
+blue
+green
+yellow
+
+//OWs
+R'Lyeh
+Plateau Of Leng
+The Dreamlands
+Great Hall Of Celeano
+Yuggoth
+City of the Great Race
+Abyss
+Another Dimension
+
+//Locathions
+Northside
+in Northside
+Curiositie Shoppe
+in Curiositie Shoppe
+Newspaper
+in Newspaper
+Train Station
+in Train Station
+Downtown
+in Downtown
+Bank of Arkham
+in Bank of Arkham
+Arkham Asylum
+in Arkham Asylum
+Independence Square
+on Independence Square
+Easttown
+in Easttown
+Hibb's Roadhouse
+in Hibb's Roadhouse
+Velma's Diner
+in Velma's Diner
+Police Station
+in Police Station
+Rivertown
+in Rivertown
+Graveyard
+in Graveyard
+Black Cave
+in Black Cave
+General Store
+in General Store
+Merchant District
+in Merchant District
+Unvisited Isle
+in Unvisited Isle
+River Docks
+in River Docks
+The Unnamable
+in the Unnamable
+French Hill
+in French Hill
+The Witch House
+in the Witch House
+Silver Twilight Lodge
+in Silver Twilight Lodge
+Miskatonic University
+in Miskatonic University
+Science Building
+in Science Building
+Administration Building
+in Administration Building
+Library
+in Library
+Southside
+in Southside
+Ma's Boarding House
+in Ma's Boarding House
+South Church
+in South Church
+Historical Society
+in Historical Society
+Uptown
+in Uptown
+Woods
+in Woods
+Ye Olde Magick Shoppe
+in Ye Olde Magick Shoppe
+St. Mary's Hospital
+in St. Mary's Hospital
+
+//specCard
+//STL
+Silver Twilite Loge Membership
+1
+Any Phase: Whewer you hava a encounter in STL, you have encounter in Inner Senctium instead.
+is member of the STL now.
+lose membership in STL.
+
+
+//Blessed
+Blessing
+2
+Your count succeses on 4,5,6.
+{b}Upkeep:{b} Roll a die. On 1, discard Blessing.
+resive {i}blessing{i}.
+lose {i}blessing{i}. 
+
+//Curse
+Curse
+2
+Your count succeses only on 6.
+Upkeep: Roll a die. On 1, discard Curse.
+is now cursed.
+discard Curse card. 
+
+//Retainer
+Retainer
+1
+Upkeep:  Gain $2, then roll a die. On 1, discard Retainer.
+gain Retainer.
+lose Retainer. 
+
+//Deputaty
+Deputate of Archem
+1
+Upkeep:  Gain $1.
+becomes Deputated of Archem.
+fire from the Deputated work. 
+
+//invistigators
+//name
+Harvey Waters
+//pronaun
+he
+//occupathion
+the Profecor
+
+
+//monsters
+Cultist
+Werader
+
+
+//encounters
+
+1 {b} 111111 {b} 2222222 {i} 3333333333{i}
+0 
+0 
+
+
+
+
+
+
