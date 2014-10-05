@@ -119,10 +119,16 @@ Open Gates:
 Teror track is incrised.
 Teror track: 
 Monsters in Archem:
-is placed to outscirts.
-Monster in outscirts:
+is placed to outscirts
+Monster in Outscirts:
 Sealed locathions:
-
+Outscirts limit is execed. All monseters in Outscirts return to the monster cup.
+Clue token appeared 
+Clue token could not apper  
+, becouse there is a gate there.
+Do you want to pickup that clue?
+Yes
+No
 
 
 
@@ -291,6 +297,11 @@ Werader
 1 {b} 111111 {b} 2222222 {i} 3333333333{i}
 0 
 0 
+
+
+//mythos
+
+TestMythos
 
 
 

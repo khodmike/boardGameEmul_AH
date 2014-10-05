@@ -35,6 +35,7 @@ namespace mmxAH
 		public Deck< OWEncCard> owEnc;
 		public  Deck< ArcEncCard> [] archEncs;
 		public GlobalStatus status;
+		public List< MonsterIndivid> Outscirts; 
 	
 
 
@@ -63,6 +64,7 @@ namespace mmxAH
 			ga = new GlobalActhions(this);
 			owEnc = new Deck<OWEncCard> ();
 			status = new GlobalStatus (this);
+			Outscirts= new List<MonsterIndivid>(); 
 
 
 		
@@ -123,7 +125,7 @@ namespace mmxAH
 
 			ActiveInvistigators.Add (invests.Draw() );
 			ActiveInvistigators [0].Setup (0);
-			MonstersCup.DrawFromBottom ().AddToMap (33);  
+			MonstersCup.DrawFromBottom ().AddToMap (33); 
 			clock.StartRandomSetup(); 
 
 		 
@@ -265,9 +267,12 @@ namespace mmxAH
 				MonstersCup .Add (ActiveMonsters [i]);
 			ActiveMonsters.Clear (); 
 			foreach (Locathion l in locs)
-				l.Reset (); 
+				l.Reset ();
+			foreach (MonsterIndivid m in Outscirts)
+				MonstersCup.Add (m); 
 			clock.Reset ();
 			status.Reset();
+			ResetOutscirts (); 
 
 			//самое последнее действие , после всех резетов
 			MonstersCup.Shuffle ();
@@ -275,6 +280,13 @@ namespace mmxAH
 			gates.Shuffle ();
 			invests.Shuffle (); 
 
+
+		}
+
+		public void ResetOutscirts()
+		{ foreach (MonsterIndivid m in Outscirts)
+			MonstersCup.Add (m); 
+			Outscirts.Clear (); 
 
 		}
 
@@ -286,6 +298,11 @@ namespace mmxAH
 			wr.Write (ActiveMonsters.Count);
 			foreach (MonsterIndivid mon in ActiveMonsters)
 				mon.WriteToSave (wr); 
+			wr.Write (Outscirts .Count);
+			foreach (MonsterIndivid mon in Outscirts )
+				mon.WriteToSave (wr); 
+
+
 
 
 		}
@@ -305,6 +322,14 @@ namespace mmxAH
 			for (int i=0; i<numMonsters; i++)
 			{ ActiveMonsters.Add (MonstersCup .GetCardById (rd.ReadInt16 ()));
 				ActiveMonsters [i].ReadFromSave (rd);  
+
+			}
+
+
+		      numMonsters = rd.ReadInt32 ();
+			for (int i=0; i<numMonsters; i++)
+			{Outscirts .Add (MonstersCup .GetCardById (rd.ReadInt16 ()));
+				Outscirts  [i].ReadFromSave (rd);  
 
 			}
 

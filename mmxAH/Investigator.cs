@@ -281,7 +281,7 @@ namespace mmxAH
 				clues += count;
 
 				
-			en.io.ServerWrite  (Pronoun + "  "+ en.sysstr.GetString (SSType.NowHas) +  "  " + en.sysstr.GetNumberClueToken (clues) + ".");      
+			en.io.ServerWrite  (Pronoun + "  "+ en.sysstr.GetString (SSType.NowHas) +  "  " + en.sysstr.GetNumberClueToken (clues) + "."+ Environment.NewLine );      
            
 
 		}

@@ -617,14 +617,14 @@ protected string GateAndClueTitle;
 
 			if (en.pref.isAutoCluePickup)
 			{
-				EndMovementClues2 (clues); 
+			   AfterMoveClues2 (clues); 
 				return;
 			}
 
 			List< IOOption> opts= new List<IOOption>(); 
 
 			for(byte i=clues; i>= 1;  i--)
-				opts.Add( new IOOptionWithParam (i.ToString(), EndMovementClues2, i)); 
+				opts.Add( new IOOptionWithParam (i.ToString(), AfterMoveClues2, i)); 
 			opts.Add( new IOOpthionWithoutParam("0", en.clock.NextPlayer )); 
 			string str = en.sysstr.GetString(SSType.CluesPromtBegin)  + "  "+ en.sysstr.GetNumberClueToken (clues);
 			str +=  "  "+ en.sysstr.GetString(SSType.CluesPromtEnd)  ;
@@ -632,7 +632,7 @@ protected string GateAndClueTitle;
 
 		}
 
-		public void EndMovementClues2( short number)
+		public void AfterMoveClues2( short number)
 		{ string str = en.ActiveInvistigators [en.clock.GetCurPlayer ()].GetTitle() + "  "+ en.sysstr.GetString(SSType.Get) ;
 			en.io.ServerWrite   (str); 
 			str = " " + en.sysstr.GetNumberClueToken (number);
@@ -644,6 +644,48 @@ protected string GateAndClueTitle;
 		  en.clock.NextPlayer (); 
 
 		}
+
+
+		public virtual void MythosClues()
+		{  clues++;
+			en.io.ServerWrite (en.sysstr.GetString (SSType.ClueAppear));
+			en.io.ServerWrite("  " + GateAndClueTitle+ "."+ Environment.NewLine  ,12,false,true);
+
+			if (investigators.Count == 0)
+			{
+				en.curs.resolvingMythos.Step3 (); 
+			} else if (investigators.Count == 1)
+			{
+				if (en.pref.isAutoCluePickup)
+					MythosClues3 (investigators [0]);
+				else
+					en.io.YesNoStart (en.sysstr.GetString (SSType.PickupClueOnMythosPromt), en.sysstr.GetString (SSType.Yes), en.sysstr.GetString (SSType.No), MythosClues2, en.curs.resolvingMythos.Step3);   
+
+
+			} else
+			{ //сДЕЛАТЬ дЛЯ НЕСКЛОЬКИХ СЛЕДОВАТЕЛЕЙ	
+
+			}
+		
+		}
+
+		private void MythosClues2()
+		{
+			MythosClues3 (investigators [0]);
+		}
+	private  void MythosClues3( short invNum)
+		{ string str = en.ActiveInvistigators [invNum].GetTitle() + "  "+ en.sysstr.GetString(SSType.Get) ;
+			en.io.ServerWrite   (str); 
+			str = " " + en.sysstr.GetNumberClueToken (1);
+			en.io.ServerWrite   (str,12,false,false,1,"Green"); 
+			str = " "+ GateAndClueTitle+ ", " ;
+			en.io.ServerWrite   (str); 
+			clues--;
+			en.ActiveInvistigators [invNum].AddClues (1);
+			en.curs.resolvingMythos.Step3 (); 
+
+		}
+
 
 		public override void Reset()
 		{ base.Reset ();
@@ -679,7 +721,8 @@ protected string GateAndClueTitle;
 				m.AddToMap (LocathionIndex);
 				en.io.ServerWrite (m.GetTitle (), 12, true);
 				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.MonsterPlacedVerb));
-				en.io.ServerWrite ("  " + GateAndClueTitle + "." + Environment.NewLine, 12, false, true); 
+				en.io.ServerWrite ("  " + GateAndClueTitle + ".  ", 12, false, true); 
+				en.status.PrintMonserCountServer (); 
 
 			}
 			return true;
@@ -947,7 +990,11 @@ protected string GateAndClueTitle;
 
 			gate = en.gates.Draw ();
 			if (gate == null)
+			{
+				en.ga.Awekeen ();
 				return false;
+			}
+			clues = 0;
 			en.io.ServerWrite (en.sysstr.GetString (SSType.GateTo) + "  ");
 			en.io.ServerWrite(en.locs[gate.GetOW()].GetTitle(),12, true);
 			en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.GateOpenVerb));
@@ -956,10 +1003,11 @@ protected string GateAndClueTitle;
 				return false;
 			if (! en.status.DoomIncrise (1))
 				return false;
-			do
+
+			while( investigators.Count != 0)
 			{DrawToGate( investigators [0], true);
 			
-			} while( investigators.Count != 0);
+			} 
 
 			if (! MonseterPlaced ())
 				return false;
@@ -982,6 +1030,20 @@ protected string GateAndClueTitle;
 			if (isDelayed) 
 				en.ActiveInvistigators [invnum].Delayed (); 
 
+		}
+
+
+		public override void MythosClues ()
+		{ if (gate == null)
+				base.MythosClues ();
+			else
+			{ 
+				en.io.ServerWrite (en.sysstr.GetString (SSType.ClueCouldNotAppear1));
+				en.io.ServerWrite("  " + GateAndClueTitle+ "  " ,12,false,true);
+				en.io.ServerWrite (en.sysstr.GetString (SSType.ClueCouldNotAppear2)+ Environment.NewLine );
+				en.curs.resolvingMythos.Step3(); 
+
+			}
 		}
 	}
 

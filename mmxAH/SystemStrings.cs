@@ -124,7 +124,14 @@ namespace mmxAH
 		MonsterInArchem,
 		PlacedToOut,
 		MonsterInOutscirts,
-		SealedLocathion
+		SealedLocathion,
+		OutscirtsIsClear,
+		ClueAppear,
+		ClueCouldNotAppear1,
+		ClueCouldNotAppear2,
+		PickupClueOnMythosPromt,
+		Yes,
+		No
 
 
 

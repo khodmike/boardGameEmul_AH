@@ -7,6 +7,7 @@ namespace mmxAH
 	{ protected GameEngine en;
 		private short GateLoc, ClueLoc;
 		private List<byte> MoveBlack, MoveWhite;
+		private string Title;
 		public MythosCard ( GameEngine eng, short pID)
 		{
 			en = eng;
@@ -18,6 +19,8 @@ namespace mmxAH
 		public void Execute()
 		{ en.curs.resolvingMythos=this; 
 		  en.clock.PrintCurPhase ();
+			en.io.ServerWrite ( Environment.NewLine+ Title+ "  ", 16, true); 
+			PrintType (); 
 
 			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep1)+Environment.NewLine, 12, true ); 
 		
@@ -38,22 +41,23 @@ namespace mmxAH
 		}
 
 		private void Step2()
-		{ //заглушка
-
-			en.clock.EndTurn (); 
-
+		{ 
+			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep2)+Environment.NewLine, 12, true ); 
+			((ArchamArea)en.locs [ClueLoc]).MythosClues ();   
 		}
 
-		private void Step3()
+		public  void Step3()
 		{
-
+			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep3)+Environment.NewLine, 12, true ); 
+			Step4 ();
 		}
 
 		protected abstract void Step4();
-
+		protected abstract  void PrintType();
 
 		public virtual bool  FromTextFile(TextFileParser data, TextFileParser text)
-		{ GateLoc  = en.map.GetNumberByCodeName (data.GetToken());
+		{  Title = text.GetCurString (); 
+			GateLoc  = en.map.GetNumberByCodeName (data.GetToken());
 			ClueLoc  = en.map.GetNumberByCodeName (data.GetToken());
 			if (GateLoc == -1 || ClueLoc == -1)
 				return false;
@@ -85,6 +89,8 @@ namespace mmxAH
 
 		}
 
+
+
 	}
 
 
@@ -94,14 +100,22 @@ namespace mmxAH
 		public MythosHead ( GameEngine eng, short pID) : base(eng, pID)
 		{
 
+			//заглушка
+			eff = new EffNothing (en); 
+
 		}
 
 
 		protected override void Step4 ()
-		{  eff.Execute( en.clock.EndTurn);  
+		{  en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
+			eff.Execute( en.clock.EndTurn);  
 
 		}
 
+		protected override void PrintType ()
+		{
+			en.io.ServerWrite ("(Headline)" + Environment.NewLine, 14, true, true);
+		}
 	}
 
 
@@ -113,7 +127,8 @@ namespace mmxAH
 
 
 		protected override void Step4 ()
-		{ if (en.curs.curEnv != null)
+		{ en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
+			if (en.curs.curEnv != null)
 			{
 				en.curs.curEnv.Stop ();
 				en.mythosDeck.Discard (en.curs.curEnv);
@@ -131,6 +146,11 @@ namespace mmxAH
 		{
 
 		}
+
+	  protected override void PrintType ()
+		{
+			en.io.ServerWrite ("(Envirotment)" + Environment.NewLine, 14, true, true);
+		}
 	}
 
 	public class MythosRumor : MythosCard
@@ -142,7 +162,8 @@ namespace mmxAH
 
 
 		protected override void Step4 ()
-		{ if (en.curs.curRumor != null)
+		{ en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
+			if (en.curs.curRumor != null)
 			{
 
 				en.mythosDeck.Discard (this);
@@ -153,7 +174,7 @@ namespace mmxAH
 
 		}
 		private void Init()
-		{
+		{ 
 
 		}
 
@@ -176,6 +197,11 @@ namespace mmxAH
 		private void Fail()
 		{
 
+		}
+
+		protected override void PrintType ()
+		{
+			en.io.ServerWrite ("(Rumor)" + Environment.NewLine, 14, true, true);
 		}
 
 

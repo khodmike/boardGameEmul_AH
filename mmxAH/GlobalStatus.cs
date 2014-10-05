@@ -76,6 +76,23 @@ namespace mmxAH
 		}
 
 
+		public void TerrorIncrise()
+		{ 
+			CurTerror++;
+			if (CurTerror > MaxTerror)
+			{ CurTerror = MaxTerror;
+				return;
+
+			}
+			en.io.ServerWrite (en.sysstr.GetString (SSType.TerorInc ));
+			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.TerrorTrack ), 12, true);
+			en.io.ServerWrite (" " + CurTerror  + " / " + MaxTerror + "."+ Environment.NewLine );  
+
+
+
+		}
+
+
 		public bool NewGate()
 		{ CurGate ++;
 			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.OpenGates ), 12, true);
@@ -92,12 +109,40 @@ namespace mmxAH
 
 
 		public bool IsMonserToPlace(MonsterIndivid m)
-		{ if (CurMonsters + 1 > MaxMonsters)
-			{  
+		{ if (CurMonsters ==  MaxMonsters)
+			{   if (CurOut == MaxOut)
+				{
+					en.io.ServerWrite (en.sysstr.GetString (SSType.OutscirtsIsClear) + Environment.NewLine);
+					CurOut = 0;
+					en.MonstersCup.Add (m);
+					en.ResetOutscirts ();
+					TerrorIncrise (); 
+				} else
+				{  CurOut++;
+					en.Outscirts.Add (m); 
+					en.io.ServerWrite (m.GetTitle (), 12, true);
+					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.PlacedToOut )+ " . ");
+					en.io.ServerWrite (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
+					en.io.ServerWrite (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );
+				}
+				return false;
 
+			} else
+			{
+				CurMonsters++;
+				return true;
 			}
+		}
+
+
+		public void PrintMonserCountServer()
+		{ en.io.ServerWrite (en.sysstr.GetString (SSType.MonsterInArchem   ), 12, true);
+			en.io.ServerWrite (" " + CurMonsters + " / " + MaxMonsters + "."+ Environment.NewLine );
 
 		}
+
+
+	
 
 
 
