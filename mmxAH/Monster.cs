@@ -515,7 +515,7 @@ namespace mmxAH
 			case "INMOB": moveType = MonsterMovementType.Inmobile; break; 
 			case "SPECIAL":
 				{
-					moveType = MonsterMovementType.Normal;
+					moveType = MonsterMovementType.Special;
 					SpecialMovementEffect = Effect.FromTextFile (data, en);
 					if (SpecialMovementEffect == null)
 						return false;

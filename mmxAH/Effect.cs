@@ -26,7 +26,8 @@ namespace mmxAH
 			case "TONEARGATE": res = new EffToNearGate (eng); break; 
 		  case "SANLOSE": res = new EffSanityLose (eng); break; 
 		  case "STALOSE": res = new EffStaminaLose (eng); break;  
-		  case "MONSTER": res = new EffMonsterApears  (eng); break;  
+		  case "MONSTER": res = new EffMonsterApears  (eng); break;
+		  case "MOVEROLL": res = new EffMonsterMoveRoll (eng);break;   
 			
 			  default: return null;
 			}
@@ -49,6 +50,29 @@ namespace mmxAH
 		public override void Execute (Func f)
 		{ f();
 
+		}
+	}
+
+
+
+	public  class EffMonsterMoveRoll : Effect
+	{   private Effect effToAll;
+		public EffMonsterMoveRoll( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+		{  
+		}
+
+		public override void Execute (Func f)
+		{  //СДЕЛАТЬ
+			f();
+
+		}
+
+		protected override bool ReadFromTextIndivid (TextFileParser data)
+		{
+			effToAll = Effect.FromTextFile (data, en);
+			if (effToAll == null)
+				return false;
+			return true;
 		}
 	}
 	public  class EffToNearGate : Effect

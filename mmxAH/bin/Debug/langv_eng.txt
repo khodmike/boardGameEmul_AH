@@ -288,8 +288,12 @@ the Profecor
 
 
 //monsters
+Byakhee
 Cultist
-Werader
+Chthonian
+Instead of moving, roll a die. On a 4-6, all investigators in Arkham lose 1 Stamina.
+Dark Young
+Dhole
 
 
 //encounters

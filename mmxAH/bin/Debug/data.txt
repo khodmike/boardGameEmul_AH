@@ -177,7 +177,17 @@ admin
 
 
 //monsters
-2
+5
+Byakhee
+circle fly
+-2
+-1 1
+0 2
+1
+0
+0
+3
+
 
 
 cultist
@@ -191,15 +201,36 @@ none
 4
 
 
-test
-hex Fly
--1
-none
-+1 1
+Chthonian 
+triangle special MoveRoll StaLose 1
++1
+-2 2
+-3 3
+3
+0
+1
 2
+
+DarkYoung
+hex Inmob
+-2
++0 3
+-1 3
+3
+2 PR Night 1
 0
+3
+
+Dhole
+circle Normal
+-1
+-1 4
+-3 4
+3
+4 PR MR Night 1 Over 1
 0
-4
+1
+
 
 
 

@@ -275,7 +275,7 @@ namespace mmxAH
 			ResetOutscirts (); 
 
 			//самое последнее действие , после всех резетов
-			MonstersCup.Shuffle ();
+			//MonstersCup.Shuffle ();
 			mythosDeck.Shuffle ();
 			gates.Shuffle ();
 			invests.Shuffle (); 
