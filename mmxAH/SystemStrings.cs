@@ -131,7 +131,8 @@ namespace mmxAH
 		ClueCouldNotAppear2,
 		PickupClueOnMythosPromt,
 		Yes,
-		No
+		No,
+		MonsterDemageSpecial
 
 
 

@@ -462,7 +462,10 @@ namespace mmxAH
 				en.io.ClientWrite ("+"); 
 			en.io.ClientWrite (CombatModif.ToString());
 			en.io.ClientWrite ( "        "+ en.sysstr.GetString (SSType.CombatDemage)+ "   ", 12, true);
-			en.io.ClientWrite (CombatDemage.ToString());
+			if( CombatDemage == 0)
+				en.io.ClientWrite ( "  "+ en.sysstr.GetString (SSType.MonsterDemageSpecial));
+			else
+				en.io.ClientWrite (CombatDemage.ToString());
 			if( ExtraCombat != 0)
 				en.io.ClientWrite ("        "+ en.sysstr.GetString (SSType.ExtraCombat )+ " " + ExtraCombat , 12, true);
 			en.io.ClientWrite (Environment.NewLine);   
@@ -483,7 +486,7 @@ namespace mmxAH
 			if( isEndless)
 				en.io.ClientWrite ( en.sysstr.GetString (SSType.Endless )+ Environment.NewLine , 12, true);
 			foreach (string str in SpecAbilText)
-				en.io.ClientWrite (str + Environment.NewLine); 
+				en.io.ClientPrintTag (str + Environment.NewLine); 
 			en.io.ClientWrite (Environment.NewLine); 
 
 

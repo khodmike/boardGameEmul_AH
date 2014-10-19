@@ -177,7 +177,7 @@ admin
 
 
 //monsters
-5
+7
 Byakhee
 circle fly
 -2
@@ -231,6 +231,26 @@ circle Normal
 0
 1
 
+DimShambler
+squere fast
+-3
+-2 1
+-2 0 Litas
+1
+0
+1
+2 
+
+//SA not sone
+ElderThing
+diamond normal
+-2
+-3 2
+0 1
+2
+0
+1
+2
 
 
 

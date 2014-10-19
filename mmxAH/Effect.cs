@@ -28,7 +28,7 @@ namespace mmxAH
 		  case "STALOSE": res = new EffStaminaLose (eng); break;  
 		  case "MONSTER": res = new EffMonsterApears  (eng); break;
 		  case "MOVEROLL": res = new EffMonsterMoveRoll (eng);break;   
-			
+		  case "LITAS": res = new EffLitas  (eng);break;   
 			  default: return null;
 			}
 
@@ -53,6 +53,21 @@ namespace mmxAH
 		}
 	}
 
+
+	public  class EffLitas : Effect
+	{   public EffLitas( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+		{  
+		}
+
+		public override void Execute (Func f)
+		{ 
+			en.ActiveInvistigators [invnum].SetLocathion (0);
+			//тут проверки на попадание в Litas
+
+			f();
+
+		}
+	}
 
 
 	public  class EffMonsterMoveRoll : Effect

@@ -129,7 +129,7 @@ Clue token could not apper
 Do you want to pickup that clue?
 Yes
 No
-
+Special
 
 
  
@@ -294,6 +294,10 @@ Chthonian
 Instead of moving, roll a die. On a 4-6, all investigators in Arkham lose 1 Stamina.
 Dark Young
 Dhole
+Dimensional Shambler
+If you fail a {b} Combat check {b} against Dimensional Shambler, you are {i}lost in time and space{i}.
+Elder Thing
+When you fail a Combat check against Elder Thing, you must discard 1 of your Weapons or Spells (your choice), if able.
 
 
 //encounters
