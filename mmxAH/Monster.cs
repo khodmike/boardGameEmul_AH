@@ -205,7 +205,7 @@ namespace mmxAH
 		}
 
 		public void PrintToMap( byte label)
-		{ en.io.ClientWrite(prot.GetTitle() , 12,true,true,label); 
+		{ en.io.ServerWrite(prot.GetTitle() , 12,true,true,label); 
 
 		}
 
@@ -255,7 +255,7 @@ namespace mmxAH
 
 		public void PrintAsTrofy()
 		{
-			en.io.ClientWrite (prot.GetTitle () + "  (" + prot.GetTougness () + ")");  
+			en.io.ServerWrite (prot.GetTitle () + "  (" + prot.GetTougness () + ")");  
 		}
 
 		public void AddItemModif( byte modifChange, bool isPhysical=false, bool  isMagic=false)
@@ -277,9 +277,10 @@ namespace mmxAH
 		private byte ExtraCombat=0, ExtraHorror=0;
 		private byte Tougness=1;
 		private byte dsindex;
-		private Effect SpecialDemageEffect=null, SpecialMovementEffect=null;
+		private Effect SpecialDemageEffect=null, SpecialMovementEffect=null, SpecialTrofyEffect=null, InsteadEncEffect=null;
 		private List< String> SpecAbilText; 
 		private MonsterMovementType moveType;
+		private  bool isUndead=false, isMask=false, isSpawn=false;
 		public string GetTitle()
 		{ return Title;
 
@@ -358,6 +359,21 @@ namespace mmxAH
 		{ return isAmbush;
 
 		}
+
+		public bool GetUndead()
+		{
+			return isUndead;
+		}
+
+		public bool GetMask()
+		{
+			return isMask;
+		}
+
+		public bool GetSpawn()
+		{  return isSpawn;
+
+		}
 		public MonsterPrototype( GameEngine eng)
 		{ en=eng;
 			SpecAbilText = new List<string> (); 
@@ -368,12 +384,22 @@ namespace mmxAH
 
 
 
+
+
+
 		public void PrintServer()
 		{
 			en.io.ServerWrite (Title, 14, true);
 			en.io.ServerWrite ("       " + en.sysstr.GetString (SSType.DS) + ": " + en.ds.GetTitle (dsindex) );
-			en.io.ServerWrite ("       " + en.sysstr.GetMonsterMovementString(moveType)+Environment.NewLine);
-			en.io.ServerWrite (en.sysstr.GetString (SSType.Awerness), 12, true);
+			en.io.ServerWrite ("       " + en.sysstr.GetMonsterMovementString(moveType));
+
+			if( isUndead)
+				en.io.ServerWrite ("       " + en.sysstr.GetString(SSType.Undead), 12, true,true);
+			if( isSpawn)
+				en.io.ServerWrite ("       " + en.sysstr.GetString(SSType.Spawn), 12, true,true);
+			if( isMask)
+				en.io.ServerWrite ("       " + en.sysstr.GetString(SSType.Mask), 12, true,true);
+			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.Awerness), 12, true);
 			en.io.ServerWrite ("  ");
 			if (EvadeModif > 0)
 				en.io.ServerWrite ("+");
@@ -382,30 +408,40 @@ namespace mmxAH
 				en.io.ServerWrite ("       "+ en.sysstr.GetString (SSType.Ambush ), 12, true);
 
 			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.HorrorModif )+ "   ", 12, true);
-			if (isHorrorCheck)
-			{ if (HorrorModif  >= 0)
+			if (InsteadEncEffect != null)
+			{ en.io.ServerWrite ("-" + Environment.NewLine);
+			  en.io.ServerWrite (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
+			  en.io.ServerWrite ("-" + Environment.NewLine);
+
+			} else
+			{
+				if (isHorrorCheck)
+				{
+					if (HorrorModif >= 0)
+						en.io.ServerWrite ("+"); 
+					en.io.ServerWrite (HorrorModif.ToString ());
+					en.io.ServerWrite ("        " + en.sysstr.GetString (SSType.HorrorDemage) + "   ", 12, true);
+					en.io.ServerWrite (HorrorDemage.ToString ());
+					if (ExtraHorror != 0)
+						en.io.ServerWrite ("        " + en.sysstr.GetString (SSType.ExtraHorror) + " " + ExtraHorror, 12, true);
+					en.io.ServerWrite (Environment.NewLine);   
+
+				} else
+					en.io.ServerWrite ("-" + Environment.NewLine);
+
+				en.io.ServerWrite (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
+				if (CombatModif >= 0) 
 					en.io.ServerWrite ("+"); 
-				en.io.ServerWrite (HorrorModif.ToString());
-				en.io.ServerWrite ("        "+ en.sysstr.GetString (SSType.HorrorDemage)+ "   ", 12, true);
-				en.io.ServerWrite (HorrorDemage.ToString());
-				if( ExtraHorror != 0)
-					en.io.ServerWrite ("        "+ en.sysstr.GetString (SSType.ExtraHorror )+ " " + ExtraHorror , 12, true);
+				en.io.ServerWrite (CombatModif.ToString ());
+				en.io.ServerWrite ("        " + en.sysstr.GetString (SSType.CombatDemage) + "   ", 12, true);
+				if (CombatDemage == 0)
+					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.MonsterDemageSpecial));
+				else
+					en.io.ServerWrite (CombatDemage.ToString ());
+				if (ExtraCombat != 0)
+					en.io.ServerWrite ("        " + en.sysstr.GetString (SSType.ExtraCombat) + " " + ExtraCombat, 12, true);
 				en.io.ServerWrite (Environment.NewLine);   
-
 			}
-			else
-				en.io.ServerWrite ("-"  + Environment.NewLine);
-
-			en.io.ServerWrite (en.sysstr.GetString (SSType.CombatModif )+ "   ", 12,true);
-			if (CombatModif >= 0) 
-				en.io.ServerWrite ("+"); 
-			en.io.ServerWrite (CombatModif.ToString());
-			en.io.ServerWrite ( "        "+ en.sysstr.GetString (SSType.CombatDemage)+ "   ", 12, true);
-			en.io.ServerWrite (CombatDemage.ToString());
-			if( ExtraCombat != 0)
-				en.io.ServerWrite ("        "+ en.sysstr.GetString (SSType.ExtraCombat )+ " " + ExtraCombat , 12, true);
-			en.io.ServerWrite (Environment.NewLine);   
-
 			en.io.ServerWrite (en.sysstr.GetString (SSType.Tougness ), 12,true );
 			en.io.ServerWrite ("  ");
 			en.io.ServerWrite ( Tougness.ToString());
@@ -422,10 +458,10 @@ namespace mmxAH
 			if( isEndless)
 				en.io.ServerWrite ( en.sysstr.GetString (SSType.Endless )+ Environment.NewLine , 12, true);
 			foreach (string str in SpecAbilText)
-				en.io.ServerWrite (str + Environment.NewLine); 
-
+				en.io.ServerPrintTag (str + Environment.NewLine); 
 			en.io.ServerWrite (Environment.NewLine); 
-		
+
+
 		}
 
 
@@ -433,8 +469,15 @@ namespace mmxAH
 		{
 			en.io.ClientWrite (Title, 14, true);
 			en.io.ClientWrite ("       " + en.sysstr.GetString (SSType.DS) + ": " + en.ds.GetTitle (dsindex) );
-			en.io.ClientWrite ("       " + en.sysstr.GetMonsterMovementString(moveType)+Environment.NewLine);
-			en.io.ClientWrite (en.sysstr.GetString (SSType.Awerness), 12, true);
+			en.io.ClientWrite ("       " + en.sysstr.GetMonsterMovementString(moveType));
+
+			if( isUndead)
+				en.io.ClientWrite ("       " + en.sysstr.GetString(SSType.Undead), 12, true,true);
+			if( isSpawn)
+				en.io.ClientWrite ("       " + en.sysstr.GetString(SSType.Spawn), 12, true,true);
+			if( isMask)
+				en.io.ClientWrite ("       " + en.sysstr.GetString(SSType.Mask), 12, true,true);
+			en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetString (SSType.Awerness), 12, true);
 			en.io.ClientWrite ("  ");
 			if (EvadeModif > 0)
 				en.io.ClientWrite ("+");
@@ -443,33 +486,40 @@ namespace mmxAH
 				en.io.ClientWrite ("       "+ en.sysstr.GetString (SSType.Ambush ), 12, true);
 
 			en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetString (SSType.HorrorModif )+ "   ", 12, true);
-			if (isHorrorCheck)
-			{ if (HorrorModif  >= 0)
-				en.io.ClientWrite ("+"); 
-				en.io.ClientWrite (HorrorModif.ToString());
-				en.io.ClientWrite ("        "+ en.sysstr.GetString (SSType.HorrorDemage)+ "   ", 12, true);
-				en.io.ClientWrite (HorrorDemage.ToString());
-				if( ExtraHorror != 0)
-					en.io.ClientWrite ("        "+ en.sysstr.GetString (SSType.ExtraHorror )+ " " + ExtraHorror , 12, true);
+			if (InsteadEncEffect != null)
+			{ en.io.ClientWrite ("-" + Environment.NewLine);
+				en.io.ClientWrite (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
+				en.io.ClientWrite ("-" + Environment.NewLine);
+
+			} else
+			{
+				if (isHorrorCheck)
+				{
+					if (HorrorModif >= 0)
+						en.io.ClientWrite ("+"); 
+					en.io.ClientWrite (HorrorModif.ToString ());
+					en.io.ClientWrite ("        " + en.sysstr.GetString (SSType.HorrorDemage) + "   ", 12, true);
+					en.io.ClientWrite (HorrorDemage.ToString ());
+					if (ExtraHorror != 0)
+						en.io.ClientWrite ("        " + en.sysstr.GetString (SSType.ExtraHorror) + " " + ExtraHorror, 12, true);
+					en.io.ClientWrite (Environment.NewLine);   
+
+				} else
+					en.io.ClientWrite ("-" + Environment.NewLine);
+
+				en.io.ClientWrite (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
+				if (CombatModif >= 0) 
+					en.io.ClientWrite ("+"); 
+				en.io.ClientWrite (CombatModif.ToString ());
+				en.io.ClientWrite ("        " + en.sysstr.GetString (SSType.CombatDemage) + "   ", 12, true);
+				if (CombatDemage == 0)
+					en.io.ClientWrite ("  " + en.sysstr.GetString (SSType.MonsterDemageSpecial));
+				else
+					en.io.ClientWrite (CombatDemage.ToString ());
+				if (ExtraCombat != 0)
+					en.io.ClientWrite ("        " + en.sysstr.GetString (SSType.ExtraCombat) + " " + ExtraCombat, 12, true);
 				en.io.ClientWrite (Environment.NewLine);   
-
 			}
-			else
-				en.io.ClientWrite ("-"  + Environment.NewLine);
-
-			en.io.ClientWrite (en.sysstr.GetString (SSType.CombatModif )+ "   ", 12,true);
-			if (CombatModif >= 0) 
-				en.io.ClientWrite ("+"); 
-			en.io.ClientWrite (CombatModif.ToString());
-			en.io.ClientWrite ( "        "+ en.sysstr.GetString (SSType.CombatDemage)+ "   ", 12, true);
-			if( CombatDemage == 0)
-				en.io.ClientWrite ( "  "+ en.sysstr.GetString (SSType.MonsterDemageSpecial));
-			else
-				en.io.ClientWrite (CombatDemage.ToString());
-			if( ExtraCombat != 0)
-				en.io.ClientWrite ("        "+ en.sysstr.GetString (SSType.ExtraCombat )+ " " + ExtraCombat , 12, true);
-			en.io.ClientWrite (Environment.NewLine);   
-
 			en.io.ClientWrite (en.sysstr.GetString (SSType.Tougness ), 12,true );
 			en.io.ClientWrite ("  ");
 			en.io.ClientWrite ( Tougness.ToString());
@@ -491,8 +541,6 @@ namespace mmxAH
 
 
 		}
-
-
 
 
 		public bool FromTextFile( TextFileParser data, TextFileParser text)
@@ -529,24 +577,36 @@ namespace mmxAH
 			if ( ! short.TryParse(data.GetToken(), out EvadeModif))
 				return false;
 			string s = data.GetToken ();
-			if (s.ToUpper () == "NONE")
-				isHorrorCheck = false;
-			else
+			if (s.ToUpper () == "INSENC")
 			{
-				if (! short.TryParse (s, out HorrorModif))
+				InsteadEncEffect = Effect.FromTextFile (data, en);
+				if (InsteadEncEffect == null)
 					return false;
-				if (! byte.TryParse (data.GetToken (), out HorrorDemage))
-					return false;
-			}
-			if ( ! short.TryParse(data.GetToken(), out CombatModif))
-				return false;
-			if ( ! byte.TryParse(data.GetToken(), out CombatDemage ))
-				return false;
-			if (CombatDemage == 0)
+
+			} else
 			{
-				SpecialDemageEffect = Effect.FromTextFile (data, en);
-				if (SpecialDemageEffect == null)
+				if (s.ToUpper () == "NONE")
+					isHorrorCheck = false;
+				else
+				{
+					if (! short.TryParse (s, out HorrorModif))
+						return false;
+					if (! byte.TryParse (data.GetToken (), out HorrorDemage))
+						return false;
+				}
+
+			 
+
+				if (! short.TryParse (data.GetToken (), out CombatModif))
 					return false;
+				if (! byte.TryParse (data.GetToken (), out CombatDemage))
+					return false;
+				if (CombatDemage == 0)
+				{
+					SpecialDemageEffect = Effect.FromTextFile (data, en);
+					if (SpecialDemageEffect == null)
+						return false;
+				}
 			}
 			if ( ! byte.TryParse(data.GetToken(), out Tougness ))
 				return false;
@@ -568,6 +628,9 @@ namespace mmxAH
 				case "PR": { PR = true;  } break;
 				case "ENDLESS": { isEndless  = true;  } break;
 				case "AMBUSH": { isAmbush  = true;  } break;
+				case "UNDEAD": { isUndead  = true;  } break;
+				case "MASK": { isMask  = true;  } break;
+				case "SPAWN": { isSpawn  = true;  } break;
 				default: return false;
 			}
 			if ( ! byte.TryParse(data.GetToken(), out SpecAbilCount  ))

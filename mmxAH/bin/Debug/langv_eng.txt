@@ -79,7 +79,7 @@ Awerness:
 Horror check:
 Sanity Demage: 
 Nightmarish
-Combat Check:
+Combat check:
 Combat Demage:
 Overwhelming
 Special
@@ -130,7 +130,9 @@ Do you want to pickup that clue?
 Yes
 No
 Special
-
+Undead
+Mask
+Spawn
 
  
 
@@ -298,7 +300,39 @@ Dimensional Shambler
 If you fail a {b} Combat check {b} against Dimensional Shambler, you are {i}lost in time and space{i}.
 Elder Thing
 When you fail a Combat check against Elder Thing, you must discard 1 of your Weapons or Spells (your choice), if able.
-
+Fire Vampire
+Flying Polyp
+Formless Spawn
+Ghost
+Ghoul
+God of the Bloody Tongue
+Gug
+Haunter of the Dark
+If the {i}Blackest Night{i} card is in play, Haunter of the Dark's fight rating increases to -5.
+High Priest
+Hound of Tindalos
+When it moves, the Hound of Tindalos moves directly to the nearest investigator inside a location in Arkham (Other than the Hospital or Asylum).
+Maniac
+If the terror level is at least 6, Maniac's fight rating increases to -2, his combat damage increases to 3 Stamina, and he gains {b}Endless{b}.
+Mi-Go
+If you pass a {b}Combat check{b} against Migo, return it to the box and draw 1 Unique Item.
+Nightgaunt
+When you fail a {b}Combat check{b} against Nightgaunt, you are drawn through the nearest open gate.
+If two or more gates are the same distance from you, you choose which gate you are drawn through.
+Shoggoth
+Star Spawn
+The Black Man
+Before making a {b}Horror check{b}, pass a {b}Luck (-1) check{b} or be {b}devoured{b}. 
+If you pass, gain 2 Clue tokens. In either case, return the Black Man to the cup.
+The Bloated Woman
+Before making a {b}Horror check{b}, pass a {b}Will(-2){b} check or automatically fail the {b}Horror check{b} and the {b}Combat check{b}.
+The Dark Pharoah
+Use {b}Lore{b} in combat with the Dark Pharoah instead of {b}Fight{b}.
+Vampire
+Warlock
+If you pass a {b}Combat check{b} against Warlock, return it to the box and gain 2 Clue tokens.
+Witch
+Zombie
 
 //encounters
 

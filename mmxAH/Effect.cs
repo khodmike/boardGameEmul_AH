@@ -24,6 +24,7 @@ namespace mmxAH
 			switch (data.GetToken ().ToUpper ())
 		{ case "NO": res = new EffNothing (eng); break; 
 			case "TONEARGATE": res = new EffToNearGate (eng); break; 
+			case "TONEARINVEST": res = new EffToNearInvest (eng); break; 
 		  case "SANLOSE": res = new EffSanityLose (eng); break; 
 		  case "STALOSE": res = new EffStaminaLose (eng); break;  
 		  case "MONSTER": res = new EffMonsterApears  (eng); break;
@@ -101,6 +102,17 @@ namespace mmxAH
 		}
 	}
 
+
+	public  class EffToNearInvest : Effect
+	{   public EffToNearInvest( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+		{  
+		}
+
+		public override void Execute (Func f)
+		{ rp=f;
+
+		}
+	}
 
 	public  abstract class EffLose : Effect
 	{   

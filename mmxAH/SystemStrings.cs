@@ -132,7 +132,10 @@ namespace mmxAH
 		PickupClueOnMythosPromt,
 		Yes,
 		No,
-		MonsterDemageSpecial
+		MonsterDemageSpecial,
+		Undead,
+		Mask,
+		Spawn
 
 
 

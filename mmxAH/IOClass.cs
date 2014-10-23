@@ -78,7 +78,7 @@ namespace mmxAH
 		private FormMode frmMode;
 		private List< LogEntry > log; 
 		private GameEngine en;
-		private byte sideCode=0; //0-netral, 1-client, 2-server
+		private byte sideCode=0; //0-netral, 1-Server, 2-server
 		private bool isServerUpdate = false;
 		private MainMenuForm mmFrm;
 
