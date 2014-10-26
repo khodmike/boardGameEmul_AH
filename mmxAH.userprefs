@@ -2,11 +2,15 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/Monster.cs">
     <Files>
-      <File FileName="mmxAH/Monster.cs" Line="554" Column="1" />
-      <File FileName="mmxAH/Effect.cs" Line="27" Column="50" />
-      <File FileName="mmxAH/TextFileParser.cs" Line="39" Column="1" />
+      <File FileName="mmxAH/Monster.cs" Line="316" Column="5" />
+      <File FileName="mmxAH/Effect.cs" Line="114" Column="8" />
+      <File FileName="mmxAH/TextFileParser.cs" Line="1" Column="1" />
       <File FileName="mmxAH/GameEngine.cs" Line="1" Column="1" />
       <File FileName="mmxAH/SystemStrings.cs" Line="1" Column="1" />
+      <File FileName="mmxAH/IOClass.cs" Line="174" Column="3" />
+      <File FileName="mmxAH/MythosCard.cs" Line="1" Column="1" />
+      <File FileName="mmxAH/Locathion.cs" Line="1" Column="1" />
+      <File FileName="mmxAH/Investigator.cs" Line="6" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

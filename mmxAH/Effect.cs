@@ -98,6 +98,7 @@ namespace mmxAH
 
 		public override void Execute (Func f)
 		{ rp=f;
+			f ();
 
 		}
 	}
@@ -110,6 +111,7 @@ namespace mmxAH
 
 		public override void Execute (Func f)
 		{ rp=f;
+			f();
 
 		}
 	}

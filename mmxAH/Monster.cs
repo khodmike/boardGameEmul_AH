@@ -45,7 +45,9 @@ namespace mmxAH
 			((ArchamArea ) en.locs[locnum]).RemoveMonster(this);
 			locnum= newLoc;
 			((ArchamArea ) en.locs[locnum]).AddMonster(this);
-			isEncountred=false;
+			en.io.ServerWrite (prot.GetTitle(), 12, true);
+			en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.MoveToFact)+ "  ");  
+			en.io.ServerWrite (en.locs [newLoc].GetMoveToTitle() + " ." + Environment.NewLine, 12, false, true);  
 		}
 
 		public short GetLocathion()
@@ -205,7 +207,7 @@ namespace mmxAH
 		}
 
 		public void PrintToMap( byte label)
-		{ en.io.ServerWrite(prot.GetTitle() , 12,true,true,label); 
+		{ en.io.ClientWrite(prot.GetTitle() , 12,true,true,label); 
 
 		}
 
@@ -255,7 +257,7 @@ namespace mmxAH
 
 		public void PrintAsTrofy()
 		{
-			en.io.ServerWrite (prot.GetTitle () + "  (" + prot.GetTougness () + ")");  
+			en.io.ClientWrite (prot.GetTitle () + "  (" + prot.GetTougness () + ")");  
 		}
 
 		public void AddItemModif( byte modifChange, bool isPhysical=false, bool  isMagic=false)
@@ -264,6 +266,68 @@ namespace mmxAH
 		}
 
 
+		public void Move( bool isWhite)
+		{  short locToMove;
+			switch (prot.GetMoveType() )
+			{ 	
+			case MonsterMovementType.Inmobile:
+				{
+				en.curs.resolvingMythos.Step3Circle ();
+				return;  }
+
+				case MonsterMovementType.Normal:
+				{  
+					if (isWhite)
+						locToMove = ((ArchamArea)en.locs [locnum]).GetWhiteArrow();
+				   else
+						locToMove = ((ArchamArea)en.locs [locnum]).GetBlackArrow();
+					SetLocathion (locToMove); 
+			      en.curs.resolvingMythos.Step3Circle ();
+					                  return;  }
+
+				 
+				case MonsterMovementType.Fast:
+				{ 
+					if (isWhite)
+					{
+						locToMove = ((ArchamArea)en.locs [locnum]).GetWhiteArrow ();
+						locToMove = ((ArchamArea)en.locs [locToMove]).GetWhiteArrow (); 
+					} else
+					{
+						locToMove = ((ArchamArea)en.locs [locnum]).GetBlackArrow ();
+						locToMove = ((ArchamArea)en.locs [locToMove]).GetBlackArrow (); 
+					}
+				SetLocathion (locToMove); 
+				en.curs.resolvingMythos.Step3Circle ();
+					return;
+
+				}
+
+
+			case MonsterMovementType.Special: 
+			{ prot.ExecuteMoveEffect (); return; 
+
+				}
+
+
+			case MonsterMovementType.Fly:
+			{
+
+				en.curs.resolvingMythos.Step3Circle ();
+				return;
+
+				}
+           
+
+
+            }
+
+	   }
+	
+		public byte GetDs()
+		{
+			return prot.GetDs ();
+		}
 	}
 
 
@@ -372,6 +436,11 @@ namespace mmxAH
 
 		public bool GetSpawn()
 		{  return isSpawn;
+
+		}
+
+		public MonsterMovementType GetMoveType()
+		{ return moveType;
 
 		}
 		public MonsterPrototype( GameEngine eng)
@@ -672,6 +741,16 @@ namespace mmxAH
 
 			return modifChange; 
 		}
+
+
+		public  void ExecuteMoveEffect()
+		{ 
+			SpecialMovementEffect.Execute( en.curs.resolvingMythos.Step3Circle);   
+		}
+
+
+        
+
 
 	}
 

@@ -398,7 +398,6 @@ protected string GateAndClueTitle;
 		public void SetClosed (bool closedStatus)
 		{
 			isClosed = closedStatus;  
-			//ПРАВЕРИТЬ ПРАВИЛА В СЛУЧАИ УЛИЦ
 			if (isClosed)
 			{ foreach( MonsterIndivid  m in monsters)
 				m.SetLocathion(BlackArrow);
@@ -918,7 +917,7 @@ protected string GateAndClueTitle;
 			if (gate != null)
 				en.io.ClientWrite (Environment.NewLine + gate.GetMediumDiscripthion (), 12,false, false,label);  
 			PrintInvestAndMonsters(label); 
-
+ 
 		}
 
 		public override void FromBin (System.IO.BinaryReader rd)

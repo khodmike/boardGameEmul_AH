@@ -504,7 +504,7 @@ SANlose 2  no no
 
 //mythos
 1
-head  witchHouse scienceBild     0 0 
+head  witchHouse scienceBild     3 moon hex  squere 2 diamond slash
 
 
 

@@ -49,7 +49,33 @@ namespace mmxAH
 		public  void Step3()
 		{
 			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep3)+Environment.NewLine, 12, true ); 
+			foreach (MonsterIndivid m  in en.ActiveMonsters)
+				m.isEncountred = false;
+			Step3Circle ();
+		}
+
+		public void Step3Circle()
+		{ foreach (MonsterIndivid m in en.ActiveMonsters)
+				if (! m.isEncountred)
+			{  m.isEncountred = true; 
+				byte dsi = m.GetDs ();
+
+					if (MoveBlack.IndexOf (dsi) >= 0)
+				{ m.Move (false); return;
+					}
+				   if (MoveWhite.IndexOf (dsi) >= 0)
+				{ m.Move (true); return;
+				   }
+				  
+				// не двигаемся
+					Step3Circle ();
+					return;
+
+				}
+
+			// нет больше монстров для движения
 			Step4 ();
+
 		}
 
 		protected abstract void Step4();
