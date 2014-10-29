@@ -134,6 +134,9 @@ Undead
 Mask
 Spawn
 to checks
+must move to onee of this locatacshion. For which it is move ?
+Confirm
+Scy
 
  
 

@@ -41,19 +41,23 @@ namespace mmxAH
 
 		}
 		public void SetLocathion( short newLoc)
-		{
+		{  if( locnum== 0)
+			en.Scy.Remove (this);
+			else
 			((ArchamArea ) en.locs[locnum]).RemoveMonster(this);
 			locnum= newLoc;
+			if (newLoc == 0)
+				en.Scy.Add (this);
+			else
 			((ArchamArea ) en.locs[locnum]).AddMonster(this);
 			en.io.ServerWrite (prot.GetTitle(), 12, true);
-			en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.MoveToFact)+ "  ");  
-			en.io.ServerWrite (en.locs [newLoc].GetMoveToTitle() + " ." + Environment.NewLine, 12, false, true);  
+			en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.MoveToFact)+ "  "); 
+			if( locnum== 0)
+				en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.Scy)+ " ." + Environment.NewLine, 12, false, true); 
+			else
+				en.io.ServerWrite (en.locs [newLoc].GetMoveToTitle() + " ." + Environment.NewLine, 12, false, true);  
 		}
 
-		public short GetLocathion()
-		{
-			return locnum;
-		}
 
 		public void BeginEncounter()
 		{ isEncountred=true;
@@ -214,6 +218,9 @@ namespace mmxAH
 		public override void ReadFromSave (System.IO.BinaryReader rd)
 		{   locnum= rd.ReadInt16();
 			monsternum =(byte) (en.ActiveMonsters.Count-1); 
+			if (locnum == 0)
+			en.Scy.Add (this);
+			else
 			((ArchamArea ) en.locs[locnum]).AddMonster(this);
 			isEncountred=false;
 
@@ -237,14 +244,14 @@ namespace mmxAH
 		}
 
 		public void MakeATrofy()
-		{  
-			if (locnum != -1)
-			{
+		{  if ( locnum== -1)
+		   {
+				if (locnum == 0)
+				en.Scy.Remove (this);  
+				else
 				((ArchamArea)en.locs [locnum]).RemoveMonster (this);  
-				 en.ActiveMonsters.Remove (this); 
-
-			}
-
+			en.ActiveMonsters.Remove (this); 
+		   }
 			if ( ! prot.GetEndless ())
 			{
 				en.ActiveInvistigators [en.clock.GetCurPlayer ()].AddTrophy (this);
@@ -268,6 +275,12 @@ namespace mmxAH
 
 		public void Move( bool isWhite)
 		{  short locToMove;
+			if ( locnum != 0 && en.locs [locnum].GetInvestCount () != 0)
+			{
+				en.curs.resolvingMythos.Step3Circle ();
+				return;
+			}
+
 			switch (prot.GetMoveType() )
 			{ 	
 			case MonsterMovementType.Inmobile:
@@ -311,19 +324,95 @@ namespace mmxAH
 
 
 			case MonsterMovementType.Fly:
-			{
-
-				en.curs.resolvingMythos.Step3Circle ();
+			{  
+					MovementFly (); 
 				return;
 
-				}
+			}
            
 
 
-            }
+        }
 
-	   }
+	}
 	
+
+	private void MovementFly()
+		{	List<short> potLoc= new List<short>();
+			byte minSneak=100;
+			Locathion loc;
+			if (locnum==0) //scy
+			{
+				for (int i=0; i< en.locs.Count; i++)  
+				{ loc = en.locs [i];
+					if (loc.GetLocType () == LocathionType.ArchamStreet && loc.GetMinSneak  () <= minSneak)
+					{ potLoc.Add ((short)i);
+
+					}
+			    }
+
+
+			} 
+			else
+			{ if (en.locs [locnum].GetLocType () != LocathionType.ArchamStreet)
+				{
+					short streetLocNum = ((ArchamArea)en.locs [locnum]).GetWhiteArrow ();
+					if (en.locs [streetLocNum].GetInvestCount () != 0)
+						potLoc.Add (streetLocNum); 
+
+				} 
+				else
+				{
+					List<short> streets = ((ArchamStreet)en.locs [locnum]).GetLinkStreets ();  
+					for (int i=0; i< streets.Count; i++)
+					{
+						loc = en.locs [streets [i]];
+						if (loc.GetMinSneak () <= minSneak)
+							potLoc.Add (streets [i]);
+
+					}
+
+				}
+
+		    }
+
+
+			if (potLoc.Count == 0)
+			{   if (locnum==0)
+				{
+					en.curs.resolvingMythos.Step3Circle ();
+					return;
+				} else
+					SetLocathion (0);
+			}
+
+			if (potLoc.Count == 1)
+			{
+				SetLocathion (potLoc [0]);
+				en.curs.resolvingMythos.Step3Circle ();
+				return;
+			}
+
+			//несколько вожможных локаций
+			List<IOOption> iop = new List<IOOption> ();
+			foreach (short li in potLoc)
+			{ iop.Add( new IOOptionWithParam(en.locs[li].GetTitle(),FlyMove2, li));
+
+			}
+			en.io.StartChoose (iop, prot.GetTitle () + "  " + en.sysstr.GetString (SSType.MonsterMovePromt), en.sysstr.GetString (SSType.Confirm));     
+			return;
+		    
+
+		}
+
+		private void FlyMove2(short locind)
+		{ 
+			SetLocathion (locind);
+			en.curs.resolvingMythos.Step3Circle ();
+			return;
+
+		}
+
 		public byte GetDs()
 		{
 			return prot.GetDs ();

@@ -36,7 +36,7 @@ namespace mmxAH
 		public  Deck< ArcEncCard> [] archEncs;
 		public GlobalStatus status;
 		public List< MonsterIndivid> Outscirts; 
-	
+		public List< MonsterIndivid> Scy;
 
 
 

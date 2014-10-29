@@ -126,6 +126,27 @@ namespace mmxAH
 		{
 			en.clock.NextPlayer ();
 		}
+
+
+		public byte GetInvestCount()
+		{ return (byte) investigators.Count; 
+
+		}
+
+		public byte GetMinSneak()
+		{ byte min = 250;
+			byte cur;
+			Investigator inv;
+			foreach( byte invnum  in investigators)
+			{ inv = en.ActiveInvistigators [invnum];  
+				cur = (byte) (inv.GetCharValue (SkillTestType.Sneak) + inv.STInfo.GetInfo (SkillTestType.Sneak).CharModif + en.GlobalModifs.GetInfo (SkillTestType.Sneak).CharModif);  
+				if (cur < min)
+					min = cur;
+
+			}
+			return min;
+
+		}
 	}
 
 
@@ -807,6 +828,21 @@ protected string GateAndClueTitle;
 			LocathionInDistr.Add (loc);
 			if( isTextLoad)
 				OtherLinks.Add (loc);
+		}
+
+
+		public List<short> GetLinkStreets()
+		{ List<short> res = new List<short> ();
+			if (en.locs [BlackArrow].GetLocType() == LocathionType.ArchamStreet)
+				res.Add (BlackArrow);
+
+			if (en.locs [WhiteArrow].GetLocType ()== LocathionType.ArchamStreet)
+				res.Add (WhiteArrow);
+			foreach( short loci in OtherLinks)
+				if (en.locs [loci].GetLocType() == LocathionType.ArchamStreet)
+					res.Add (loci);
+			return res;
+
 		}
 
 

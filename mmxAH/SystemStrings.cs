@@ -136,7 +136,10 @@ namespace mmxAH
 		Undead,
 		Mask,
 		Spawn,
-		ToChecks
+		ToChecks,
+		MonsterMovePromt,
+		Confirm,
+		Scy
 
 
 
