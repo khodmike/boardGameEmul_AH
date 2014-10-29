@@ -10,11 +10,13 @@ namespace mmxAH
 		{ infos= new SkillTestInfoEntry[SkillTest.skill_test_types_count];
 			for (int i = 0; i < infos.Length; i++)
 			{ infos [i] = new SkillTestInfoEntry ();
-				 infos [i].modif=0;
+				 infos [i].CharModif=0;
+				infos [i].SCmodif = 0;
 				infos [i].ClueDiceRathio = 1;
 				infos [i].isReroll = false;
-				mpmodif = 0;
+
 			}
+			mpmodif = 0;
 
 		}
 
@@ -27,10 +29,21 @@ namespace mmxAH
 		public string PrintInfo(SkillTestType t, SystemStrings strs)
 		{ SkillTestInfoEntry info= infos[(int)t];
 			string res="";
-			if (info.modif != 0)
-			{ if (info.modif > 0)
+			if (info.CharModif != 0)
+			{ if (info.CharModif > 0)
 					res += "+";
-			 res += info.modif.ToString ();
+			 res += info.CharModif.ToString ();
+
+			}
+
+			if (info.SCmodif != 0)
+			{ if (res != "")
+				res += ", ";
+
+				if (info.SCmodif > 0)
+				res += "+";
+				res += info.SCmodif.ToString ();
+				res += " " + strs.GetString (SSType.ToChecks)+ " "; 
 
 			}
 			if (info.ClueDiceRathio != 1)
@@ -81,7 +94,8 @@ namespace mmxAH
 	}
 
 	public class SkillTestInfoEntry
-	{ public short modif;
+	{ public short CharModif;
+		public short SCmodif;
 	  public byte ClueDiceRathio;
 	  public bool isReroll;
       

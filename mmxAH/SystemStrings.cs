@@ -135,7 +135,8 @@ namespace mmxAH
 		MonsterDemageSpecial,
 		Undead,
 		Mask,
-		Spawn
+		Spawn,
+		ToChecks
 
 
 

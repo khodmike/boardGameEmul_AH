@@ -131,15 +131,17 @@ namespace mmxAH
 		 
 
 
-			//map.Print ();
-			//loc[9].Move(0); 
+
 
 
 		}
 
 
 
+		private void Test2(short a)
+		{ 
 
+		}
 
 	
 

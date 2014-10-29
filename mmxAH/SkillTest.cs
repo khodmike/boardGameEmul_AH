@@ -19,13 +19,13 @@ namespace mmxAH
 			SkillTestInfoEntry  info1, info2, infog1, infog2;
 			info1 = inv.STInfo.GetInfo(type);
 			infog1 = en.GlobalModifs.GetInfo (type);
-			totalDice=(short)(modif+ modif2+ inv.GetCharValue(type)+info1.modif +infog1.modif); 
+			totalDice=(short)(modif+ modif2+ inv.GetCharValue(type)+info1.CharModif +infog1.CharModif+ info1.SCmodif+ infog1.SCmodif); 
 			ClueDice = (byte)(Math.Max (info1.ClueDiceRathio, infog1.ClueDiceRathio));  
 		
 			if (isSecondType)
 			{ info2 = inv.STInfo.GetInfo(type2);
 				infog2 = en.GlobalModifs.GetInfo (type2);
-				totalDice += (short)(inv.GetCharValue (type2) + info2.modif + infog2.modif);
+				totalDice += (short)(inv.GetCharValue (type2) + info2.CharModif + info2.SCmodif+ infog2.CharModif + infog2.SCmodif);
 				ClueDice = (byte)(Math.Max (ClueDice, Math.Max(info1.ClueDiceRathio, infog1.ClueDiceRathio)));  
 
 			}

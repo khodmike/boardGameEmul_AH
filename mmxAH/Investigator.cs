@@ -634,8 +634,8 @@ namespace mmxAH
 			} else
 			{ isCanMove = true;
 				short mp;
-				mp = (short)(SpeedSneak.GetFirstChar () + STInfo.GetInfo (SkillTestType.Speed).modif);
-				mp += en.GlobalModifs.GetInfo (SkillTestType.Speed).modif; 
+				mp = (short)(SpeedSneak.GetFirstChar () + STInfo.GetInfo (SkillTestType.Speed).CharModif);
+				mp += en.GlobalModifs.GetInfo (SkillTestType.Speed).CharModif; 
 				mp += STInfo.GetMPModif ();
 				mp += en.GlobalModifs.GetMPModif (); 
 				if (mp < 0)
