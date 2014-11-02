@@ -244,7 +244,7 @@ namespace mmxAH
 		}
 
 		public void MakeATrofy()
-		{  if ( locnum== -1)
+		{  if ( locnum!= -1)
 		   {
 				if (locnum == 0)
 				en.Scy.Remove (this);  
@@ -347,7 +347,7 @@ namespace mmxAH
 				{ loc = en.locs [i];
 					if (loc.GetLocType () == LocathionType.ArchamStreet && loc.GetMinSneak  () <= minSneak)
 					{ potLoc.Add ((short)i);
-
+						minSneak = loc.GetMinSneak ();  
 					}
 			    }
 
@@ -378,12 +378,13 @@ namespace mmxAH
 
 
 			if (potLoc.Count == 0)
-			{   if (locnum==0)
-				{
-					en.curs.resolvingMythos.Step3Circle ();
-					return;
-				} else
-					SetLocathion (0);
+			{   if (locnum!=0)
+				{ SetLocathion (0);
+				} 
+
+				en.curs.resolvingMythos.Step3Circle ();
+				return;
+				
 			}
 
 			if (potLoc.Count == 1)

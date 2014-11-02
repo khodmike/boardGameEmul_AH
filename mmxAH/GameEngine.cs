@@ -65,6 +65,7 @@ namespace mmxAH
 			owEnc = new Deck<OWEncCard> ();
 			status = new GlobalStatus (this);
 			Outscirts= new List<MonsterIndivid>(); 
+			Scy = new List<MonsterIndivid> ();
 
 
 		
@@ -124,7 +125,6 @@ namespace mmxAH
 		  
 
 
-			MonstersCup.Draw ().AddToMap (33); 
 			clock.StartRandomSetup(); 
 
 		 
@@ -289,10 +289,11 @@ namespace mmxAH
 			ResetOutscirts (); 
 
 			//самое последнее действие , после всех резетов
-			MonstersCup.Shuffle ();
-			mythosDeck.Shuffle ();
-			gates.Shuffle ();
-			invests.Shuffle (); 
+			MonstersCup.Reset ();
+			mythosDeck.Reset ();
+			gates.Reset ();
+			invests.Reset ();
+			owEnc.Reset ();
 
 
 		}

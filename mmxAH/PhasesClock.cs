@@ -100,7 +100,7 @@ namespace mmxAH
 				if (firstPlayer == en.GetPlayersNumber ())
 					firstPlayer = 0;
 				curPlayer = firstPlayer; 
-				en.io.ServerWrite (en.sysstr.GetString (SSType.Turn) + "  " + curTurn + " " + en.sysstr.GetString (SSType.TurnEndMessage), 14);
+				en.io.ServerWrite (Environment.NewLine +en.sysstr.GetString (SSType.Turn) + "  " + curTurn + " " + en.sysstr.GetString (SSType.TurnEndMessage), 14);
 				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.FirstPlayer) + "  : ", 14, true);
 				en.io.ServerWrite (en.ActiveInvistigators [firstPlayer].GetTitle () + Environment.NewLine + Environment.NewLine + Environment.NewLine, 14, false, true);
 			}
@@ -124,7 +124,11 @@ namespace mmxAH
 			case Phases.Movement : {curPhase = Phases.AhEnc ;} break; 
 			case Phases.AhEnc  : {curPhase = Phases.OwEnc  ;} break;
 			case Phases.OwEnc  : {curPhase = Phases.Mythos  ;} break;
-			case Phases.Mythos: EndTurn (); break;
+			case Phases.Mythos:
+				{
+					EndTurn ();
+					return; 
+				}break;
 
 
 

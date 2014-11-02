@@ -2,12 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/Monster.cs">
     <Files>
-      <File FileName="mmxAH/Monster.cs" Line="373" Column="7" />
+      <File FileName="mmxAH/Monster.cs" Line="380" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/docs/Програмирование/mmxAH/mmxAH/MapOfCity.cs" line="128" column="1" />
+      <Breakpoint file="/docs/Програмирование/mmxAH/mmxAH/PhasesClock.cs" line="96" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>

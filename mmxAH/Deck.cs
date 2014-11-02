@@ -196,26 +196,29 @@ namespace mmxAH
 				cards.Add (c);
 			foreach (CardType c in discard)
 				cards.Add (c);
-
+			Shuffle ();
 		}
 
 
 		public void ToSave(System.IO.BinaryWriter wr)
 		{ wr.Write (TopZone.Count);
-			foreach (CardType c in cards)
+			foreach (CardType c in TopZone)
 				wr.Write (c.GetID()); 
 
 
-			wr.Write (cards.Count);
-			foreach (CardType c in cards)
-				wr.Write (c.GetID()); 
+
 
 			wr.Write (BottomZone .Count);
 			foreach (CardType c in  BottomZone)
 				wr.Write (c.GetID()); 
 
-			wr.Write (discard  .Count);
+			wr.Write (discard.Count);
 			foreach (CardType c in  discard )
+				wr.Write (c.GetID()); 
+
+			//cards- последие. Иначе уничтожаем исходник при загрузке.
+			wr.Write (cards.Count);
+			foreach (CardType c in cards)
 				wr.Write (c.GetID()); 
 
 
@@ -232,11 +235,7 @@ namespace mmxAH
 				newList.Add (GetCardById(rd.ReadInt16()));
 			TopZone = newList;
 
-			cc = rd.ReadInt32 (); 
-		      newList= new List<CardType>();
-			for (int i=0; i<cc; i++)
-				newList.Add (GetCardById (rd.ReadInt16()));
-			cards = newList;
+
 
 			cc = rd.ReadInt32 (); 
 			newList= new List<CardType>();
@@ -250,6 +249,12 @@ namespace mmxAH
 			for (int i=0; i<cc; i++)
 				newList.Add (GetCardById (rd.ReadInt16()));
 			discard  = newList;
+
+			cc = rd.ReadInt32 (); 
+			newList= new List<CardType>();
+			for (int i=0; i<cc; i++)
+				newList.Add (GetCardById (rd.ReadInt16()));
+			cards = newList;
 		
 
 

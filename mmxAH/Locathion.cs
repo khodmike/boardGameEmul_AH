@@ -577,16 +577,14 @@ protected string GateAndClueTitle;
 		{ en.io.ClientWrite( Environment.NewLine, 10, false, false, label); 
 
 			foreach( byte invnum in investigators)
-				en.io.ClientWrite (en.ActiveInvistigators[invnum].PrintToMap() + "  ", 12, false, true, label);
-           if( investigators.Count != 0)
-				en.io.ClientWrite( Environment.NewLine, 10, false, false, label); 
+				en.io.ClientWrite (en.ActiveInvistigators[invnum].PrintToMap() +Environment.NewLine, 12, false, true, label);
+
 			foreach (MonsterIndivid m in monsters)
 			{
 				m.PrintToMap (label); 
-				en.io.ClientWrite ("   "); 
+				en.io.ClientWrite (Environment.NewLine,12,false,false, label); 
 			}
-			if( monsters.Count != 0)
-				en.io.ClientWrite( Environment.NewLine, 10, false, false, label); 
+
 
 
 		}

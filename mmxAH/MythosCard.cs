@@ -134,7 +134,14 @@ namespace mmxAH
 
 		protected override void Step4 ()
 		{  en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
-			eff.Execute( en.clock.EndTurn);  
+			eff.Execute(Clear);  
+
+		}
+
+		private  void Clear()
+		{ en.curs.resolvingMythos = null;
+			en.mythosDeck.Discard (this);
+			en.clock.EndTurn (); 
 
 		}
 

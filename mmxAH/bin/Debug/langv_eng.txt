@@ -356,7 +356,8 @@ Zombie
 
 //mythos
 
-TestMythos
+TestMythos1
+TestMythos2
 
 
 

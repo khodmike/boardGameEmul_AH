@@ -57,6 +57,8 @@ namespace mmxAH
 			foreach (Locathion loc in en.locs)
 				loc.WriteToSave (wr);
 
+			en.mythosDeck.ToSave (wr);
+			en.owEnc.ToSave (wr); 
 			wr.Close ();
 				
 
@@ -111,6 +113,8 @@ namespace mmxAH
 				foreach( Locathion loc in en.locs)
 					loc.ReadFromSave(rd); 
 
+				en.mythosDeck.FromSave(rd);
+				en.owEnc.FromSave(rd);
 				rd.Close(); 
 			} catch ( Exception e)
 			{ System.Windows.Forms.MessageBox.Show (e.Message); 
