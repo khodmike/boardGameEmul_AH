@@ -258,8 +258,17 @@ namespace mmxAH
 
 		private void PrintInvist()
 		{ frm.mapMode (false);
-			foreach (Investigator inv in en.ActiveInvistigators)
-				inv.Print (); 
+			byte i = en.clock.GetCurPlayer (); 
+			do
+			{
+				en.ActiveInvistigators [i]. Print (); 
+				ClientWrite (Environment.NewLine);
+				ClientWrite (Environment.NewLine);
+				i++;
+				if( i== en.GetPlayersNumber())
+					i=0;
+			}
+			while( i != en.clock.GetCurPlayer ()); 
 		} 
 
 

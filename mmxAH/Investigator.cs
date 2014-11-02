@@ -231,6 +231,8 @@ namespace mmxAH
 		{
 			//Нельзя автодобовления из-за вожможной замены после devour
 			investnum= newInvestNum;
+			en.io.ServerWrite (en.sysstr.GetString (SSType.Investigitor) + " " + (investnum+1) + ": ");
+			en.io.ServerWrite (DisplayName + Environment.NewLine, 12, false, true);   
 
 			locnum = setupi.StartLoc;
 			en.locs [locnum].AddInvestigator (investnum);
@@ -248,7 +250,7 @@ namespace mmxAH
 
 		public void  SetupRandom()
 		{
-
+			en.clock.PrintCurPhase (); 
 			en.clock.NextPlayer (); 
 
 		}
@@ -591,7 +593,8 @@ namespace mmxAH
 
 
 		public void Setup_Sliders()
-		{  en.io.SetServerFormMode (FormMode.Investigators);  
+		{  en.clock.PrintCurPhase ();
+			en.io.SetServerFormMode (FormMode.Investigators);  
 			en.io.StartChoose (SpeedSneak.SetupChoses (Setup_Slider_1), en.sysstr.GetString (SSType.SetYourSlider) + " " + SpeedSneak.GetTitle (),  en.sysstr.GetString( SSType.ChooseActhionButton ));    
 		}
 

@@ -139,7 +139,15 @@ namespace mmxAH
 		ToChecks,
 		MonsterMovePromt,
 		Confirm,
-		Scy
+		Scy,
+		Setup_Started,
+		Setup_NumOfInv_Promt,
+		Setup_NumOfInv_Fact,
+		Investigitor,
+		SetupRandomStep,
+		SetupSlidersStep,
+		SetupMythosStep
+
 
 
 
@@ -181,7 +189,9 @@ namespace mmxAH
 
 		public string GetString( SSType t)
 		{ 
-			return systemStringsArr[(int) t]; 
+			return systemStringsArr[(int) t];
+		
+
 		}
 
 		public string GetNumberClueToken( short num)

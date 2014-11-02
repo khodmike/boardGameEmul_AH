@@ -6,15 +6,19 @@ namespace mmxAH
 	{  protected GameEngine en;
 		protected  Func rp;
 		protected byte invnum;
-		public Effect( GameEngine eng, byte pInvnum=40 ) 
+		public Effect( GameEngine eng) 
 		{  en=eng;
-			if (pInvnum == 40)
-				invnum = en.clock.GetCurPlayer ();
-			else
-				invnum = pInvnum;  
+
 		}
 
-		public abstract void Execute( Func f);
+		public virtual void Execute( Func f,  byte pInvNum=40)
+		{ rp = f;
+			if (pInvNum == 40)
+			invnum = en.clock.GetCurPlayer ();
+			else
+				invnum = pInvNum;  
+
+		}
 		protected virtual bool ReadFromTextIndivid(TextFileParser data)
 		{
 			return true;
@@ -44,24 +48,25 @@ namespace mmxAH
 
 
 	public  class EffNothing : Effect
-	{   public EffNothing( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+	{   public EffNothing( GameEngine eng ) : base(eng)
 		{  
 		}
 
-		public override void Execute (Func f)
-		{ f();
+		public override void Execute (Func f, byte pInvnum=40)
+		{  base.Execute(f, pInvnum); 
+			f();
 
 		}
 	}
 
 
 	public  class EffLitas : Effect
-	{   public EffLitas( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+	{   public EffLitas( GameEngine eng ) : base(eng)
 		{  
 		}
 
-		public override void Execute (Func f)
-		{ 
+		public override void Execute (Func f, byte pInvnum=40)
+		{  base.Execute(f, pInvnum); 
 			en.ActiveInvistigators [invnum].SetLocathion (0);
 			//тут проверки на попадание в Litas
 
@@ -73,12 +78,13 @@ namespace mmxAH
 
 	public  class EffMonsterMoveRoll : Effect
 	{   private Effect effToAll;
-		public EffMonsterMoveRoll( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+		public EffMonsterMoveRoll( GameEngine eng ) : base(eng)
 		{  
 		}
 
-		public override void Execute (Func f)
-		{  //СДЕЛАТЬ
+		public override void Execute (Func f, byte pInvnum=40)
+		{  base.Execute(f, pInvnum); 
+			//СДЕЛАТЬ
 			f();
 
 		}
@@ -92,12 +98,12 @@ namespace mmxAH
 		}
 	}
 	public  class EffToNearGate : Effect
-	{   public EffToNearGate( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+	{   public EffToNearGate( GameEngine eng) : base(eng)
 		{  
 		}
 
-		public override void Execute (Func f)
-		{ rp=f;
+		public override void Execute (Func f, byte pInvnum=40)
+		{  base.Execute(f, pInvnum); 
 			f ();
 
 		}
@@ -105,12 +111,12 @@ namespace mmxAH
 
 
 	public  class EffToNearInvest : Effect
-	{   public EffToNearInvest( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+	{   public EffToNearInvest( GameEngine eng ) : base(eng)
 		{  
 		}
 
-		public override void Execute (Func f)
-		{ rp=f;
+		public override void Execute (Func f, byte pInvnum=40)
+		{  base.Execute(f, pInvnum); 
 			f();
 
 		}
@@ -119,7 +125,7 @@ namespace mmxAH
 	public  abstract class EffLose : Effect
 	{   
 		protected short demageCount;
-		public EffLose( GameEngine eng, byte pInvnum=40 ) : base(eng, pInvnum)
+		public EffLose( GameEngine eng ) : base(eng)
 		{  
 		}
 
@@ -140,14 +146,14 @@ namespace mmxAH
 
 	public  class EffStaminaLose : EffLose
 	{   
-		public  EffStaminaLose( GameEngine eng, byte pInvnum=40 ):  base(eng, pInvnum)
+		public  EffStaminaLose( GameEngine eng):  base(eng)
 		{
 		}
 		
 
 
-		public override void Execute (Func f)
-		{ rp=f;
+		public override void Execute (Func f, byte pInvnum=40)
+		{  base.Execute(f, pInvnum);
 			if (demageCount < 0) 
 				demageCount = 0;
 			if(en.ActiveInvistigators[invnum].LoseStamina((byte)demageCount))
@@ -162,14 +168,14 @@ namespace mmxAH
 	public  class EffSanityLose : EffLose
 	{   
 
-		public  EffSanityLose( GameEngine eng, byte pInvnum=40 ): base(eng, pInvnum) 
+		public  EffSanityLose( GameEngine eng): base(eng) 
 		{
 
 		}
 
 
-		public override void Execute (Func f)
-		{ rp=f;
+		public override void Execute (Func f, byte pInvnum=40)
+		{  base.Execute(f, pInvnum); 
 			if (demageCount < 0) 
 				demageCount = 0;
 			if(en.ActiveInvistigators[invnum].LoseSanity((byte)demageCount))
@@ -183,12 +189,12 @@ namespace mmxAH
 
 
 	public  class EffMonsterApears : Effect
-	{   public EffMonsterApears( GameEngine eng,  byte pInvnum=40 ) : base(eng, pInvnum)
+	{   public EffMonsterApears( GameEngine eng ) : base(eng)
 		{  
 		}
 
-		public override void Execute (Func f)
-		{ rp=f;
+		public override void Execute (Func f, byte pInvnum=40)
+		{  base.Execute(f, pInvnum);  
 			MonsterIndivid m = en.MonstersCup.Draw ();
 			if (m != null)
 			{

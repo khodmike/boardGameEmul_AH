@@ -121,11 +121,10 @@ namespace mmxAH
 		private void Test ()
 		{ 
 
-		 
+		  
 
-			ActiveInvistigators.Add (invests.Draw() );
-			ActiveInvistigators [0].Setup (0);
-			MonstersCup.DrawFromBottom ().AddToMap (33); 
+
+			MonstersCup.Draw ().AddToMap (33); 
 			clock.StartRandomSetup(); 
 
 		 
@@ -138,10 +137,6 @@ namespace mmxAH
 
 
 
-		private void Test2(short a)
-		{ 
-
-		}
 
 	
 
@@ -189,16 +184,33 @@ namespace mmxAH
 		}
 		public void newGame ()
 		{   Reset (); 
+			io.ServerWrite (sysstr.GetString (SSType.Setup_Started) + "  "+ DateTime.Now+"."+ Environment.NewLine );  
+			List<IOOption> ioopts = new List<IOOption > ();
+
+			for( short i=1; i<= lims.Count; i++)
+				ioopts.Add( new IOOptionWithParam(i.ToString(), NewGame_NumOfInv,i));
+
+			io.StartChoose (ioopts, sysstr.GetString (SSType.Setup_NumOfInv_Promt), sysstr.GetString (SSType.Confirm));
 
 
 
-
-			lim = lims [0];
-			status.Init (lim.gates, lim.mA, lim.mO);  
-			Test ();
 
 		}
 
+
+				          
+	    private void NewGame_NumOfInv(short num)
+		{   lim = lims [num-1];
+			io.ServerWrite (sysstr.GetString (SSType.Setup_NumOfInv_Fact) + " : " + num+"."+ Environment.NewLine);  
+			status.Init (lim.gates, lim.mA, lim.mO);
+			//Random inv
+			for (byte i=0; i<num; i++)
+			{ ActiveInvistigators.Add (invests.Draw());
+				ActiveInvistigators [i].Setup (i);
+
+			}
+			Test ();
+		}
 
        
 
@@ -277,7 +289,7 @@ namespace mmxAH
 			ResetOutscirts (); 
 
 			//самое последнее действие , после всех резетов
-			//MonstersCup.Shuffle ();
+			MonstersCup.Shuffle ();
 			mythosDeck.Shuffle ();
 			gates.Shuffle ();
 			invests.Shuffle (); 

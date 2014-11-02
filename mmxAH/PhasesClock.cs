@@ -94,12 +94,12 @@ namespace mmxAH
 
 		private  void EndTurn2()
 		{ en.io.SetSaveEnable (false);
-			firstPlayer++;
-			if (firstPlayer == en.GetPlayersNumber ())
-				firstPlayer = 0;
-			curPlayer = firstPlayer; 
+
 			if (curTurn != 0)
-			{
+			{ 	firstPlayer++;
+				if (firstPlayer == en.GetPlayersNumber ())
+					firstPlayer = 0;
+				curPlayer = firstPlayer; 
 				en.io.ServerWrite (en.sysstr.GetString (SSType.Turn) + "  " + curTurn + " " + en.sysstr.GetString (SSType.TurnEndMessage), 14);
 				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.FirstPlayer) + "  : ", 14, true);
 				en.io.ServerWrite (en.ActiveInvistigators [firstPlayer].GetTitle () + Environment.NewLine + Environment.NewLine + Environment.NewLine, 14, false, true);
@@ -184,7 +184,7 @@ namespace mmxAH
 				  case Phases.OwEnc: str += en.sysstr.GetString (SSType.OwEncPhase); break;   
 					}
 
-					str += " . " + en.ActiveInvistigators [firstPlayer].GetTitle ();
+					str += " . " + en.ActiveInvistigators [curPlayer ].GetTitle ();
 
 				}
 			}
@@ -196,8 +196,14 @@ namespace mmxAH
 		}
 
 		private string  GetSetupPhaseString()
-		{
-			return en.sysstr.GetString (SSType.Setup);  
+		{ switch (curPhase)
+		{ case Phases.SetupFix: return en.sysstr.GetString (SSType.Setup); 
+			case Phases.SetupRandom: return  en.sysstr.GetString (SSType.SetupRandomStep) + " . " + en.ActiveInvistigators [curPlayer ].GetTitle (); 
+			case Phases.SetupSliders: return  en.sysstr.GetString (SSType.SetupSlidersStep)  + " . " + en.ActiveInvistigators [curPlayer ].GetTitle ();
+			case Phases.SetupMythos: return   en.sysstr.GetString (SSType.SetupMythosStep);
+
+			}
+			return "";
 		}
 
 

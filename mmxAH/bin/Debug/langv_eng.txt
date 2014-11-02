@@ -137,6 +137,14 @@ to checks
 must move to onee of this locatacshion. For which it is move ?
 Confirm
 Scy
+New game started
+Choose number of investigators
+Number of investigators:
+Investigator
+Setup. Step 9 (Receive Random Possessions)
+Setup. Step  10 ( Place Initial Sliders)
+Setup. Step 14 ( Mythos card)
+
 
  
 
@@ -285,11 +293,12 @@ becomes Deputated of Archem.
 fire from the Deputated work. 
 
 //invistigators
-//name
+Amanda Sharpe 
+she
+the Student
+
 Harvey Waters
-//pronaun
 he
-//occupathion
 the Profecor
 
 

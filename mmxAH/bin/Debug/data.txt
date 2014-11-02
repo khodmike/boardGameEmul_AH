@@ -134,7 +134,47 @@ stab hospital
 
 //inveswtigators
 //count
+2
+//indiv-ent-start( Amanda Sharp)
+//max-san
+5
+//max-sta
+5
+//start_locathion
+bank
+//start_clues
 1
+//start $
+1
+//number and codenames of other fix posseshion
+0
+//draw_common
+1
+//draw_unice
+1
+//draw_spells
+1
+//draw_skills
+2
+//focus
+3
+//speed
+1 2 3 4
+//sneak
+4 3 2 1
+//fight
+1 2 3 4
+//will
+4 3 2 1 
+//lore
+1 2 3 4
+//luck
+4 3 2 1
+//number and descriptrhion of s.a.
+0
+//indiv-ent-end
+
+
 //indiv-ent-start( Harvy Waters)
 //max-san
 7
