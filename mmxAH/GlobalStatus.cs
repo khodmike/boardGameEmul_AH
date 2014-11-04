@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace mmxAH
 {
@@ -143,6 +144,27 @@ namespace mmxAH
 
 
 	   
+		public void ToSave(BinaryWriter wr)
+		{ 
+			wr.Write (CurDoom);
+			wr.Write (CurGate);
+			wr.Write (CurMonsters);
+			wr.Write (CurOut);
+			wr.Write (CurTerror);
+			wr.Write (CurSealed);
+
+		}
+
+
+		public void FromSave( BinaryReader rd)
+		{ CurDoom = rd.ReadByte ();
+		  CurGate = rd.ReadByte ();
+		  CurMonsters= rd.ReadByte ();
+		  CurOut = rd.ReadByte ();
+		  CurTerror = rd.ReadByte ();
+		  CurSealed = rd.ReadByte ();
+
+		}
 
 
 

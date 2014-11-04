@@ -59,6 +59,7 @@ namespace mmxAH
 
 			en.mythosDeck.ToSave (wr);
 			en.owEnc.ToSave (wr); 
+			en.status.ToSave (wr);  
 			wr.Close ();
 				
 
@@ -115,6 +116,7 @@ namespace mmxAH
 
 				en.mythosDeck.FromSave(rd);
 				en.owEnc.FromSave(rd);
+				en.status.FromSave(rd); 
 				rd.Close(); 
 			} catch ( Exception e)
 			{ System.Windows.Forms.MessageBox.Show (e.Message); 

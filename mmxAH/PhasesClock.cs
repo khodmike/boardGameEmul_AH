@@ -125,8 +125,8 @@ namespace mmxAH
 			case Phases.AhEnc  : {curPhase = Phases.OwEnc  ;} break;
 			case Phases.OwEnc  : {curPhase = Phases.Mythos  ;} break;
 			case Phases.Mythos:
-				{
-					EndTurn ();
+				{ // только при загрузке из сейва
+					EndTurn2 ();
 					return; 
 				}break;
 
