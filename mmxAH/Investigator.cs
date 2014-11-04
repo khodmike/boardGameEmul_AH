@@ -304,20 +304,30 @@ namespace mmxAH
 
 		}
 
-
-		public short GetCharValue(SkillTestType t)
-		{ 
-			switch (t)
-		{ 	case SkillTestType.Speed:  return  SpeedSneak.GetFirstChar ();   
-			case SkillTestType.Sneak : return SpeedSneak.GetSecondChar ();   
-			case SkillTestType.Fight : return FightWill.GetFirstChar (); 
-			case SkillTestType.Will: return FightWill.GetSecondChar ();  
-			case SkillTestType.Lore: return  LoreLuck .GetFirstChar ();  
-			case SkillTestType.Luck: return  LoreLuck .GetSecondChar ();   
-			default: return 0;
+      private  short GetSliderValue(SkillTestType t)
+		{ switch (t)
+			{ 	case SkillTestType.Speed:  return  SpeedSneak.GetFirstChar ();   
+				case SkillTestType.Sneak : return SpeedSneak.GetSecondChar ();   
+				case SkillTestType.Fight : return FightWill.GetFirstChar (); 
+				case SkillTestType.Will: return FightWill.GetSecondChar ();  
+				case SkillTestType.Lore: return  LoreLuck .GetFirstChar ();  
+				case SkillTestType.Luck: return  LoreLuck .GetSecondChar ();   
+				default: return 0;
 			}
 
+
+		}
+
+
+		public short GetCharValue(SkillTestType t)
+		{  return(short)(GetSliderValue (t) + STInfo.GetInfo (t).CharModif + en.GlobalModifs.GetInfo (t).CharModif);  
+
 		
+		}
+
+		public short GetSkillTestValue(SkillTestType t)
+		{  return (short)( GetCharValue (t) + STInfo.GetInfo (t).SCmodif + en.GlobalModifs.GetInfo (t).CharModif);    
+
 		}
 
 		public bool FromTextFile( TextFileParser data, TextFileParser text)

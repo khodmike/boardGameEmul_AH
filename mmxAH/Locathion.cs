@@ -139,7 +139,7 @@ namespace mmxAH
 			Investigator inv;
 			foreach( byte invnum  in investigators)
 			{ inv = en.ActiveInvistigators [invnum];  
-				cur = (byte) (inv.GetCharValue (SkillTestType.Sneak) + inv.STInfo.GetInfo (SkillTestType.Sneak).CharModif + en.GlobalModifs.GetInfo (SkillTestType.Sneak).CharModif);  
+				cur = (byte) (inv.GetCharValue (SkillTestType.Sneak));  
 				if (cur < min)
 					min = cur;
 

@@ -120,12 +120,10 @@ namespace mmxAH
 
 
 		private void Test ()
-		{ 
-
-		  
+		{ clock.StartRandomSetup ();
 
 
-			clock.StartRandomSetup(); 
+			 
 
 		 
 
@@ -136,8 +134,7 @@ namespace mmxAH
 		}
 
 
-
-
+	
 	
 
 
