@@ -28,6 +28,7 @@ namespace mmxAH
 	    public bool isCanMove=true;
 		private List< MonsterIndivid> monsterTrofies;
 		private List<GatePrototype> gateTrofies;
+		public bool isExploredToken=false;
 
 
 		private struct SetupInfo
@@ -220,6 +221,7 @@ namespace mmxAH
 			en.locs[locnum].RemoveInvestigator(investnum);
 			locnum= newLoc;
 			en.locs[locnum].AddInvestigator(investnum);
+			isExploredToken = false; 
 		}
 
 		public short GetLocathion()
@@ -262,7 +264,7 @@ namespace mmxAH
 		}
 
 		public void MoveTo (short locindex)
-		{ MovementPoints -= ((ArchamArea) en.locs[locindex]).GetCost();
+		{ MovementPoints -= ((ArchemArea) en.locs[locindex]).GetCost();
 
 			en.io.ServerWrite  ( DisplayName+ "  "+ en.sysstr.GetString( SSType.MoveToFact)+ " ");
 			en.io.ServerWrite (en.locs[locindex].GetMoveToTitle(), 12, false, true);
@@ -663,7 +665,8 @@ namespace mmxAH
 
 		public void Delayed()
 		{ isDelayed = true;
-			en.io.ServerWrite (DisplayName + " " + en.sysstr.GetString (SSType.DelayedStart)+ Environment.NewLine);   
+			en.io.ServerWrite (DisplayName, 12,false, true);
+			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.DelayedStart)+ Environment.NewLine);   
 
 		}
 
@@ -780,7 +783,8 @@ namespace mmxAH
 		public void OwEnc()
 		{ en.curs.DiscardEncounters();
 			if (en.locs [locnum].GetLocType () == LocathionType.OW)
-				en.locs [locnum].Encounter(); 
+				en.locs [locnum].Encounter();
+
 			else
 				en.clock.NextPlayer (); 
 

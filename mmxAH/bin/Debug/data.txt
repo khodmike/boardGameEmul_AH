@@ -545,7 +545,7 @@ SANlose 2  no no
 //mythos
 2
 head  witchHouse scienceBild     1 circle 0 
-head  indsqr   road 1 circle 0
+head  scienceBild  road 1 circle 0
 
 
 

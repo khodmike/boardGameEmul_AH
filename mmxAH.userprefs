@@ -1,14 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/Monster.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/Locathion.cs">
     <Files>
-      <File FileName="mmxAH/Monster.cs" Line="380" Column="1" />
+      <File FileName="mmxAH/Gate.cs" Line="98" Column="82" />
+      <File FileName="mmxAH/Locathion.cs" Line="234" Column="86" />
+      <File FileName="mmxAH/Investigator.cs" Line="786" Column="28" />
+      <File FileName="mmxAH/CurStorage.cs" Line="52" Column="1" />
+      <File FileName="mmxAH/ArcEncCard.cs" Line="48" Column="1" />
+      <File FileName="mmxAH/Deck.cs" Line="23" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/docs/Програмирование/mmxAH/mmxAH/MapOfCity.cs" line="128" column="1" />
-      <Breakpoint file="/docs/Програмирование/mmxAH/mmxAH/PhasesClock.cs" line="96" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>

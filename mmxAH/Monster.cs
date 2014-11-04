@@ -25,7 +25,7 @@ namespace mmxAH
 		{ locnum=StartLocathion;
 			monsternum=(byte) en.ActiveMonsters.Count;
 			en.ActiveMonsters.Add(this); 
-			((ArchamArea)en.locs [StartLocathion]).AddMonster (this);  
+			((ArchemArea)en.locs [StartLocathion]).AddMonster (this);  
 			isEncountred=false; 
 
 		}
@@ -44,12 +44,12 @@ namespace mmxAH
 		{  if( locnum== 0)
 			en.Scy.Remove (this);
 			else
-			((ArchamArea ) en.locs[locnum]).RemoveMonster(this);
+			((ArchemArea ) en.locs[locnum]).RemoveMonster(this);
 			locnum= newLoc;
 			if (newLoc == 0)
 				en.Scy.Add (this);
 			else
-			((ArchamArea ) en.locs[locnum]).AddMonster(this);
+			((ArchemArea ) en.locs[locnum]).AddMonster(this);
 			en.io.ServerWrite (prot.GetTitle(), 12, true);
 			en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.MoveToFact)+ "  "); 
 			if( locnum== 0)
@@ -221,7 +221,7 @@ namespace mmxAH
 			if (locnum == 0)
 			en.Scy.Add (this);
 			else
-			((ArchamArea ) en.locs[locnum]).AddMonster(this);
+			((ArchemArea ) en.locs[locnum]).AddMonster(this);
 			isEncountred=false;
 
 		}
@@ -249,7 +249,7 @@ namespace mmxAH
 				if (locnum == 0)
 				en.Scy.Remove (this);  
 				else
-				((ArchamArea)en.locs [locnum]).RemoveMonster (this);  
+				((ArchemArea)en.locs [locnum]).RemoveMonster (this);  
 			en.ActiveMonsters.Remove (this); 
 		   }
 			if ( ! prot.GetEndless ())
@@ -291,9 +291,9 @@ namespace mmxAH
 				case MonsterMovementType.Normal:
 				{  
 					if (isWhite)
-						locToMove = ((ArchamArea)en.locs [locnum]).GetWhiteArrow();
+						locToMove = ((ArchemArea)en.locs [locnum]).GetWhiteArrow();
 				   else
-						locToMove = ((ArchamArea)en.locs [locnum]).GetBlackArrow();
+						locToMove = ((ArchemArea)en.locs [locnum]).GetBlackArrow();
 					SetLocathion (locToMove); 
 			      en.curs.resolvingMythos.Step3Circle ();
 					                  return;  }
@@ -303,12 +303,12 @@ namespace mmxAH
 				{ 
 					if (isWhite)
 					{
-						locToMove = ((ArchamArea)en.locs [locnum]).GetWhiteArrow ();
-						locToMove = ((ArchamArea)en.locs [locToMove]).GetWhiteArrow (); 
+						locToMove = ((ArchemArea)en.locs [locnum]).GetWhiteArrow ();
+						locToMove = ((ArchemArea)en.locs [locToMove]).GetWhiteArrow (); 
 					} else
 					{
-						locToMove = ((ArchamArea)en.locs [locnum]).GetBlackArrow ();
-						locToMove = ((ArchamArea)en.locs [locToMove]).GetBlackArrow (); 
+						locToMove = ((ArchemArea)en.locs [locnum]).GetBlackArrow ();
+						locToMove = ((ArchemArea)en.locs [locToMove]).GetBlackArrow (); 
 					}
 				SetLocathion (locToMove); 
 				en.curs.resolvingMythos.Step3Circle ();
@@ -356,14 +356,14 @@ namespace mmxAH
 			else
 			{ if (en.locs [locnum].GetLocType () != LocathionType.ArchamStreet)
 				{
-					short streetLocNum = ((ArchamArea)en.locs [locnum]).GetWhiteArrow ();
+					short streetLocNum = ((ArchemArea)en.locs [locnum]).GetWhiteArrow ();
 					if (en.locs [streetLocNum].GetInvestCount () != 0)
 						potLoc.Add (streetLocNum); 
 
 				} 
 				else
 				{
-					List<short> streets = ((ArchamStreet)en.locs [locnum]).GetLinkStreets ();  
+					List<short> streets = ((ArchemStreet)en.locs [locnum]).GetLinkStreets ();  
 					for (int i=0; i< streets.Count; i++)
 					{
 						loc = en.locs [streets [i]];

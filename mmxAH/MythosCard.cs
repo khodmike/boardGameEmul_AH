@@ -24,7 +24,7 @@ namespace mmxAH
 
 			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep1)+Environment.NewLine, 12, true ); 
 		
-			ArchamUnstableLoc l = (ArchamUnstableLoc)en.locs [GateLoc];  
+			ArchemUnstableLoc l = (ArchemUnstableLoc)en.locs [GateLoc];  
 
 			if (l.isGate ())
 				en.ga.MonsterSurge (GateLoc);
@@ -43,7 +43,7 @@ namespace mmxAH
 		private void Step2()
 		{ 
 			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep2)+Environment.NewLine, 12, true ); 
-			((ArchamArea)en.locs [ClueLoc]).MythosClues ();   
+			((ArchemArea)en.locs [ClueLoc]).MythosClues ();   
 		}
 
 		public  void Step3()

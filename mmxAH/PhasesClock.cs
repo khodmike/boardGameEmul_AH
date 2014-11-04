@@ -47,7 +47,7 @@ namespace mmxAH
 			short locnum = en.ActiveInvistigators [curPlayer].GetLocathion ();
 			LocathionType t = en.locs [locnum ].GetLocType ();
 			if( t != LocathionType.LiTaS  && t != LocathionType.OW)     
-				((ArchamArea) en.locs [locnum]).EndMovementClues(curPlayer);   
+				((ArchemArea) en.locs [locnum]).EndMovementClues(curPlayer);   
 		}
 
 

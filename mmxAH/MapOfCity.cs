@@ -21,7 +21,7 @@ namespace mmxAH
 			if (! Byte.TryParse (prs.GetToken (), out Count))
 				return false;
 			//Первый этап - кодовые имена и типы
-			ArchamArea aa;
+			ArchemArea aa;
 			string type, codename;
 			for (int i=0; i< Count; i++)
 			{ type= prs.GetToken ().Trim().ToUpper();
@@ -29,15 +29,15 @@ namespace mmxAH
 					return false;
 				codename=prs.GetToken ().Trim ().ToUpper() ;   
               if( type=="STREET")
-				{aa= new ArchamStreet(en,codename);
+				{aa= new ArchemStreet(en,codename);
                  //читаем положение района
 				 if( ! ReadPossithionFromText(prs))
 						return true;
 				}
               else if( type=="STAB")
-					aa= new ArchamStableLoc(en,codename);
+					aa= new ArchemStableLoc(en,codename);
               else if (type== "UNSTAB")
-					aa= new ArchamUnstableLoc(en,codename); 
+					aa= new ArchemUnstableLoc(en,codename); 
               else
 				{  System.Windows.Forms.MessageBox.Show( " Unknow loc type: " + type);  
 					return false;
@@ -59,7 +59,7 @@ namespace mmxAH
 		{ Locathion l;
 			for (short i=0; i<Count; i++)
 			{ l= en.locs [i + StartIndex];
-				if ( l.GetLocType()== LocathionType.ArchamStreet  && ((ArchamStreet ) l).GetDistrickt ()==dis  )
+				if ( l.GetLocType()== LocathionType.ArchamStreet  && ((ArchemStreet ) l).GetDistrickt ()==dis  )
 					return((short) (i + StartIndex));
 			}
 				    return -1;
@@ -112,13 +112,13 @@ namespace mmxAH
 			en.io.Set3LabelView (); 
 			for (byte i=0; i< rowCount; i++)
 			{ if( rows[i].Left !=0 )
-				((ArchamStreet) en.locs[rows[i].Left]).PrintDistrickt(1, i); 
+				((ArchemStreet) en.locs[rows[i].Left]).PrintDistrickt(1, i); 
               if( rows[i].Meddium  > 0 )
-				((ArchamStreet) en.locs[rows[i].Meddium ]).PrintDistrickt(2, i); 
+				((ArchemStreet) en.locs[rows[i].Meddium ]).PrintDistrickt(2, i); 
               if( rows[i].Meddium  < 0 )
 					en.io.ClientWrite((i+1).ToString()+ ". [ "+ en.locs[-rows[i].Meddium].GetTitle()+ " ]", 16,true, false, 2);    
 			    if( rows[i].Right !=0 )
-				((ArchamStreet) en.locs[rows[i].Right]).PrintDistrickt(3, i); 
+				((ArchemStreet) en.locs[rows[i].Right]).PrintDistrickt(3, i); 
                
 				en.io.ArrengeLabels(); 
               
@@ -151,9 +151,9 @@ namespace mmxAH
 				//обеспечение дальнейшего нармального чтения
 				rd.BaseStream.Position -= 4; 
 				switch (t)
-			{ case LocathionType.ArchamStreet: l = new ArchamStreet (en, "AAA"); break;  
-			 case LocathionType.ArchamStable: l = new ArchamStableLoc (en, "AAA"); break;
-			 case LocathionType.ArchamUnstable : l = new ArchamUnstableLoc  (en, "AAA"); break;
+			{ case LocathionType.ArchamStreet: l = new ArchemStreet (en, "AAA"); break;  
+			 case LocathionType.ArchamStable: l = new ArchemStableLoc (en, "AAA"); break;
+			 case LocathionType.ArchamUnstable : l = new ArchemUnstableLoc  (en, "AAA"); break;
 				default:
 					l = new Litas (en);
 					break;

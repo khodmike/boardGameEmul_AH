@@ -228,7 +228,10 @@ namespace mmxAH
 			//A1->A2
 			if (investigators.IndexOf (invest) != -1 )
 			{ investigators.Remove(invest);
-			 investigatorsArea2.Add(invest); 
+			 investigatorsArea2.Add(invest);
+				en.io.ServerWrite (en.ActiveInvistigators [invest].GetTitle(), 12, false, true); 
+				en.io.ServerWrite (" "+en.sysstr.GetString (SSType.MoveToFact)+ " ");
+				en.io.ServerWrite (displayName + "  "+  en.sysstr.GetString (SSType.OWArea) + "  2.", 12, true); 
 
 			}
 
@@ -348,7 +351,7 @@ namespace mmxAH
 		}
 
 		public override void Encounter ()
-		{  OWEncCard c;
+		{  /*OWEncCard c;
 			do
 			{ c= en.owEnc.Draw();
 				if( colors.IndexOf( c.GetColor()) != -1  ) 
@@ -356,11 +359,13 @@ namespace mmxAH
 				en.owEnc.Discard(c);   
 		    } while(true);
 			c.Execute(LocathionIndex );  
+			*/
+			en.clock.NextPlayer (); 
 	   }
 	}
 
 
-	public abstract  class ArchamArea : Locathion
+	public abstract  class ArchemArea : Locathion
 	{ protected List<MonsterIndivid > monsters;
 		protected short BlackArrow=-1;
 		protected short WhiteArrow=-1;
@@ -373,12 +378,16 @@ namespace mmxAH
 protected string GateAndClueTitle;
 
 
-      public ArchamArea ()
+      public ArchemArea ()
 		{ monsters= new List<MonsterIndivid >();
           OtherLinks= new List<short>(); 
 			MPcost=1;
 		}
 
+		public string GetGateAndClueTitle()
+		{ return GateAndClueTitle;
+
+		}
 
 		public byte GetDistrickt ()
 		{
@@ -529,7 +538,7 @@ protected string GateAndClueTitle;
 		}
 
 		private void CreateMoveOpthin (short loci, Investigator inv, List<IOOption> opts )
-		{ if( ((ArchamArea) en.locs[loci]).GetCost() > inv.MovementPoints)
+		{ if( ((ArchemArea) en.locs[loci]).GetCost() > inv.MovementPoints)
 			return;
 			string title= en.sysstr.GetString (SSType.MoveToPropos) + "  " + en.locs[loci].GetMoveToTitle();
 		  opts.Add ( new IOOptionWithParam(title, inv.MoveTo, loci)); 
@@ -749,11 +758,11 @@ protected string GateAndClueTitle;
 
 	}
 
-	public class ArchamStreet: ArchamArea
+	public class ArchemStreet: ArchemArea
 	{  private List<short> LocathionInDistr;
 	   
 
-		public ArchamStreet( GameEngine eng, string cn)
+		public ArchemStreet( GameEngine eng, string cn)
 		{ type= LocathionType.ArchamStreet; 
 			LocathionInDistr= new List<short>();
 			codeName=cn; 
@@ -763,7 +772,7 @@ protected string GateAndClueTitle;
 		public void RemoveMonstersFromDistrict()
 		{ monsters.Clear ();
           foreach( byte locindex in LocathionInDistr)
-				((ArchamArea)en.locs[locindex]).RemoveAllMonsters(); 
+				((ArchemArea)en.locs[locindex]).RemoveAllMonsters(); 
 
 		}
 
@@ -771,7 +780,7 @@ protected string GateAndClueTitle;
 		{ isClosed=closeStatus;  
 
           foreach( byte locindex in LocathionInDistr)
-				((ArchamArea)en.locs[locindex]).SetClosed(closeStatus); 
+				((ArchemArea)en.locs[locindex]).SetClosed(closeStatus); 
 
 		}
 
@@ -848,11 +857,11 @@ protected string GateAndClueTitle;
 
 
 
-	public class ArchamStableLoc: ArchamArea
+	public class ArchemStableLoc: ArchemArea
 	{  
 	   
 
-		public ArchamStableLoc(GameEngine eng,  string cn)
+		public ArchemStableLoc(GameEngine eng,  string cn)
 		{ 
 			codeName=cn; 
 			type= LocathionType.ArchamStable; 
@@ -860,7 +869,7 @@ protected string GateAndClueTitle;
 
 		}
 
-		public ArchamStableLoc ()
+		public ArchemStableLoc ()
 		{
 
 		}
@@ -885,7 +894,7 @@ protected string GateAndClueTitle;
 			}
 			BlackArrow=a;
 			WhiteArrow=a; 
-			((ArchamStreet) en.locs[a]).AddLocInDistr(LocathionIndex);   
+			((ArchemStreet) en.locs[a]).AddLocInDistr(LocathionIndex);   
 			return true;
 		}
 
@@ -900,7 +909,7 @@ protected string GateAndClueTitle;
 		public override void FromBin (System.IO.BinaryReader rd)
 		{
 			FromBin2 (rd);
-			((ArchamStreet) en.locs[en.map.GetDistricktStreetNumber(Districkt) ]).AddLocInDistr(LocathionIndex, false);
+			((ArchemStreet) en.locs[en.map.GetDistricktStreetNumber(Districkt) ]).AddLocInDistr(LocathionIndex, false);
 		}
 
 		public override void Encounter()
@@ -913,12 +922,12 @@ protected string GateAndClueTitle;
 	}
 
 
-	public class ArchamUnstableLoc: ArchamStableLoc
+	public class ArchemUnstableLoc: ArchemStableLoc
 	{  
 		private bool isSealed;
 		private GatePrototype gate;
 
-		public ArchamUnstableLoc(GameEngine eng, string cn)
+		public ArchemUnstableLoc(GameEngine eng, string cn)
 		{   codeName=cn;
 			type= LocathionType.ArchamUnstable; 
 			en=eng; 
@@ -957,7 +966,7 @@ protected string GateAndClueTitle;
 		public override void FromBin (System.IO.BinaryReader rd)
 		{
 			FromBin2 (rd);
-			((ArchamStreet) en.locs[en.map.GetDistricktStreetNumber(Districkt) ]).AddLocInDistr(LocathionIndex, false);
+			((ArchemStreet) en.locs[en.map.GetDistricktStreetNumber(Districkt) ]).AddLocInDistr(LocathionIndex, false);
 		}
 
 		public override void Reset()
@@ -991,7 +1000,10 @@ protected string GateAndClueTitle;
 			if (gateId == 0)
 				gate = null;
 			else
+			{
 				gate = en.gates.GetCardById ((short)(gateId - 1)); 
+				gate.Open (LocathionIndex, false);
+			}
 
 		}
 
@@ -1028,17 +1040,15 @@ protected string GateAndClueTitle;
 				return false;
 			}
 			clues = 0;
-			en.io.ServerWrite (en.sysstr.GetString (SSType.GateTo) + "  ");
-			en.io.ServerWrite(en.locs[gate.GetOW()].GetTitle(),12, true);
-			en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.GateOpenVerb));
-			en.io.ServerWrite( "  "+ GateAndClueTitle+ ".", 12, false, true); 
+
+			gate.Open (LocathionIndex);
 			if (! en.status.NewGate ())
 				return false;
 			if (! en.status.DoomIncrise (1))
 				return false;
 
 			while( investigators.Count != 0)
-			{DrawToGate( investigators [0], true);
+			{ gate.MoveTo( investigators [0], true);
 			
 			} 
 
@@ -1052,18 +1062,6 @@ protected string GateAndClueTitle;
 		}
 
 
-		private void DrawToGate(byte invnum, bool isDelayed)
-		{
-			
-
-			en.io.ServerWrite (en.ActiveInvistigators [invnum].GetTitle (), 12, false, true);
-			en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.GateDrawn) + " ");
-			en.io.ServerWrite (en.locs [gate.GetOW ()].GetTitle () + ".  ", 12, true);
-			en.ActiveInvistigators [invnum].SetLocathion (gate.GetOW ());
-			if (isDelayed) 
-				en.ActiveInvistigators [invnum].Delayed (); 
-
-		}
 
 
 		public override void MythosClues ()
@@ -1077,6 +1075,29 @@ protected string GateAndClueTitle;
 				en.curs.resolvingMythos.Step3(); 
 
 			}
+		}
+
+
+		public override void Encounter ()
+		{  if (gate != null)
+			{ byte curInv = en.clock.GetCurPlayer ();
+				if (en.ActiveInvistigators [curInv].isExploredToken)
+					ClosedGate ();
+				else
+				{
+					en.clock.PrintCurPhase (); 
+					gate.MoveTo (curInv, false);
+					en.clock.NextPlayer (); 
+				}
+
+			}
+			else
+				base.Encounter ();
+		}
+
+		private void ClosedGate()
+		{
+
 		}
 	}
 
