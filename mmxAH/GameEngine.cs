@@ -120,10 +120,9 @@ namespace mmxAH
 
 
 		private void Test ()
-		{ clock.StartRandomSetup ();
+		{ 
 
 
-			 
 
 		 
 
@@ -180,7 +179,8 @@ namespace mmxAH
 
 		}
 		public void newGame ()
-		{   Reset (); 
+		{   Test ();
+			Reset (); 
 			io.ServerWrite (sysstr.GetString (SSType.Setup_Started) + "  "+ DateTime.Now+"."+ Environment.NewLine );  
 			List<IOOption> ioopts = new List<IOOption > ();
 
@@ -206,7 +206,7 @@ namespace mmxAH
 				ActiveInvistigators [i].Setup (i);
 
 			}
-			Test ();
+			clock.StartRandomSetup ();
 		}
 
        

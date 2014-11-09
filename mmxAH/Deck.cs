@@ -6,7 +6,6 @@ namespace mmxAH
 	public class Deck<CardType> where CardType: Card
 	{ private List<CardType> TopZone,  cards, BottomZone;
 	  private List<CardType> discard;
-		 private const short  ShaflCount=1000;  
 		private bool isShuffleDraw, isDiscardToTheBottom;
 		public Deck ( bool pShuffleDraw=false, bool pDiscardToTheBottomZone=false)
 		{ cards= new List<CardType>();
@@ -120,12 +119,12 @@ namespace mmxAH
 			CardType t;
 			int num;
 			Random r = new Random (Environment.TickCount);  
-			for( short j=0; j< ShaflCount; j++)
 				for (short i=0; i< cards.Count; i++) 
 				{   num= i+(int) Math.Round (r.NextDouble()*(cards.Count-1-i)); 
-					t= cards[i];
+				    t= cards[i];
 					cards[i]=cards[num];
 					cards[num]=t;
+				    System.Threading.Thread.Sleep (5);
 				}
 
 		}
@@ -175,7 +174,11 @@ namespace mmxAH
 				if(isNewLine)
 					res=res+Environment.NewLine; 
 			}
+
 			return res;
+
+			
+
 		}
 
 		public void ToBin(System.IO.BinaryWriter wr)
@@ -334,7 +337,7 @@ namespace mmxAH
 
 		public override  String ToString ()
 		{
-			return " Card Class. " + ID;
+			return " ID:   " + ID+ Environment.NewLine ;
 		}
 		public short GetID ()
 		{

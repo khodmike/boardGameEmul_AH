@@ -50,10 +50,11 @@ namespace mmxAH
 	  }
 
 		private byte Roll()
-		{  	System.Threading.Thread.Sleep (500);
-			return (byte)(1+ new Random(Environment.TickCount).Next (dice));
+		{  	System.Threading.Thread.Sleep (5);
+			Random r = new Random (Environment.TickCount);
 
 
+			 return (byte) ((r.NextDouble()*dice)+1); 
 			  
 		}
 
