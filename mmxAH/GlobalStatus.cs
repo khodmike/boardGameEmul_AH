@@ -8,6 +8,7 @@ namespace mmxAH
 		private  byte CurDoom, CurGate, CurMonsters, CurOut, CurTerror, CurSealed;
 		private byte MaxDoom, MaxGate, MaxMonsters, MaxOut;
 		private const byte Terror1=3, Terror2=6, Terror3=9, MaxTerror=10, MaxSealed=6;
+		private short CluesToSealed;
 		public GlobalStatus ( GameEngine eng)
 		{ en=eng;
 			Reset ();
@@ -53,7 +54,7 @@ namespace mmxAH
 			MaxGate = 0;
 			MaxMonsters = 0;
 			MaxOut = 0;
-
+			CluesToSealed = 5; 
 			//заглушка
 			MaxDoom = 10;
 
@@ -142,6 +143,12 @@ namespace mmxAH
 
 		}
 
+		public void PrintMonserCountInOutServer()
+		{ en.io.ServerWrite (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
+			en.io.ServerWrite (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );
+
+		}
+
 
 	   
 		public void ToSave(BinaryWriter wr)
@@ -167,7 +174,39 @@ namespace mmxAH
 		}
 
 
+		public  void CluesToSealedModif( short modif)
+		{ CluesToSealed+= modif;
+			if( CluesToSealed<0)
+				CluesToSealed=0; 
 
+		}
+
+
+		public byte GetCluesToSealed()
+		{  return (byte)CluesToSealed; 
+
+		}
+
+
+		public void ClosedGate()
+		{ if (CurGate > 0)
+				CurGate--;
+			en.io.ServerWrite (en.sysstr.GetString (SSType.OpenGates    ), 12, true);
+			en.io.ServerWrite (" " + CurGate + " / " + MaxGate + "."+ Environment.NewLine );
+
+		}
+
+		public void RemoveFromOut()
+		{ if (CurOut > 0)
+				CurOut--;
+
+		}
+
+		public void RemoveMonsterInArchem()
+		{ if (CurMonsters > 0)
+				CurMonsters--; 
+
+		}
 	}
 }
 

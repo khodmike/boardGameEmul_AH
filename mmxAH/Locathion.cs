@@ -193,7 +193,7 @@ namespace mmxAH
 	public class OWLoc: Locathion
 	{ private List<byte>  colors;
 		private List<byte> investigatorsArea2;
-		private SByte GateModif=0;
+		private short GateModif=0;
 		private byte GateDif=1;
 
 		public OWLoc (GameEngine eng)
@@ -210,6 +210,11 @@ namespace mmxAH
 		public byte GetGateDif ()
 		{
 			return GateDif;
+		}
+
+		public short GetGateModif()
+		{
+			return GateModif; 
 		}
 		public override void Move ()
 		{ byte invest = en.clock.GetCurPlayer ();
@@ -283,7 +288,7 @@ namespace mmxAH
 				colors.Add ((byte)c); 
 
 			}
-			if (! SByte.TryParse (prs.GetToken (), out GateModif )) 
+			if (! short.TryParse (prs.GetToken (), out GateModif )) 
 				return false;
 
 			return true;
@@ -362,6 +367,8 @@ namespace mmxAH
 			*/
 			en.clock.NextPlayer (); 
 	   }
+
+
 	}
 
 
@@ -1082,7 +1089,7 @@ protected string GateAndClueTitle;
 		{  if (gate != null)
 			{ byte curInv = en.clock.GetCurPlayer ();
 				if (en.ActiveInvistigators [curInv].isExploredToken)
-					ClosedGate ();
+					ClosedGateChoose ();
 				else
 				{
 					en.clock.PrintCurPhase (); 
@@ -1095,8 +1102,39 @@ protected string GateAndClueTitle;
 				base.Encounter ();
 		}
 
-		private void ClosedGate()
-		{
+		private void ClosedGateChoose()
+		{ List <IOOption> opts = new List<IOOption> ();
+			foreach (IOOption opt in en.ActiveInvistigators[ en.clock.GetCurPlayer()].myTrigers.GetChooseOpthions(TrigerEvent.BeforeGateClosing, 0))     
+				opts.Add (opt);
+			opts.Add( new IOOptionWithParam(en.sysstr.GetString(SSType.ClosingWith)+ en.sysstr.GetString(SSType.Fight), gate.ClosedCheck, 0));
+			opts.Add( new IOOptionWithParam(en.sysstr.GetString(SSType.ClosingWith)+ en.sysstr.GetString(SSType.Lore), gate.ClosedCheck, 1));
+			opts.Add( new IOOpthionWithoutParam(en.sysstr.GetString(SSType.NotClosing ), en.clock.NextPlayer));
+
+		}
+
+
+		public void CloseGate(byte trofyNum=40)
+		{ foreach (byte invnum in investigators )
+				en.ActiveInvistigators [invnum].isExploredToken = false;
+			gate.Close ();
+			if (trofyNum == 40)
+				en.ActiveInvistigators [en.clock.GetCurPlayer()].AddTrophy (gate);
+			else if (trofyNum != 60)
+				en.ActiveInvistigators [trofyNum].AddTrophy (gate);   
+			gate = null;
+
+		}
+
+		public void SealedChoose()
+		{ 
+
+		}
+		public void Sealed()
+		{ if (gate != null)
+			{
+				CloseGate (40);
+
+			}
 
 		}
 	}

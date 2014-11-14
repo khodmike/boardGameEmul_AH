@@ -153,7 +153,8 @@ namespace mmxAH
 	{ Upkeep=1,
       MoveAH,
 	  MoveOW,
-      SCRerolls
+      SCRerolls,
+		BeforeGateClosing
 
 	}
 }

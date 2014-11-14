@@ -796,6 +796,11 @@ namespace mmxAH
 			monsterTrofies.Add (mons); 
 		}
 
+		public void AddTrophy( GatePrototype  gate)
+		{
+			gateTrofies .Add (gate); 
+		}
+
 
 		public void BeforeCombatCheck()
 		{   

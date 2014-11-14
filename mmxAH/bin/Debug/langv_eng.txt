@@ -144,6 +144,13 @@ Investigator
 Setup. Step 9 (Receive Random Possessions)
 Setup. Step  10 ( Place Initial Sliders)
 Setup. Step 14 ( Mythos card)
+Close gate with
+Not closing gate.
+is closed.
+from
+returned to the monster cup.
+Outscirts
+
 
 
  

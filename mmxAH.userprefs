@@ -2,12 +2,12 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/Locathion.cs">
     <Files>
-      <File FileName="mmxAH/Gate.cs" Line="98" Column="82" />
-      <File FileName="mmxAH/Locathion.cs" Line="234" Column="86" />
-      <File FileName="mmxAH/Investigator.cs" Line="786" Column="28" />
-      <File FileName="mmxAH/CurStorage.cs" Line="52" Column="1" />
-      <File FileName="mmxAH/ArcEncCard.cs" Line="48" Column="1" />
-      <File FileName="mmxAH/Deck.cs" Line="23" Column="1" />
+      <File FileName="mmxAH/GlobalStatus.cs" Line="180" Column="33" />
+      <File FileName="mmxAH/Locathion.cs" Line="291" Column="15" />
+      <File FileName="mmxAH/TrigerCollrecthion.cs" Line="48" Column="3" />
+      <File FileName="mmxAH/SystemStrings.cs" Line="151" Column="13" />
+      <File FileName="mmxAH/Gate.cs" Line="135" Column="18" />
+      <File FileName="mmxAH/Monster.cs" Line="40" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

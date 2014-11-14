@@ -146,7 +146,13 @@ namespace mmxAH
 		Investigitor,
 		SetupRandomStep,
 		SetupSlidersStep,
-		SetupMythosStep
+		SetupMythosStep,
+		ClosingWith,
+		NotClosing,
+		GateClosedFact,
+		From,
+		ReturnToTheCup,
+		Outscirts
 
 
 

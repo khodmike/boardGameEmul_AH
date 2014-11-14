@@ -99,7 +99,56 @@ namespace mmxAH
 			}
 
 
+		}
 
+		public void ClosedCheck( short isLore)
+		{ SkillTestType tp;
+			short modif = ((OWLoc)en.locs [owindex]).GetGateModif ();
+			byte dif= ((OWLoc)en.locs [owindex]).GetGateDif ();
+			if (isLore == 1)
+				tp = SkillTestType.Lore;
+			else
+				tp = SkillTestType.Fight;
+			new SkillTest (en, tp, modif, ClosedAfterCheck, dif);
+
+
+		}
+
+       private void ClosedAfterCheck( short succeses)
+		{ if (succeses >= ((OWLoc)en.locs [owindex]).GetGateDif ())
+			{
+				((ArchemUnstableLoc)en.locs [ArchemLoc]).CloseGate ();
+				((ArchemUnstableLoc)en.locs [ArchemLoc]).SealedChoose ();
+			}
+			else
+				en.clock.NextPlayer (); 
+
+			}
+
+
+		public void Close()
+		{ en.io.ServerWrite(en.sysstr.GetString(SSType.GateTo)+ " " );
+			en.io.ServerWrite( en.locs[owindex].GetMoveToTitle(),12,true) ; 
+			en.io.ServerWrite (en.sysstr.GetString (SSType.GateClosedFact));
+			en.status.ClosedGate ();
+			foreach (MonsterIndivid m in en.ActiveMonsters)
+				if (m.GetDs() == dsindex)
+					m.Discard (true); 
+			
+			foreach (MonsterIndivid m in en.Outscirts )
+				if (m.GetDs() == dsindex)
+			{		en.MonstersCup.Add (m);
+					en.Outscirts.Remove(m); 
+					en.status.RemoveFromOut (); 
+					en.io.ServerWrite (m.GetTitle(), 12, true, true);
+					en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.From)+ "  ");
+				    en.io.ServerWrite ( en.sysstr.GetString (SSType.Outscirts), 12,false, true);
+					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.ReturnToTheCup) + Environment.NewLine); 
+			}
+                 
+			en.status.PrintMonserCountServer ();
+			en.status.PrintMonserCountInOutServer (); 
+			ArchemLoc = -1;
 
 		}
 

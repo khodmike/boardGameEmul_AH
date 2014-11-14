@@ -30,8 +30,29 @@ namespace mmxAH
 
 		}
 
-		public void Discard ()
-		{ en.ActiveMonsters.RemoveAt( monsternum);
+		public void Discard ( bool isPrint=false)
+		{ if (isPrint)
+			{
+				en.io.ServerWrite (prot.GetTitle() , 12, true, true);
+				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.From) + "  ");
+				if( locnum == 0) 
+				en.io.ServerWrite (en.sysstr.GetString (SSType.Scy), 12, false, true);
+				else
+					en.io.ServerWrite (en.locs[locnum].GetMoveToTitle() , 12, false, true);
+				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.ReturnToTheCup) + Environment.NewLine); 
+
+			}
+			if (locnum != -1)
+			{
+				if (locnum == 0)
+					en.Scy.Remove (this);
+				else
+					((ArchemArea)en.locs [locnum]).RemoveMonster (this);
+			en.ActiveMonsters.RemoveAt( monsternum);
+			en.status.RemoveMonsterInArchem (); 
+			}
+			locnum = -1;
+
 			en.MonstersCup.Add (this);
 
 		}
