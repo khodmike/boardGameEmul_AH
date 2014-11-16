@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace mmxAH
 {
 	public class MonsterIndivid: Card
-	{  private byte monsternum;
+	{ 
 		private short locnum=-1;
 		private GameEngine en;
 		public bool isEncountred=false;
@@ -23,7 +23,7 @@ namespace mmxAH
 
 		public void AddToMap( short StartLocathion)
 		{ locnum=StartLocathion;
-			monsternum=(byte) en.ActiveMonsters.Count;
+
 			en.ActiveMonsters.Add(this); 
 			((ArchemArea)en.locs [StartLocathion]).AddMonster (this);  
 			isEncountred=false; 
@@ -238,7 +238,7 @@ namespace mmxAH
 
 		public override void ReadFromSave (System.IO.BinaryReader rd)
 		{   locnum= rd.ReadInt16();
-			monsternum =(byte) (en.ActiveMonsters.Count-1); 
+			//monsternum =(byte) (en.ActiveMonsters.Count-1); 
 			if (locnum == 0)
 			en.Scy.Add (this);
 			else
