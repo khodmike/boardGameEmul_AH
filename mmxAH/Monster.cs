@@ -48,7 +48,7 @@ namespace mmxAH
 					en.Scy.Remove (this);
 				else
 					((ArchemArea)en.locs [locnum]).RemoveMonster (this);
-			en.ActiveMonsters.RemoveAt( monsternum);
+			en.ActiveMonsters.Remove( this);
 			en.status.RemoveMonsterInArchem (); 
 			}
 			locnum = -1;

@@ -129,23 +129,38 @@ namespace mmxAH
 		public void Close()
 		{ en.io.ServerWrite(en.sysstr.GetString(SSType.GateTo)+ " " );
 			en.io.ServerWrite( en.locs[owindex].GetMoveToTitle(),12,true) ; 
-			en.io.ServerWrite (en.sysstr.GetString (SSType.GateClosedFact));
+			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.GateClosedFact));
 			en.status.ClosedGate ();
-			foreach (MonsterIndivid m in en.ActiveMonsters)
-				if (m.GetDs() == dsindex)
-					m.Discard (true); 
-			
-			foreach (MonsterIndivid m in en.Outscirts )
-				if (m.GetDs() == dsindex)
-			{		en.MonstersCup.Add (m);
-					en.Outscirts.Remove(m); 
-					en.status.RemoveFromOut (); 
-					en.io.ServerWrite (m.GetTitle(), 12, true, true);
-					en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.From)+ "  ");
-				    en.io.ServerWrite ( en.sysstr.GetString (SSType.Outscirts), 12,false, true);
-					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.ReturnToTheCup) + Environment.NewLine); 
+			byte i=0;
+			MonsterIndivid m;
+			while (i< en.ActiveMonsters.Count)
+			{ m = en.ActiveMonsters [i];
+				if (m.GetDs () == dsindex)
+				{
+					m.Discard (true);
+					i = 0;
+				} else
+					i++;
+
+
 			}
-                 
+			i = 0;
+			while (i< en.Outscirts.Count)
+			{
+				m = en.Outscirts [i];
+				if (m.GetDs () == dsindex)
+				{
+					i = 0;
+					en.MonstersCup.Add (m);
+					en.Outscirts.Remove (m); 
+					en.status.RemoveFromOut (); 
+					en.io.ServerWrite (m.GetTitle (), 12, true, true);
+					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.From) + "  ");
+					en.io.ServerWrite (en.sysstr.GetString (SSType.Outscirts), 12, false, true);
+					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.ReturnToTheCup) + Environment.NewLine); 
+				} else
+					i++;
+			}        
 			en.status.PrintMonserCountServer ();
 			en.status.PrintMonserCountInOutServer (); 
 			ArchemLoc = -1;

@@ -45,7 +45,7 @@ namespace mmxAH
 				g = new GatePrototype (en);
 
 			}
-			en.gates.Shuffle(); 
+
 
 			en.map= new MapOfCity(en);
 			if( ! en.map.FromText(data, text))
