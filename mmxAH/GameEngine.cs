@@ -120,7 +120,8 @@ namespace mmxAH
 
 
 		private void Test ()
-		{ 
+		{  ActiveInvistigators[0].AddClues(10);
+
 		 
 
 

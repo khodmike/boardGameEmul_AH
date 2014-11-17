@@ -150,7 +150,10 @@ is closed.
 from
 returned to the monster cup.
 Outscirts
-
+You may sealed 
+for
+. Do your want to sealed ?
+is sealed.
 
 
  
@@ -365,6 +368,8 @@ Zombie
 
 TestMythos1
 TestMythos2
+TestMythos3
+TestMythos4
 
 
 

@@ -28,7 +28,7 @@ namespace mmxAH
 
 		public void MonsterSurge( short startLoc)
 		{
-
+			en.curs.resolvingMythos.Step2 ();
 
 		}
 

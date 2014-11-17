@@ -237,7 +237,7 @@ namespace mmxAH
 				en.io.ServerWrite (en.ActiveInvistigators [invest].GetTitle(), 12, false, true); 
 				en.io.ServerWrite (" "+en.sysstr.GetString (SSType.MoveToFact)+ " ");
 				en.io.ServerWrite (displayName + "  "+  en.sysstr.GetString (SSType.OWArea) + "  2.", 12, true); 
-
+				en.clock.NextPlayer ();
 			}
 
 
@@ -960,7 +960,7 @@ protected string GateAndClueTitle;
 		{
 			en.io.ClientWrite (displayName , 14, true, false, label);
 			if( isSealed)
-				en.io.ClientWrite (en.sysstr.GetString(SSType.SealedFact)  , 14, false, true, label);
+				en.io.ClientWrite ( "  "+ en.sysstr.GetString(SSType.SealedFact)  , 14, false, true, label);
 			PrintClosed (label); 
 			if( clues != 0)
 				en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetNumberClueToken(clues)  , 14, false, false, label);
@@ -1126,7 +1126,22 @@ protected string GateAndClueTitle;
 		}
 
 		public void SealedChoose()
-		{ 
+		{ if (en.ActiveInvistigators [en.clock.GetCurPlayer()].GetCluesValue () < en.status.GetCluesToSealed ())
+			{ en.clock.NextPlayer ();
+				return;
+
+			}
+			string promt = en.sysstr.GetString (SSType.SealedPromt1) + " " + displayName +  " " + en.sysstr.GetString (SSType.ForWotld);
+			promt += "  "+ en.sysstr.GetNumberClueToken (en.status.GetCluesToSealed ())+" "+  en.sysstr.GetString (SSType.SealedPromt2);
+			en.io.YesNoStart (promt, en.sysstr.GetString (SSType.Yes), en.sysstr.GetString (SSType.No), SealedChooseYes, en.clock.NextPlayer);  
+
+
+		}
+
+		private  void  SealedChooseYes()
+		{ Sealed ();
+			en.ActiveInvistigators [en.clock.GetCurPlayer ()].RemoveClues (en.status.GetCluesToSealed ());
+			en.clock.NextPlayer (); 
 
 		}
 		public void Sealed()
@@ -1135,7 +1150,10 @@ protected string GateAndClueTitle;
 				CloseGate (40);
 
 			}
-
+			isSealed = true;
+			en.io.ServerWrite (displayName, 12, false, true);
+			en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.SealedMessage));
+			en.status.AddSealed (); 
 		}
 	}
 

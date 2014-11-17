@@ -152,7 +152,12 @@ namespace mmxAH
 		GateClosedFact,
 		From,
 		ReturnToTheCup,
-		Outscirts
+		Outscirts,
+		SealedPromt1,
+		ForWotld,
+		SealedPromt2,
+		SealedMessage
+
 
 
 

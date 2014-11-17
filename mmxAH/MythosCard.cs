@@ -40,7 +40,7 @@ namespace mmxAH
 
 		}
 
-		private void Step2()
+		 public void Step2()
 		{ 
 			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep2)+Environment.NewLine, 12, true ); 
 			((ArchemArea)en.locs [ClueLoc]).MythosClues ();   

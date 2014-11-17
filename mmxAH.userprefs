@@ -1,15 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/GameEngine.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/Locathion.cs">
     <Files>
-      <File FileName="mmxAH/GlobalStatus.cs" Line="207" Column="19" />
-      <File FileName="mmxAH/Locathion.cs" Line="1135" Column="20" />
-      <File FileName="mmxAH/SystemStrings.cs" Line="155" Column="12" />
-      <File FileName="mmxAH/Gate.cs" Line="143" Column="37" />
-      <File FileName="mmxAH/Monster.cs" Line="52" Column="4" />
-      <File FileName="mmxAH/Investigator.cs" Line="801" Column="26" />
-      <File FileName="mmxAH/GameEngine.cs" Line="212" Column="12" />
-      <File FileName="mmxAH/BinaryWorker.cs" Line="111" Column="8" />
+      <File FileName="mmxAH/GlobalStatus.cs" Line="153" Column="18" />
+      <File FileName="mmxAH/Locathion.cs" Line="981" Column="17" />
+      <File FileName="mmxAH/SystemStrings.cs" Line="158" Column="9" />
+      <File FileName="mmxAH/Gate.cs" Line="132" Column="29" />
+      <File FileName="mmxAH/Monster.cs" Line="6" Column="4" />
+      <File FileName="mmxAH/Investigator.cs" Line="281" Column="1" />
+      <File FileName="mmxAH/GameEngine.cs" Line="124" Column="1" />
+      <File FileName="mmxAH/PhasesClock.cs" Line="167" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

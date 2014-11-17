@@ -149,6 +149,13 @@ namespace mmxAH
 
 		}
 
+		public void AddSealed()
+		{  CurSealed++;
+			en.io.ServerWrite (en.sysstr.GetString (SSType.SealedLocathion    ), 12, true);
+			en.io.ServerWrite (" " + CurSealed + " / " + MaxSealed + "."+ Environment.NewLine );
+
+		}
+
 
 	   
 		public void ToSave(BinaryWriter wr)
