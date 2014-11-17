@@ -227,7 +227,7 @@ namespace mmxAH
 			//A2-> RetToArch
 			if (investigatorsArea2.IndexOf (invest) != -1)
 			{ 	investigatorsArea2.Remove(invest);  
-				en.ga.ReturnToArchem (LocathionIndex);
+				en.ga.ReturnToArchem (LocathionIndex, en.ActiveInvistigators[invest].MoveChicle );
 			
 			}
 			//A1->A2
@@ -351,7 +351,7 @@ namespace mmxAH
 		}
 
 		public override void Reset()
-		{
+		{ base.Reset ();
 			investigatorsArea2.Clear (); 
 		}
 
@@ -368,7 +368,25 @@ namespace mmxAH
 			en.clock.NextPlayer (); 
 	   }
 
+		public override void WriteToSave (System.IO.BinaryWriter wr)
+		{ wr.Write (investigators.Count);
+			foreach (byte inv in investigators)
+				wr.Write (inv);
+			wr.Write (investigatorsArea2.Count);
+			foreach (byte inv in investigatorsArea2)
+				wr.Write (inv);
 
+		}
+		public override void ReadFromSave (System.IO.BinaryReader rd)
+		{
+			int num = rd.ReadInt32 ();
+			for (int i=0; i< num; i++)
+				investigators.Add (rd.ReadByte());
+			num = rd.ReadInt32 ();
+			for (int i=0; i< num; i++)
+				investigatorsArea2.Add (rd.ReadByte());
+		}
+	
 	}
 
 
@@ -1087,12 +1105,13 @@ protected string GateAndClueTitle;
 
 		public override void Encounter ()
 		{  if (gate != null)
-			{ byte curInv = en.clock.GetCurPlayer ();
+			{ en.clock.PrintCurPhase (); 
+				byte curInv = en.clock.GetCurPlayer ();
 				if (en.ActiveInvistigators [curInv].isExploredToken)
 					ClosedGateChoose ();
 				else
 				{
-					en.clock.PrintCurPhase (); 
+
 					gate.MoveTo (curInv, false);
 					en.clock.NextPlayer (); 
 				}
@@ -1106,10 +1125,10 @@ protected string GateAndClueTitle;
 		{ List <IOOption> opts = new List<IOOption> ();
 			foreach (IOOption opt in en.ActiveInvistigators[ en.clock.GetCurPlayer()].myTrigers.GetChooseOpthions(TrigerEvent.BeforeGateClosing, 0))     
 				opts.Add (opt);
-			opts.Add( new IOOptionWithParam(en.sysstr.GetString(SSType.ClosingWith)+ en.sysstr.GetString(SSType.Fight), gate.ClosedCheck, 0));
-			opts.Add( new IOOptionWithParam(en.sysstr.GetString(SSType.ClosingWith)+ en.sysstr.GetString(SSType.Lore), gate.ClosedCheck, 1));
+			opts.Add( new IOOptionWithParam(en.sysstr.GetString(SSType.ClosingWith)+ "  "+ en.sysstr.GetString(SSType.Fight), gate.ClosedCheck, 0));
+			opts.Add( new IOOptionWithParam(en.sysstr.GetString(SSType.ClosingWith)+ "  " +  en.sysstr.GetString(SSType.Lore), gate.ClosedCheck, 1));
 			opts.Add( new IOOpthionWithoutParam(en.sysstr.GetString(SSType.NotClosing ), en.clock.NextPlayer));
-
+			en.io.StartChoose (opts, en.sysstr.GetString (SSType.ChooseActhioPromt), en.sysstr.GetString (SSType.ChooseActhionButton));   
 		}
 
 
@@ -1131,7 +1150,9 @@ protected string GateAndClueTitle;
 				return;
 
 			}
-			string promt = en.sysstr.GetString (SSType.SealedPromt1) + " " + displayName +  " " + en.sysstr.GetString (SSType.ForWotld);
+			string promt = en.ActiveInvistigators [en.clock.GetCurPlayer ()].GetTitle () + " ";
+				promt+= en.sysstr.GetString(SSType.Has)+ " "+ en.sysstr.GetNumberClueToken(en.ActiveInvistigators [en.clock.GetCurPlayer()].GetCluesValue())+ Environment.NewLine;  
+				promt += en.sysstr.GetString (SSType.SealedPromt1) + " " + displayName +  " " + en.sysstr.GetString (SSType.ForWotld);
 			promt += "  "+ en.sysstr.GetNumberClueToken (en.status.GetCluesToSealed ())+" "+  en.sysstr.GetString (SSType.SealedPromt2);
 			en.io.YesNoStart (promt, en.sysstr.GetString (SSType.Yes), en.sysstr.GetString (SSType.No), SealedChooseYes, en.clock.NextPlayer);  
 
@@ -1139,8 +1160,8 @@ protected string GateAndClueTitle;
 		}
 
 		private  void  SealedChooseYes()
-		{ Sealed ();
-			en.ActiveInvistigators [en.clock.GetCurPlayer ()].RemoveClues (en.status.GetCluesToSealed ());
+		{ en.ActiveInvistigators [en.clock.GetCurPlayer ()].RemoveClues (en.status.GetCluesToSealed ());
+			Sealed ();
 			en.clock.NextPlayer (); 
 
 		}

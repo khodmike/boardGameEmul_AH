@@ -648,14 +648,18 @@ namespace mmxAH
 				MovementPoints = 0; 
 			} else
 			{ isCanMove = true;
-				short mp;
-				mp = (short)(SpeedSneak.GetFirstChar () + STInfo.GetInfo (SkillTestType.Speed).CharModif);
-				mp += en.GlobalModifs.GetInfo (SkillTestType.Speed).CharModif; 
-				mp += STInfo.GetMPModif ();
-				mp += en.GlobalModifs.GetMPModif (); 
-				if (mp < 0)
-					mp = 0;
-				MovementPoints = (byte)mp; 
+				if (en.locs [locnum].GetLocType () != LocathionType.OW)
+				{
+					short mp;
+					mp = (short)(SpeedSneak.GetFirstChar () + STInfo.GetInfo (SkillTestType.Speed).CharModif);
+					mp += en.GlobalModifs.GetInfo (SkillTestType.Speed).CharModif; 
+					mp += STInfo.GetMPModif ();
+					mp += en.GlobalModifs.GetMPModif (); 
+					if (mp < 0)
+						mp = 0;
+					MovementPoints = (byte)mp; 
+				} else
+					MovementPoints = 0;
 			}
 			en.io.SetServerFormMode (FormMode.Map );  
 			en.locs [locnum].Move(); 
@@ -718,7 +722,8 @@ namespace mmxAH
 			isDelayed=rd.ReadBoolean() ; 
 			locnum = rd.ReadInt16(); 
 			investnum = rd.ReadByte ();  
-			en.locs [locnum].AddInvestigator (investnum);  
+			if(en.locs [locnum].GetLocType() != LocathionType.OW)  
+				en.locs [locnum].AddInvestigator (investnum);  
 			//Вещи
 
 			//Особые карты

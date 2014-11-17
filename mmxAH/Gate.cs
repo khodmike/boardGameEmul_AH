@@ -20,6 +20,16 @@ namespace mmxAH
 		}
 
 
+		public byte GetOW()
+		{
+			return owindex; 
+		}
+
+		public short GetArchemLoc()
+		{
+			return ArchemLoc;
+		}
+
 
 		public override string ToString ()
 		{
@@ -73,6 +83,7 @@ namespace mmxAH
 
 		public void Open( short LocIndex, bool isPrint=true)
 		{ ArchemLoc=LocIndex;
+			en.openGates.Add (this); 
 			if (isPrint)
 			{
 				en.io.ServerWrite (en.sysstr.GetString (SSType.GateTo) + "  ");
@@ -116,9 +127,10 @@ namespace mmxAH
 
        private void ClosedAfterCheck( short succeses)
 		{ if (succeses >= ((OWLoc)en.locs [owindex]).GetGateDif ())
-			{
+			{  //необходимо так как в процессе закрытия archemLOc=-1
+				short loc = ArchemLoc;
 				((ArchemUnstableLoc)en.locs [ArchemLoc]).CloseGate ();
-				((ArchemUnstableLoc)en.locs [ArchemLoc]).SealedChoose ();
+				((ArchemUnstableLoc)en.locs [loc]).SealedChoose ();
 			}
 			else
 				en.clock.NextPlayer (); 
@@ -164,6 +176,7 @@ namespace mmxAH
 			en.status.PrintMonserCountServer ();
 			en.status.PrintMonserCountInOutServer (); 
 			ArchemLoc = -1;
+			en.openGates.Remove (this); 
 
 		}
 

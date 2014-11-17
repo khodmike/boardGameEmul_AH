@@ -37,7 +37,7 @@ namespace mmxAH
 		public GlobalStatus status;
 		public List< MonsterIndivid> Outscirts; 
 		public List< MonsterIndivid> Scy;
-
+		public List< GatePrototype> openGates; 
 
 
 		public GameEngine ( MainMenuForm pMmFrm)
@@ -66,7 +66,7 @@ namespace mmxAH
 			status = new GlobalStatus (this);
 			Outscirts= new List<MonsterIndivid>(); 
 			Scy = new List<MonsterIndivid> ();
-
+			openGates = new List<GatePrototype> ();
 
 		
 		}
@@ -283,7 +283,9 @@ namespace mmxAH
 			clock.Reset ();
 			status.Reset();
 			ResetOutscirts (); 
-
+			foreach (GatePrototype  g in openGates)
+				gates.Add (g); 
+			openGates.Clear (); 
 			//самое последнее действие , после всех резетов
 			MonstersCup.Reset ();
 			mythosDeck.Reset ();
@@ -316,6 +318,7 @@ namespace mmxAH
 
 
 
+
 		}
 
 
@@ -343,6 +346,7 @@ namespace mmxAH
 				Outscirts  [i].ReadFromSave (rd);  
 
 			}
+
 
 		}
 

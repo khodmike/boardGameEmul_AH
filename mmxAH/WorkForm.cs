@@ -57,25 +57,26 @@ namespace mmxAH
 			this.Controls.Add(btn);
 
 		    
-			btnYes = CreateButton (BtnYesClick, 20, 85, false, "Yes"); 
-			btnNo=CreateButton (BtnNoClick, 40, 85, false, "No"); ;
+			btnYes = CreateButton (BtnYesClick, 20, 89, false, "Yes"); 
+			btnNo=CreateButton (BtnNoClick, 40, 89, false, "No"); ;
 
 			Label lbl= new Label();
 			lbl.Visible=false;
 			lbl.Location= new Point( MaxX*2/10, MaxY*83/100);
 			lbl.Width=MaxX*6/10;
+			lbl.Height=MaxY*3/100;
 			lblQ=lbl;
 			this.Controls.Add(lbl);
 
 			libChoose= new ComboBox();
-			libChoose.Location= new Point( MaxX*2/10, MaxY*85/100);
+			libChoose.Location= new Point( MaxX*2/10, MaxY*87/100);
 			libChoose.Width=MaxX*4/10;
 			libChoose.DropDownStyle = ComboBoxStyle.DropDownList; 
 			libChoose.Visible=false;
 			libChoose.SelectedIndexChanged += LibChooseSelected;
 			libChoose.MaximumSize = new Size (MaxX * 6 / 10, MaxY * 6 / 100);  
 			this.Controls.Add(libChoose);
-			btnChoose=CreateButton (BtnChooseClick, 70, 85, false, "Choose"); 
+			btnChoose=CreateButton (BtnChooseClick, 70, 87, false, "Choose"); 
 			btnStatus= CreateButton (BtnStatusClick, 10, 77, true, en.sysstr.GetString(SSType.ButtonStatus) );
 			btnLog= CreateButton (BtnLogClick, 20, 77, true, en.sysstr.GetString(SSType.ButtonLog));
 			btnInvest= CreateButton (BtnInvestClick, 30, 77, true, en.sysstr.GetString(SSType.ButtonInvest));
