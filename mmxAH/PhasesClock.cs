@@ -212,14 +212,7 @@ namespace mmxAH
 
 
 		public void ResumeFromSave()
-		{ if (curPlayer == firstPlayer)
-			{
-				NextPhase ();
-				return;
-			}
-
-			//сохранение в конце сегмента
-			NextSegment (); 
+		{  NextPlayer2(); 
 
 		}
 

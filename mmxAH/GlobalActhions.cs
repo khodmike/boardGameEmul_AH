@@ -33,6 +33,7 @@ namespace mmxAH
 				en.io.ServerWrite (en.locs [potLoc [0]].GetTitle()+"."+ Environment.NewLine, 12, false, true);
 				invest.isExploredToken = true; 
 				invest.isCanMove = false;
+				invest.isMonsterImunity = true;
 				rp ();
 			
 			}

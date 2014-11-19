@@ -29,6 +29,7 @@ namespace mmxAH
 		private List< MonsterIndivid> monsterTrofies;
 		private List<GatePrototype> gateTrofies;
 		public bool isExploredToken=false;
+		public bool isMonsterImunity=false;
 
 
 		private struct SetupInfo
@@ -654,6 +655,7 @@ namespace mmxAH
 		public void Movement()
 		{   
 			en.clock.PrintCurPhase (); 
+			isMonsterImunity = false;
 			if (isDelayed)
 			{ isDelayed = false;
 				isCanMove = false; 
@@ -700,6 +702,8 @@ namespace mmxAH
 			wr.Write (clues);
 			wr.Write (Money);
 			wr.Write (isDelayed); 
+			wr.Write (isExploredToken);
+			wr.Write (isMonsterImunity);
 			wr.Write (locnum); 
 			wr.Write (investnum); 
 			//Вещи
@@ -732,7 +736,9 @@ namespace mmxAH
 			curStamina=rd.ReadByte();
 			clues=rd.ReadByte();
 			Money=rd.ReadByte();
-			isDelayed=rd.ReadBoolean() ; 
+			isDelayed=rd.ReadBoolean() ;
+			 isExploredToken =rd.ReadBoolean() ; 
+			isMonsterImunity = rd.ReadBoolean ();
 			locnum = rd.ReadInt16(); 
 			investnum = rd.ReadByte ();  
 			if(en.locs [locnum].GetLocType() != LocathionType.OW)  
@@ -777,7 +783,9 @@ namespace mmxAH
 			Money=0 ;
 			locnum = 0;
 			isCanMove = true; 
-			isDelayed=false ; 
+			isDelayed=false ;
+			isExploredToken = false;
+			isMonsterImunity = false;
 			specCards.Clear ();
 			foreach (MonsterIndivid m in monsterTrofies)
 				en.MonstersCup.Add (m);

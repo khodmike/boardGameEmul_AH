@@ -542,6 +542,8 @@ protected string GateAndClueTitle;
 
 			}
 
+			if (inv.isMonsterImunity == true) 
+				noMonsters = true;
 			//вещи следователя
 			foreach (IOOption opt in inv.myTrigers.GetChooseOpthions(TrigerEvent.MoveAH, inv.MovementPoints))
 				opts.Add (opt);
