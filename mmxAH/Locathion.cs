@@ -1052,7 +1052,7 @@ protected string GateAndClueTitle;
 		public bool OpenGate()
 		{ if (isSealed)
 			{ en.io.ServerWrite (en.sysstr.GetString (SSType.GateCant1));
-				en.io.ServerWrite( "  "+ MoveToTitle + "  ", 12, false, true); 
+				en.io.ServerWrite( "  "+ GateAndClueTitle  + "  ", 12, false, true); 
 				en.io.ServerPrintTag (en.sysstr.GetString (SSType.GateCant2)+ Environment.NewLine ); 
 				return true;
 

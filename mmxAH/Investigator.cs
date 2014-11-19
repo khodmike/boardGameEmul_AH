@@ -385,6 +385,8 @@ namespace mmxAH
 			en.io.ClientWrite ("," + Occupashion );
 			if(isDelayed) 
 				en.io.ClientWrite ("    "+en.sysstr.GetString( SSType.Delayed)   , 12, false,true); 
+			if(isExploredToken) 
+				en.io.ClientWrite ("    "+en.sysstr.GetString( SSType.ExploredToken)   , 12, false,true); 
 			if (investnum == en.clock.GetFirstPlayer ())
 				en.io.ClientWrite ("    "+en.sysstr.GetString( SSType.FirstPlayer)   , 12, true); 
 			en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetNumberClueToken (clues),12, false,false,1,"Green");     
@@ -429,6 +431,17 @@ namespace mmxAH
 						en.io.ClientWrite (","); 
 
 				   monsterTrofies [i].PrintAsTrofy() ;
+
+				}
+			}
+
+
+			if (gateTrofies.Count != 0)
+			{  en.io.ClientWrite (Environment.NewLine + en.sysstr.GetString(SSType.GateTrofies)  +  " ("+ gateTrofies.Count + "):"+  Environment.NewLine, 12, true);
+				for (int i = 0; i < gateTrofies .Count; i++)
+				{ if (i != 0)
+					en.io.ClientWrite (","); 
+					en.io.ClientWrite(gateTrofies  [i].GetShortDiscripthion())  ;
 
 				}
 			}
@@ -817,6 +830,8 @@ namespace mmxAH
 		{ string res = DisplayName;
 			if (isDelayed)
 				res += "( " + en.sysstr.GetString (SSType.Delayed)+ ")";
+			if (isExploredToken)
+				res += "( " + en.sysstr.GetString (SSType.ExploredToken)+ ")";
 			return res;
 
 		}

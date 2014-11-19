@@ -157,7 +157,8 @@ namespace mmxAH
 		ForWotld,
 		SealedPromt2,
 		SealedMessage,
-		ReturnToArchem
+		ReturnToArchem,
+		ExploredToken
 
 
 

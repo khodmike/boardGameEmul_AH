@@ -52,7 +52,7 @@ namespace mmxAH
 
 
 
-		public string  ShortDiscripthion()
+		public string  GetShortDiscripthion()
 		{ 
 			return en.sysstr.GetString(SSType.GateTo)+ "  "+  en.locs[owindex].GetMoveToTitle() ;  
 

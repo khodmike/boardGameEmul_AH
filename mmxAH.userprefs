@@ -1,23 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/Locathion.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/WorkForm.cs">
     <Files>
-      <File FileName="mmxAH/GlobalStatus.cs" Line="153" Column="18" />
-      <File FileName="mmxAH/Locathion.cs" Line="981" Column="17" />
-      <File FileName="mmxAH/SystemStrings.cs" Line="158" Column="9" />
-      <File FileName="mmxAH/Gate.cs" Line="132" Column="29" />
-      <File FileName="mmxAH/Monster.cs" Line="6" Column="4" />
-      <File FileName="mmxAH/Investigator.cs" Line="281" Column="1" />
-      <File FileName="mmxAH/GameEngine.cs" Line="124" Column="1" />
-      <File FileName="mmxAH/PhasesClock.cs" Line="167" Column="1" />
+      <File FileName="mmxAH/Locathion.cs" Line="1154" Column="144" />
+      <File FileName="mmxAH/Investigator.cs" Line="807" Column="1" />
+      <File FileName="mmxAH/GlobalStatus.cs" Line="152" Column="3" />
+      <File FileName="mmxAH/WorkForm.cs" Line="65" Column="47" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/docs/Програмирование/mmxAH/mmxAH/MapOfCity.cs" line="128" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
-    <Watch file="mmxAH/Deck.cs" line="282" offsetX="422" offsetY="5058" expression="BottomZone" liveUpdate="False" />
-  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
