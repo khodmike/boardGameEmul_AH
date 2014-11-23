@@ -46,7 +46,7 @@ namespace mmxAH
 			colors= new PairMeneger();
 			lims= new List<Limits>();
 			locs= new List<Locathion>();
-			gates= new Deck<GatePrototype>( );
+			gates= new Deck<GatePrototype>(false ); //true
 			ows= new OWMeneger(this); 
 			ActiveInvistigators= new List<Investigator>();
 			ActiveMonsters= new List<MonsterIndivid>();
@@ -121,9 +121,8 @@ namespace mmxAH
 
 		private void Test ()
 		{  ActiveInvistigators[0].AddClues(10);
-
-		 
-
+			((ArchemUnstableLoc)locs [map.GetNumberByCodeName ("cave")]).OpenGate (); 
+			((ArchemUnstableLoc)locs [map.GetNumberByCodeName ("graveyard")]).OpenGate (); 
 
 
 
@@ -289,7 +288,7 @@ namespace mmxAH
 			//самое последнее действие , после всех резетов
 			MonstersCup.Reset ();
 			mythosDeck.Reset ();
-			gates.Reset ();
+			//gates.Reset ();
 			invests.Reset ();
 			owEnc.Reset ();
 

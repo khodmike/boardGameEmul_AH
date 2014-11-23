@@ -781,7 +781,18 @@ protected string GateAndClueTitle;
 			}
 			return true;
 		}
-		
+
+		public List<short> GetLinkedLocs()
+		{ List<short> res= new List<short>();
+			if (WhiteArrow != -1)
+				res.Add (WhiteArrow);
+			if (BlackArrow != -1 && WhiteArrow != BlackArrow)
+				res.Add (BlackArrow);
+			foreach (short loc in OtherLinks)
+				res.Add (loc);
+			return res;
+
+		}
 
 	}
 
@@ -1177,6 +1188,14 @@ protected string GateAndClueTitle;
 			en.io.ServerWrite (displayName, 12, false, true);
 			en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.SealedMessage));
 			en.status.AddSealed (); 
+		}
+
+		public void DrawFromGate( byte invnum)
+		{  if (gate != null)
+				gate.MoveTo (invnum, true); 
+
+			
+
 		}
 	}
 

@@ -104,7 +104,31 @@ namespace mmxAH
 
 		public override void Execute (Func f, byte pInvnum=40)
 		{  base.Execute(f, pInvnum); 
-			f ();
+			if (en.locs [en.ActiveInvistigators [invnum].GetLocathion()].GetLocType () == LocathionType.OW)
+			{
+				en.ga.ReturnToArchem (en.ActiveInvistigators [invnum].GetLocathion (), f, invnum); 
+			} else
+			{ System.Collections.Generic.List<short> potLocs = new PathFinder (en).Find (en.ActiveInvistigators [invnum].GetLocathion (), Check);  
+				if (potLocs.Count == 0)
+				{
+					f ();
+					return;
+				}
+				if (potLocs.Count == 1)
+				{ ((ArchemUnstableLoc)en.locs [potLocs [0]]).DrawFromGate (invnum);
+					f ();
+
+				}
+				//Выбор
+			}
+
+		}
+
+		private bool Check(short loc)
+		{ if (en.locs [loc].GetLocType() == LocathionType.ArchamUnstable && ((ArchemUnstableLoc)en.locs [loc]).isGate ())  
+			return true;
+			else
+				return false;
 
 		}
 	}

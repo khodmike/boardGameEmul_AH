@@ -72,6 +72,7 @@
     <Compile Include="GlobalActhions.cs" />
     <Compile Include="TextWorker.cs" />
     <Compile Include="GlobalStatus.cs" />
+    <Compile Include="PathFinder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
