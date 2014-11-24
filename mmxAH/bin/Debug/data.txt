@@ -82,7 +82,7 @@ stab docks
 unstab unnable
 street hill 2 R
 unstab witchHouse
-stab stl
+unstab stl
 street univer 2 L
 unstab scienceBild
 stab admin

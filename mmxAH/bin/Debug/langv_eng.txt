@@ -134,7 +134,9 @@ Undead
 Mask
 Spawn
 to checks
-must move to onee of this locatacshion. For which it is move ?
+must move to one of this locatacshion. For which 
+it 
+is move?
 Confirm
 Scy
 New game started
@@ -323,7 +325,7 @@ Dhole
 Dimensional Shambler
 If you fail a {b} Combat check {b} against Dimensional Shambler, you are {i}lost in time and space{i}.
 Elder Thing
-When you fail a Combat check against Elder Thing, you must discard 1 of your Weapons or Spells (your choice), if able.
+When you fail a {b} Combat check  {b} against Elder Thing, you must discard 1 of your Weapons or Spells (your choice), if able.
 Fire Vampire
 Flying Polyp
 Formless Spawn

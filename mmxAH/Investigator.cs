@@ -217,6 +217,11 @@ namespace mmxAH
 		{ return DisplayName;  
 
 		}
+
+		public string GetPronaun()
+		{
+			return Pronoun; 
+		}
 		public void SetLocathion( short newLoc)
 		{
 			en.locs[locnum].RemoveInvestigator(investnum);

@@ -96,7 +96,7 @@ namespace mmxAH
 		public void MoveTo(byte invnum, bool isDelayed)
 		{
 			en.ActiveInvistigators [invnum].SetLocathion (owindex);
-
+			en.ActiveInvistigators [invnum].isCanMove = false; 
 			en.io.ServerWrite (en.ActiveInvistigators [invnum].GetTitle (), 12, false, true);
 			if (isDelayed)
 			{

@@ -764,7 +764,7 @@ protected string GateAndClueTitle;
 
 
 		public bool  MonseterPlaced( )
-		{  MonsterIndivid m= en.MonstersCup.Draw();
+		{  MonsterIndivid m= en.MonstersCup.Draw ();
 			if (m == null)
 			{
 				en.ga.Awekeen ();  
@@ -1190,9 +1190,9 @@ protected string GateAndClueTitle;
 			en.status.AddSealed (); 
 		}
 
-		public void DrawFromGate( byte invnum)
+		public void DrawFromGate( byte invnum, bool isDelayed=true)
 		{  if (gate != null)
-				gate.MoveTo (invnum, true); 
+				gate.MoveTo (invnum, isDelayed); 
 
 			
 

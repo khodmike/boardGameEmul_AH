@@ -104,7 +104,7 @@ namespace mmxAH
 				EndEncounter (); 
           else
 			{
-				prot.DoDemage(HorrorCheck);
+				prot.DoDemage(HorrorCheck, this);
 			
 
 			}
@@ -180,7 +180,7 @@ namespace mmxAH
 				}
 			}
 			else
-			{  prot.DoDemage (FleeOrFight); 
+			{  prot.DoDemage (FleeOrFight, this); 
 
 			}
 			
@@ -211,7 +211,7 @@ namespace mmxAH
 			EndEncounter (); 
 			else
 			{
-				prot.DoDemage(FleeOrFight);
+				prot.DoDemage(FleeOrFight, this);
 
 
 			}
@@ -421,7 +421,7 @@ namespace mmxAH
 			{ iop.Add( new IOOptionWithParam(en.locs[li].GetTitle(),FlyMove2, li));
 
 			}
-			en.io.StartChoose (iop, prot.GetTitle () + "  " + en.sysstr.GetString (SSType.MonsterMovePromt), en.sysstr.GetString (SSType.Confirm));     
+			en.io.StartChoose (iop, prot.GetTitle () + "  " + en.sysstr.GetString (SSType.MonsterMovePromt1)+ "  " + en.sysstr.GetString (SSType.it) + "  " +  en.sysstr.GetString (SSType.MonsterMovePromt2) , en.sysstr.GetString (SSType.Confirm));     
 			return;
 		    
 
@@ -827,9 +827,12 @@ namespace mmxAH
 
 		}
 
-		public  void DoDemage( Func f)
+		public  void DoDemage( Func f, MonsterIndivid mons)
 		{ if (SpecialDemageEffect != null)
-				SpecialDemageEffect.Execute (f);
+			//замещение, прекпащение боя
+			{
+				SpecialDemageEffect.Execute (mons.EndEncounter);
+			}
 			else
 			{ EffStaminaLose l = new EffStaminaLose (en);
 				l.ChangeDemageCount (CombatDemage);

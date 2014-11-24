@@ -104,6 +104,7 @@ namespace mmxAH
 
 		public override void Execute (Func f, byte pInvnum=40)
 		{  base.Execute(f, pInvnum); 
+
 			if (en.locs [en.ActiveInvistigators [invnum].GetLocathion()].GetLocType () == LocathionType.OW)
 			{
 				en.ga.ReturnToArchem (en.ActiveInvistigators [invnum].GetLocathion (), f, invnum); 
@@ -115,13 +116,28 @@ namespace mmxAH
 					return;
 				}
 				if (potLocs.Count == 1)
-				{ ((ArchemUnstableLoc)en.locs [potLocs [0]]).DrawFromGate (invnum);
+				{ ((ArchemUnstableLoc)en.locs [potLocs [0]]).DrawFromGate (invnum, false);
 					f ();
 
 				}
 				//Выбор
+				string promt = en.ActiveInvistigators [invnum].GetTitle () + "  " + en.sysstr.GetString (SSType.MonsterMovePromt1) + "  " + en.ActiveInvistigators [invnum].GetPronaun() +"  " + en.sysstr.GetString (SSType.MonsterMovePromt2);
+				System.Collections.Generic.List<IOOption> opts = new System.Collections.Generic.List<IOOption> ();
+				foreach (short l in potLocs)
+					opts.Add (new IOOptionWithParam (en.locs [l].GetTitle (), Execute2, l));
+				en.io.StartChoose (opts, promt, en.sysstr.GetString (SSType.ChooseActhionButton));
+
 			}
 
+
+
+		}
+
+
+		private void Execute2( short loc)
+		{
+			((ArchemUnstableLoc)en.locs [loc]).DrawFromGate (invnum, false);
+			rp ();
 		}
 
 		private bool Check(short loc)
