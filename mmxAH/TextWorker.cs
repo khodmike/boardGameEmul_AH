@@ -84,7 +84,11 @@ namespace mmxAH
 			if (! int.TryParse (data.GetToken (), out cn)) 
 				return false;
 			MythosCard c;
-			for (int i=0; i< cn; i++)
+			c = new MythosShuffleCard (en, 0);
+			c.FromTextFile (data, text); 
+			en.mythosDeck.Add (c);
+
+			for (int i=1; i< cn+1; i++)
 			{ switch (data.GetToken ().ToUpper() )
 				{ case "HEAD": c = new MythosHead (en, (short)i); break; 
 				  case "ENV": c = new MythosEnv (en, (short)i); break;

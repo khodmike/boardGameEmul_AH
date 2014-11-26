@@ -7,7 +7,7 @@ namespace mmxAH
 	{ protected GameEngine en;
 		private short GateLoc, ClueLoc;
 		private List<byte> MoveBlack, MoveWhite;
-		private string Title;
+		protected  string Title;
 		public MythosCard ( GameEngine eng, short pID)
 		{
 			en = eng;
@@ -16,9 +16,8 @@ namespace mmxAH
 			MoveWhite = new List<byte> ();  
 		}
 
-		public void Execute()
+		public virtual void  Execute()
 		{ en.curs.resolvingMythos=this; 
-		  en.clock.PrintCurPhase ();
 			en.io.ServerWrite ( Environment.NewLine+ Title+ "  ", 16, true); 
 			PrintType (); 
 
@@ -120,6 +119,43 @@ namespace mmxAH
 	}
 
 
+	public class MythosShuffleCard: MythosCard
+	{ public  MythosShuffleCard( GameEngine eng, short pID) : base(eng, pID)
+		{
+
+		}
+
+		private string TextStr;
+		public override void Execute ()
+		{ en.io.ServerWrite ( Environment.NewLine+ Title+ "  ", 16, true); 
+		  en.io.ServerPrintTag  ( Environment.NewLine+ TextStr+ Environment.NewLine); 
+			en.mythosDeck.Discard (this);
+			en.mythosDeck.ReshuffleDiscard ();
+			en.mythosDeck.Draw ().Execute() ;
+
+
+
+		}
+
+		public override bool FromTextFile (TextFileParser data, TextFileParser text)
+		{
+	        Title = text.GetCurString (); 
+			TextStr= text.GetCurString (); 
+			return true;
+		}
+
+	 protected override void Step4 ()
+		{
+
+
+		}
+
+		protected override void PrintType ()
+		{
+
+		}
+
+	}
 
 	public class MythosHead : MythosCard
 	{  private  Effect eff;

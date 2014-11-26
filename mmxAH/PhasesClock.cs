@@ -153,7 +153,7 @@ namespace mmxAH
 			    }break; 
 				case Phases.AhEnc:{invest.AhEnc ();}  break;
 				case Phases.OwEnc  : {invest.OwEnc (); } break;
-			case Phases.Mythos: {en.mythosDeck.Draw ().Execute() ; } break;
+			case Phases.Mythos: { PrintCurPhase (); en.mythosDeck.Draw ().Execute() ; } break;
 
 
 

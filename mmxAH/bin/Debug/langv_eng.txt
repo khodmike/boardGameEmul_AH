@@ -160,6 +160,7 @@ returned to Archem in
 Explorathion token
 pass though the gate to
 
+
  
 
 //tokens
@@ -369,7 +370,8 @@ Zombie
 
 
 //mythos
-
+The Story Continues…
+{i} Mythos Deck {i} is reshuffle.
 TestMythos1
 TestMythos2
 TestMythos3
