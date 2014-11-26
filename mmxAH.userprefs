@@ -1,11 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/Effect.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/GameEngine.cs">
     <Files>
-      <File FileName="mmxAH/PathFinder.cs" Line="26" Column="16" />
-      <File FileName="mmxAH/GameEngine.cs" Line="49" Column="43" />
-      <File FileName="mmxAH/Effect.cs" Line="115" Column="6" />
-      <File FileName="mmxAH/Locathion.cs" Line="1195" Column="32" />
+      <File FileName="mmxAH/GameEngine.cs" Line="204" Column="4" />
+      <File FileName="mmxAH/MapOfCity.cs" Line="74" Column="1" />
+      <File FileName="mmxAH/Locathion.cs" Line="767" Column="43" />
+      <File FileName="mmxAH/Effect.cs" Line="110" Column="88" />
+      <File FileName="mmxAH/GlobalActhions.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

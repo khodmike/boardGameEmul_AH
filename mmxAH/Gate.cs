@@ -105,7 +105,7 @@ namespace mmxAH
 				en.ActiveInvistigators [invnum].Delayed (); 
 			} else
 			{
-				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.MoveToFact) + " ");
+				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.PassThoughGate ) + " ");
 				en.io.ServerWrite (en.locs [owindex].GetTitle () + ".  "+ Environment.NewLine, 12, true);
 			}
 

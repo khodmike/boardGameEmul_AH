@@ -160,7 +160,8 @@ namespace mmxAH
 		SealedPromt2,
 		SealedMessage,
 		ReturnToArchem,
-		ExploredToken
+		ExploredToken,
+		PassThoughGate
 
 
 

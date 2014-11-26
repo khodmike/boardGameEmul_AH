@@ -212,7 +212,10 @@ namespace mmxAH
 
 
 		public void ResumeFromSave()
-		{  NextPlayer2(); 
+		{  if (curPhase == Phases.Mythos)
+				EndTurn2 ();
+			else
+			NextPlayer2(); 
 
 		}
 
