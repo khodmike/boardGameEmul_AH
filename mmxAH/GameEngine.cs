@@ -50,7 +50,7 @@ namespace mmxAH
 			ows= new OWMeneger(this); 
 			ActiveInvistigators= new List<Investigator>();
 			ActiveMonsters= new List<MonsterIndivid>();
-			MonstersCup = new Deck<MonsterIndivid>(true); 
+			MonstersCup = new Deck<MonsterIndivid>(false); //true
 			sysstr= new SystemStrings();  
 			clock= new PhasesClock(this);
 			pref = new Preference ();
@@ -122,7 +122,8 @@ namespace mmxAH
 		private void Test ()
 		{((ArchemUnstableLoc)locs [map.GetNumberByCodeName ("indsqr")]).OpenGate ();
 		  ((ArchemUnstableLoc)locs [map.GetNumberByCodeName ("witchhouse")]).OpenGate (); 
-
+			MonstersCup.Shuffle ();
+			((ArchemUnstableLoc)locs [map.GetNumberByCodeName ("witchhouse")]).MonseterPlaced(); 
 
 
 		}
@@ -284,7 +285,7 @@ namespace mmxAH
 				gates.Add (g); 
 			openGates.Clear (); 
 			//самое последнее действие , после всех резетов
-			MonstersCup.Reset ();
+			//MonstersCup.Reset ();
 			mythosDeck.Reset ();
 			//gates.Reset ();
 			invests.Reset ();

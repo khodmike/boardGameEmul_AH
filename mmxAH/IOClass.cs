@@ -274,6 +274,8 @@ namespace mmxAH
 
 		private void PrintMonsters()
 		{ frm.mapMode (false);
+			foreach (MonsterPrototype  pr in en.MonsterPrototypes)
+				pr.isPrinted = false; 
 			foreach (MonsterIndivid m  in en.ActiveMonsters)
 				m.PrintClient (); 
 		} 

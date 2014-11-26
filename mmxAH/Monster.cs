@@ -456,6 +456,7 @@ namespace mmxAH
 		private List< String> SpecAbilText; 
 		private MonsterMovementType moveType;
 		private  bool isUndead=false, isMask=false, isSpawn=false;
+		public bool isPrinted=false;
 		public string GetTitle()
 		{ return Title;
 
@@ -646,7 +647,10 @@ namespace mmxAH
 
 
 		public void PrintClient()
-		{
+		{ if (isPrinted)
+				return;
+			else
+				isPrinted = true;
 			en.io.ClientWrite (Title, 14, true);
 			en.io.ClientWrite ("       " + en.sysstr.GetString (SSType.DS) + ": " + en.ds.GetTitle (dsindex) );
 			en.io.ClientWrite ("       " + en.sysstr.GetMonsterMovementString(moveType));
