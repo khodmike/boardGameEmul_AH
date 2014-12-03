@@ -86,10 +86,10 @@ namespace mmxAH
 			en.openGates.Add (this); 
 			if (isPrint)
 			{
-				en.io.ServerWrite (en.sysstr.GetString (SSType.GateTo) + "  ");
-				en.io.ServerWrite (en.locs [owindex].GetTitle (), 12, true);
-				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.GateOpenVerb));
-				en.io.ServerWrite ("  " + ((ArchemArea)en.locs [ArchemLoc]).GetGateAndClueTitle () + ".", 12, false, true); 
+				en.io.PrintToLog (en.sysstr.GetString (SSType.GateTo) + "  ");
+				en.io.PrintToLog (en.locs [owindex].GetTitle (), 12, true);
+				en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.GateOpenVerb));
+				en.io.PrintToLog ("  " + ((ArchemArea)en.locs [ArchemLoc]).GetGateAndClueTitle () + ".", 12, false, true); 
 			}
 		}
 
@@ -97,16 +97,16 @@ namespace mmxAH
 		{
 			en.ActiveInvistigators [invnum].SetLocathion (owindex);
 			en.ActiveInvistigators [invnum].isCanMove = false; 
-			en.io.ServerWrite (en.ActiveInvistigators [invnum].GetTitle (), 12, false, true);
+			en.io.PrintToLog (en.ActiveInvistigators [invnum].GetTitle (), 12, false, true);
 			if (isDelayed)
 			{
-				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.GateDrawn) + " ");
-				en.io.ServerWrite (en.locs [owindex].GetTitle () + ".  "+ Environment.NewLine , 12, true);
+				en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.GateDrawn) + " ");
+				en.io.PrintToLog (en.locs [owindex].GetTitle () + ".  "+ Environment.NewLine , 12, true);
 				en.ActiveInvistigators [invnum].Delayed (); 
 			} else
 			{
-				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.PassThoughGate ) + " ");
-				en.io.ServerWrite (en.locs [owindex].GetTitle () + ".  "+ Environment.NewLine, 12, true);
+				en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.PassThoughGate ) + " ");
+				en.io.PrintToLog (en.locs [owindex].GetTitle () + ".  "+ Environment.NewLine, 12, true);
 			}
 
 
@@ -139,9 +139,9 @@ namespace mmxAH
 
 
 		public void Close()
-		{ en.io.ServerWrite(en.sysstr.GetString(SSType.GateTo)+ " " );
-			en.io.ServerWrite( en.locs[owindex].GetMoveToTitle(),12,true) ; 
-			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.GateClosedFact));
+		{ en.io.PrintToLog(en.sysstr.GetString(SSType.GateTo)+ " " );
+			en.io.PrintToLog( en.locs[owindex].GetMoveToTitle(),12,true) ; 
+			en.io.PrintToLog (" " + en.sysstr.GetString (SSType.GateClosedFact));
 			en.status.ClosedGate ();
 			byte i=0;
 			MonsterIndivid m;
@@ -166,10 +166,10 @@ namespace mmxAH
 					en.MonstersCup.Add (m);
 					en.Outscirts.Remove (m); 
 					en.status.RemoveFromOut (); 
-					en.io.ServerWrite (m.GetTitle (), 12, true, true);
-					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.From) + "  ");
-					en.io.ServerWrite (en.sysstr.GetString (SSType.Outscirts), 12, false, true);
-					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.ReturnToTheCup) + Environment.NewLine); 
+					en.io.PrintToLog (m.GetTitle (), 12, true, true);
+					en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.From) + "  ");
+					en.io.PrintToLog (en.sysstr.GetString (SSType.Outscirts), 12, false, true);
+					en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.ReturnToTheCup) + Environment.NewLine); 
 				} else
 					i++;
 			}        

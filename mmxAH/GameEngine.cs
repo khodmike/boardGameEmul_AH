@@ -174,7 +174,7 @@ namespace mmxAH
 		public void newGame ()
 		{  
 			Reset (); 
-			io.ServerWrite (sysstr.GetString (SSType.Setup_Started) + "  "+ DateTime.Now+"."+ Environment.NewLine );  
+			io.PrintToLog (sysstr.GetString (SSType.Setup_Started) + "  "+ DateTime.Now+"."+ Environment.NewLine );  
 			List<IOOption> ioopts = new List<IOOption > ();
 
 			for( short i=1; i<= lims.Count; i++)
@@ -191,7 +191,7 @@ namespace mmxAH
 				          
 	    private void NewGame_NumOfInv(short num)
 		{   lim = lims [num-1];
-			io.ServerWrite (sysstr.GetString (SSType.Setup_NumOfInv_Fact) + " : " + num+"."+ Environment.NewLine);  
+			io.PrintToLog (sysstr.GetString (SSType.Setup_NumOfInv_Fact) + " : " + num+"."+ Environment.NewLine);  
 			status.Init (lim.gates, lim.mA, lim.mO);
 			//Random inv
 			for (byte i=0; i<num; i++)
@@ -231,16 +231,16 @@ namespace mmxAH
 
 		public void ToBin2 ()
 		{
-			io.ClientWrite ("Convert text files to binary" + Environment.NewLine, 16, true); 
-			io.ClientWrite ("Data file: " + TextFileName + Environment.NewLine); 
-			io.ClientWrite ("Strings file: " + LangvFileName + Environment.NewLine); 
-			io.ClientWrite ("Loading data...");  
+			io.Print ("Convert text files to binary" + Environment.NewLine, 16, true); 
+			io.Print ("Data file: " + TextFileName + Environment.NewLine); 
+			io.Print ("Strings file: " + LangvFileName + Environment.NewLine); 
+			io.Print ("Loading data...");  
 			if (! new TextWorker (this).TextInit (TextFileName, LangvFileName))
-			{ io.ClientWrite ("Error !!!",16, true);  
+			{ io.Print ("Error !!!",16, true);  
 				return;
 
 			}
-			io.ClientWrite("OK."+ Environment.NewLine);     
+			io.Print("OK."+ Environment.NewLine);     
 			new BinaryWorker(this, "data.bin").ToBin() ; 
 
 		}

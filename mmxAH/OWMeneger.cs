@@ -27,7 +27,7 @@ namespace mmxAH
 		{ 
 			foreach( Locathion l in en.locs)
 				if( l.GetLocType()== LocathionType.OW ) 
-			{ l.Print (1); en.io.ClientWrite( Environment.NewLine);}     
+			{ l.Print (1); en.io.Print( Environment.NewLine);}     
 
 		}
 

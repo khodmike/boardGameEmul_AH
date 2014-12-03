@@ -46,9 +46,9 @@ namespace mmxAH
 		private void RetToArchem2( short loc)
 		{  
 			invest.SetLocathion (loc);
-			en.io.ServerWrite (invest.GetTitle(), 12, true, true);
-			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.ReturnToArchem) + " ");
-			en.io.ServerWrite (en.locs [loc].GetTitle()+"."+ Environment.NewLine, 12, false, true);
+			en.io.PrintToLog (invest.GetTitle(), 12, true, true);
+			en.io.PrintToLog (" " + en.sysstr.GetString (SSType.ReturnToArchem) + " ");
+			en.io.PrintToLog (en.locs [loc].GetTitle()+"."+ Environment.NewLine, 12, false, true);
 			invest.isExploredToken = true; 
 			invest.isCanMove = false;
 			invest.isMonsterImunity = true;

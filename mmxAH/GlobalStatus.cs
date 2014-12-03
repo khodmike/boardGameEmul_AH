@@ -16,18 +16,18 @@ namespace mmxAH
 
 		public void Print()
 		{ en.clock.PrintCurPhase(false); 
-			en.io.ClientWrite (en.sysstr.GetString (SSType.DoomTrack), 12, true);
-		  en.io.ClientWrite (" " + CurDoom + " / " + MaxDoom+ "."+ Environment.NewLine );  
-			en.io.ClientWrite ( en.sysstr.GetString (SSType.OpenGates ), 12, true);
-			en.io.ClientWrite (" " + CurGate + " / " + MaxGate+ "."+ Environment.NewLine ); 
-			en.io.ClientWrite (en.sysstr.GetString (SSType.MonsterInArchem   ), 12, true);
-			en.io.ClientWrite (" " + CurMonsters + " / " + MaxMonsters + "."+ Environment.NewLine );
-			en.io.ClientWrite (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
-			en.io.ClientWrite (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );  
-			en.io.ClientWrite (en.sysstr.GetString (SSType.TerrorTrack  ), 12, true);
-			en.io.ClientWrite (" " + CurTerror + " / " + MaxTerror + "."+ Environment.NewLine ); 
-			en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetString (SSType.SealedLocathion   ), 12, true);
-			en.io.ClientWrite (" " + CurSealed + " / " + MaxSealed + "."+ Environment.NewLine ); 
+			en.io.Print (en.sysstr.GetString (SSType.DoomTrack), 12, true);
+		  en.io.Print (" " + CurDoom + " / " + MaxDoom+ "."+ Environment.NewLine );  
+			en.io.Print ( en.sysstr.GetString (SSType.OpenGates ), 12, true);
+			en.io.Print (" " + CurGate + " / " + MaxGate+ "."+ Environment.NewLine ); 
+			en.io.Print (en.sysstr.GetString (SSType.MonsterInArchem   ), 12, true);
+			en.io.Print (" " + CurMonsters + " / " + MaxMonsters + "."+ Environment.NewLine );
+			en.io.Print (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
+			en.io.Print (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );  
+			en.io.Print (en.sysstr.GetString (SSType.TerrorTrack  ), 12, true);
+			en.io.Print (" " + CurTerror + " / " + MaxTerror + "."+ Environment.NewLine ); 
+			en.io.Print (Environment.NewLine+ en.sysstr.GetString (SSType.SealedLocathion   ), 12, true);
+			en.io.Print (" " + CurSealed + " / " + MaxSealed + "."+ Environment.NewLine ); 
 
 		}
 
@@ -64,9 +64,9 @@ namespace mmxAH
 
 		public bool DoomIncrise( byte count=1)
 		{ CurDoom+=count;
-			en.io.ServerWrite (en.sysstr.GetNumberDoomToken (count) + " " + en.sysstr.GetString (SSType.DoomInc));
-			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.DoomTrack), 12, true);
-			en.io.ServerWrite (" " + CurDoom + " / " + MaxDoom+ "."+ Environment.NewLine );  
+			en.io.PrintToLog (en.sysstr.GetNumberDoomToken (count) + " " + en.sysstr.GetString (SSType.DoomInc));
+			en.io.PrintToLog (" " + en.sysstr.GetString (SSType.DoomTrack), 12, true);
+			en.io.PrintToLog (" " + CurDoom + " / " + MaxDoom+ "."+ Environment.NewLine );  
 
 			if (CurDoom >= MaxDoom)
 			{ en.ga.Awekeen ();
@@ -86,9 +86,9 @@ namespace mmxAH
 				return;
 
 			}
-			en.io.ServerWrite (en.sysstr.GetString (SSType.TerorInc ));
-			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.TerrorTrack ), 12, true);
-			en.io.ServerWrite (" " + CurTerror  + " / " + MaxTerror + "."+ Environment.NewLine );  
+			en.io.PrintToLog (en.sysstr.GetString (SSType.TerorInc ));
+			en.io.PrintToLog (" " + en.sysstr.GetString (SSType.TerrorTrack ), 12, true);
+			en.io.PrintToLog (" " + CurTerror  + " / " + MaxTerror + "."+ Environment.NewLine );  
 
 
 
@@ -97,8 +97,8 @@ namespace mmxAH
 
 		public bool NewGate()
 		{ CurGate ++;
-			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.OpenGates ), 12, true);
-			en.io.ServerWrite (" " + CurGate + " / " + MaxGate+ "."+ Environment.NewLine );  
+			en.io.PrintToLog (" " + en.sysstr.GetString (SSType.OpenGates ), 12, true);
+			en.io.PrintToLog (" " + CurGate + " / " + MaxGate+ "."+ Environment.NewLine );  
 
 			if (CurGate >= MaxGate)
 			{ en.ga.Awekeen ();
@@ -114,7 +114,7 @@ namespace mmxAH
 		{ if (CurMonsters ==  MaxMonsters)
 			{   if (CurOut == MaxOut)
 				{
-					en.io.ServerWrite (en.sysstr.GetString (SSType.OutscirtsIsClear) + Environment.NewLine);
+					en.io.PrintToLog (en.sysstr.GetString (SSType.OutscirtsIsClear) + Environment.NewLine);
 					CurOut = 0;
 					en.MonstersCup.Add (m);
 					en.ResetOutscirts ();
@@ -122,10 +122,10 @@ namespace mmxAH
 				} else
 				{  CurOut++;
 					en.Outscirts.Add (m); 
-					en.io.ServerWrite (m.GetTitle (), 12, true);
-					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.PlacedToOut )+ " . ");
-					en.io.ServerWrite (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
-					en.io.ServerWrite (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );
+					en.io.PrintToLog (m.GetTitle (), 12, true);
+					en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.PlacedToOut )+ " . ");
+					en.io.PrintToLog (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
+					en.io.PrintToLog (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );
 				}
 				return false;
 
@@ -138,21 +138,21 @@ namespace mmxAH
 
 
 		public void PrintMonserCountServer()
-		{ en.io.ServerWrite (en.sysstr.GetString (SSType.MonsterInArchem   ), 12, true);
-			en.io.ServerWrite (" " + CurMonsters + " / " + MaxMonsters + "."+ Environment.NewLine );
+		{ en.io.PrintToLog (en.sysstr.GetString (SSType.MonsterInArchem   ), 12, true);
+			en.io.PrintToLog (" " + CurMonsters + " / " + MaxMonsters + "."+ Environment.NewLine );
 
 		}
 
 		public void PrintMonserCountInOutServer()
-		{ en.io.ServerWrite (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
-			en.io.ServerWrite (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );
+		{ en.io.PrintToLog (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
+			en.io.PrintToLog (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );
 
 		}
 
 		public void AddSealed()
 		{  CurSealed++;
-			en.io.ServerWrite (en.sysstr.GetString (SSType.SealedLocathion    ), 12, true);
-			en.io.ServerWrite (" " + CurSealed + " / " + MaxSealed + "."+ Environment.NewLine );
+			en.io.PrintToLog (en.sysstr.GetString (SSType.SealedLocathion    ), 12, true);
+			en.io.PrintToLog (" " + CurSealed + " / " + MaxSealed + "."+ Environment.NewLine );
 
 		}
 
@@ -198,8 +198,8 @@ namespace mmxAH
 		public void ClosedGate()
 		{ if (CurGate > 0)
 				CurGate--;
-			en.io.ServerWrite (en.sysstr.GetString (SSType.OpenGates    ), 12, true);
-			en.io.ServerWrite (" " + CurGate + " / " + MaxGate + "."+ Environment.NewLine );
+			en.io.PrintToLog (en.sysstr.GetString (SSType.OpenGates    ), 12, true);
+			en.io.PrintToLog (" " + CurGate + " / " + MaxGate + "."+ Environment.NewLine );
 
 		}
 

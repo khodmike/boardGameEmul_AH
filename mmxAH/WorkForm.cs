@@ -86,10 +86,7 @@ namespace mmxAH
 			btnArchemMap= CreateButton (BtnArchemMapClick, 20, 80, true, en.sysstr.GetString(SSType.ButtonArchemMap));
 			this.Shown += frmShow  ;  
 
-			Timer tm = new Timer ();
-			tm.Interval = 250;
-			tm.Tick += tmTick; 
-			tm.Start ();
+
 
 		 
 		}
@@ -126,10 +123,7 @@ namespace mmxAH
 		}
 
 
-		private void tmTick( object sender, EventArgs arg)
-		{ en.io.CheckServerUpdate (); 
 
-		}
 		private void BtnMMClick( object sender, EventArgs arg)
 		{ this.Hide ();
 			en.io.ShowMainMenu (); 
@@ -155,7 +149,7 @@ namespace mmxAH
 				else
 				en.io.Answer(true);
 		
-
+			RefreshControls (); 
 
 		}
 
@@ -164,6 +158,7 @@ namespace mmxAH
 		{  
 			ClearControls(); 
 			en.io.Answer(false);
+			RefreshControls (); 
 
 
 		}
@@ -173,6 +168,7 @@ namespace mmxAH
 		{  
 			ClearControls(); 
 			en.io.ChooseEnd(libChoose.SelectedIndex);  
+			RefreshControls (); 
 
 
 
@@ -333,7 +329,7 @@ namespace mmxAH
 		}
 
 
-		public void RefreshControls ()
+		private void RefreshControls ()
 		{
 
 

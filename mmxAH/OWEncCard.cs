@@ -20,19 +20,19 @@ namespace mmxAH
 
 
 		public void Execute(short locnum)
-		{  en.curs.resolvingOW.Add(this); 
+		{  en.curs.resolvingOW.Add(this);
 			if (locnum == loc1)
 			{
-				en.io.ServerPrintTag (Environment.NewLine + Text1);
+				en.io.PrintTag (Environment.NewLine + Text1);
 				eff1.Execute (en.clock.NextPlayer);
 
 			} else if (locnum == loc2)
 			{
-				en.io.ServerPrintTag (Environment.NewLine + Text2);
+				en.io.PrintTag (Environment.NewLine + Text2);
 				eff2.Execute (en.clock.NextPlayer);
 
 			} else
-			{ en.io.ServerPrintTag (Environment.NewLine + TextOther);
+			{ en.io.PrintTag (Environment.NewLine + TextOther);
 				effOther.Execute (en.clock.NextPlayer);
 
 			}

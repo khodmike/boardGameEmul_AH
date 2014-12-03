@@ -116,7 +116,7 @@ namespace mmxAH
               if( rows[i].Meddium  > 0 )
 				((ArchemStreet) en.locs[rows[i].Meddium ]).PrintDistrickt(2, i); 
               if( rows[i].Meddium  < 0 )
-					en.io.ClientWrite((i+1).ToString()+ ". [ "+ en.locs[-rows[i].Meddium].GetTitle()+ " ]", 16,true, false, 2);    
+					en.io.Print((i+1).ToString()+ ". [ "+ en.locs[-rows[i].Meddium].GetTitle()+ " ]", 16,true, false, 2);    
 			    if( rows[i].Right !=0 )
 				((ArchemStreet) en.locs[rows[i].Right]).PrintDistrickt(3, i); 
                

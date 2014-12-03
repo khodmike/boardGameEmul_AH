@@ -39,8 +39,8 @@ namespace mmxAH
 		}
 
 		public   void Print()
-		{ en.io.ClientWrite(text.Title+Environment.NewLine,12,true);
-			en.io.ClientPrintTag (text.InfoText+Environment.NewLine );  
+		{ en.io.Print(text.Title+Environment.NewLine,12,true);
+			en.io.PrintTag (text.InfoText+Environment.NewLine );  
 
 		}
 
@@ -48,16 +48,19 @@ namespace mmxAH
 		{  inv=invest;
 			inv.AddSpecCards(this);
 			if (isWrite)
-			{
-				en.io.ServerPrintTag (inv.GetTitle () + " " + text.InitMessage + Environment.NewLine);
+			{   en.io.SetFormMode (FormMode.Log);  
+				en.io.PrintTag (inv.GetTitle () + " " + text.InitMessage + Environment.NewLine);
 			}
 
 		}
 		public virtual void Discard( bool isPrint)
 		{ //необходим для тика
 			inv.RemoveSpecCards (CodeName, false);  
-			if(isPrint)
-				en.io.ServerPrintTag   (inv.GetTitle () + " " + text.DiscardMessage + Environment.NewLine );  
+			if (isPrint)
+			{
+				en.io.SetFormMode (FormMode.Log);  
+				en.io.PrintTag (inv.GetTitle () + " " + text.DiscardMessage + Environment.NewLine); 
+			}
 		}
 
 		protected virtual   void Tick ()
@@ -66,11 +69,11 @@ namespace mmxAH
 				isFirstTurn = false;
 				return;
 			} 
-			en.io.ServerWrite (text.Title+":", 12, true);
+			en.io.PrintToLog (text.Title+":", 12, true);
 			byte d= new DiceRoller(en).RollOneDice();
 			if(d==1)
 				Discard(true);
-			en.io.ServerWrite (Environment.NewLine);
+			en.io.PrintToLog (Environment.NewLine);
 		}
 
 
@@ -245,18 +248,18 @@ namespace mmxAH
 
 		protected override void Tick()
 		{ 
-				en.io.ServerWrite (text.Title+":", 12, true);
+				en.io.PrintToLog (text.Title+":", 12, true);
 			    inv.GainMoney (2); 
 				if (isFirstTurn)
 				{
 				isFirstTurn = false;
 				return;
 				} 
-			en.io.ServerWrite ("   "); 
+			en.io.PrintToLog ("   "); 
 				byte d= new DiceRoller(en).RollOneDice();
 				if(d==1)
 					Discard(true);
-				en.io.ServerWrite (Environment.NewLine);
+				en.io.PrintToLog (Environment.NewLine);
 
 		}
 
@@ -302,9 +305,9 @@ namespace mmxAH
 
 		protected override void Tick()
 		{ 
-			en.io.ServerWrite (text.Title+":", 12, true);
+			en.io.PrintToLog (text.Title+":", 12, true);
 			inv.GainMoney (1); 
-			en.io.ServerWrite (Environment.NewLine);
+			en.io.PrintToLog (Environment.NewLine);
 
 		}
 

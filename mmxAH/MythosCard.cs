@@ -18,10 +18,10 @@ namespace mmxAH
 
 		public virtual void  Execute()
 		{ en.curs.resolvingMythos=this; 
-			en.io.ServerWrite ( Environment.NewLine+ Title+ "  ", 16, true); 
+			en.io.PrintToLog ( Environment.NewLine+ Title+ "  ", 16, true); 
 			PrintType (); 
 
-			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep1)+Environment.NewLine, 12, true ); 
+			en.io.PrintToLog (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep1)+Environment.NewLine, 12, true ); 
 		
 			ArchemUnstableLoc l = (ArchemUnstableLoc)en.locs [GateLoc];  
 
@@ -41,13 +41,13 @@ namespace mmxAH
 
 		 public void Step2()
 		{ 
-			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep2)+Environment.NewLine, 12, true ); 
+			en.io.PrintToLog (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep2)+Environment.NewLine, 12, true ); 
 			((ArchemArea)en.locs [ClueLoc]).MythosClues ();   
 		}
 
 		public  void Step3()
 		{
-			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep3)+Environment.NewLine, 12, true ); 
+			en.io.PrintToLog (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep3)+Environment.NewLine, 12, true ); 
 			foreach (MonsterIndivid m  in en.ActiveMonsters)
 				m.isEncountred = false;
 			Step3Circle ();
@@ -127,8 +127,8 @@ namespace mmxAH
 
 		private string TextStr;
 		public override void Execute ()
-		{ en.io.ServerWrite ( Environment.NewLine+ Title+ "  ", 16, true); 
-		  en.io.ServerPrintTag  ( Environment.NewLine+ TextStr+ Environment.NewLine); 
+		{ en.io.PrintToLog ( Environment.NewLine+ Title+ "  ", 16, true); 
+		  en.io.PrintTag  ( Environment.NewLine+ TextStr+ Environment.NewLine); 
 			en.mythosDeck.Discard (this);
 			en.mythosDeck.ReshuffleDiscard ();
 			en.mythosDeck.Draw ().Execute() ;
@@ -169,7 +169,7 @@ namespace mmxAH
 
 
 		protected override void Step4 ()
-		{  en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
+		{  en.io.PrintToLog (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
 			eff.Execute(Clear);  
 
 		}
@@ -183,7 +183,7 @@ namespace mmxAH
 
 		protected override void PrintType ()
 		{
-			en.io.ServerWrite ("(Headline)" + Environment.NewLine, 14, true, true);
+			en.io.PrintToLog ("(Headline)" + Environment.NewLine, 14, true, true);
 		}
 	}
 
@@ -196,7 +196,7 @@ namespace mmxAH
 
 
 		protected override void Step4 ()
-		{ en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
+		{ en.io.PrintToLog (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
 			if (en.curs.curEnv != null)
 			{
 				en.curs.curEnv.Stop ();
@@ -218,7 +218,7 @@ namespace mmxAH
 
 	  protected override void PrintType ()
 		{
-			en.io.ServerWrite ("(Envirotment)" + Environment.NewLine, 14, true, true);
+			en.io.PrintToLog ("(Envirotment)" + Environment.NewLine, 14, true, true);
 		}
 	}
 
@@ -231,7 +231,7 @@ namespace mmxAH
 
 
 		protected override void Step4 ()
-		{ en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
+		{ en.io.PrintToLog (Environment.NewLine+ en.sysstr.GetString (SSType.MythosStep4)+Environment.NewLine, 12, true ); 
 			if (en.curs.curRumor != null)
 			{
 
@@ -270,7 +270,7 @@ namespace mmxAH
 
 		protected override void PrintType ()
 		{
-			en.io.ServerWrite ("(Rumor)" + Environment.NewLine, 14, true, true);
+			en.io.PrintToLog ("(Rumor)" + Environment.NewLine, 14, true, true);
 		}
 
 

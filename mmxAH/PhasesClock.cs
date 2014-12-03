@@ -100,9 +100,9 @@ namespace mmxAH
 				if (firstPlayer == en.GetPlayersNumber ())
 					firstPlayer = 0;
 				curPlayer = firstPlayer; 
-				en.io.ServerWrite (Environment.NewLine +en.sysstr.GetString (SSType.Turn) + "  " + curTurn + " " + en.sysstr.GetString (SSType.TurnEndMessage), 14);
-				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.FirstPlayer) + "  : ", 14, true);
-				en.io.ServerWrite (en.ActiveInvistigators [firstPlayer].GetTitle () + Environment.NewLine + Environment.NewLine + Environment.NewLine, 14, false, true);
+				en.io.PrintToLog (Environment.NewLine +en.sysstr.GetString (SSType.Turn) + "  " + curTurn + " " + en.sysstr.GetString (SSType.TurnEndMessage), 14);
+				en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.FirstPlayer) + "  : ", 14, true);
+				en.io.PrintToLog (en.ActiveInvistigators [firstPlayer].GetTitle () + Environment.NewLine + Environment.NewLine + Environment.NewLine, 14, false, true);
 			}
 			curTurn++;
 			
@@ -194,9 +194,9 @@ namespace mmxAH
 			}
 			str+= "==" + Environment.NewLine;
 			if( isServer) 
-			en.io.ServerWrite (str, 14, true); 
+			en.io.PrintToLog (str, 14, true); 
 			else
-			en.io.ClientWrite (str, 14, true); 
+			en.io.Print (str, 14, true); 
 		}
 
 		private string  GetSetupPhaseString()

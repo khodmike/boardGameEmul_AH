@@ -20,7 +20,7 @@ namespace mmxAH
 			str+= num.ToString()+ "d"+dice.ToString();
 			if (num == 0)
 			{
-				en.io.ServerWrite (str);
+				en.io.PrintToLog (str);
 				return 0;
 			}
 		str+= (" = ( ");
@@ -44,7 +44,7 @@ namespace mmxAH
 		  }
 
 			str+=")";
-			en.io.ServerWrite (str); 
+			en.io.PrintToLog (str); 
 			return sucesses;
 
 	  }
@@ -60,7 +60,7 @@ namespace mmxAH
 
 		public byte RollOneDice()
 		{   byte res = Roll ();
-			en.io.ServerWrite("1d"+dice.ToString()+ " = "+ res.ToString()+ " . ");
+			en.io.PrintToLog("1d"+dice.ToString()+ " = "+ res.ToString()+ " . ");
 			return res;
 
 		}

@@ -33,13 +33,13 @@ namespace mmxAH
 		public void Discard ( bool isPrint=false)
 		{ if (isPrint)
 			{
-				en.io.ServerWrite (prot.GetTitle() , 12, true, true);
-				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.From) + "  ");
+				en.io.PrintToLog (prot.GetTitle() , 12, true, true);
+				en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.From) + "  ");
 				if( locnum == 0) 
-				en.io.ServerWrite (en.sysstr.GetString (SSType.Scy), 12, false, true);
+				en.io.PrintToLog (en.sysstr.GetString (SSType.Scy), 12, false, true);
 				else
-					en.io.ServerWrite (en.locs[locnum].GetMoveToTitle() , 12, false, true);
-				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.ReturnToTheCup) + Environment.NewLine); 
+					en.io.PrintToLog (en.locs[locnum].GetMoveToTitle() , 12, false, true);
+				en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.ReturnToTheCup) + Environment.NewLine); 
 
 			}
 			if (locnum != -1)
@@ -71,12 +71,12 @@ namespace mmxAH
 				en.Scy.Add (this);
 			else
 			((ArchemArea ) en.locs[locnum]).AddMonster(this);
-			en.io.ServerWrite (prot.GetTitle(), 12, true);
-			en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.MoveToFact)+ "  "); 
+			en.io.PrintToLog (prot.GetTitle(), 12, true);
+			en.io.PrintToLog ("  "+ en.sysstr.GetString (SSType.MoveToFact)+ "  "); 
 			if( locnum== 0)
-				en.io.ServerWrite ("  "+ en.sysstr.GetString (SSType.Scy)+ " ." + Environment.NewLine, 12, false, true); 
+				en.io.PrintToLog ("  "+ en.sysstr.GetString (SSType.Scy)+ " ." + Environment.NewLine, 12, false, true); 
 			else
-				en.io.ServerWrite (en.locs [newLoc].GetMoveToTitle() + " ." + Environment.NewLine, 12, false, true);  
+				en.io.PrintToLog (en.locs [newLoc].GetMoveToTitle() + " ." + Environment.NewLine, 12, false, true);  
 		}
 
 
@@ -84,16 +84,17 @@ namespace mmxAH
 		{ isEncountred=true;
 			en.curs.curFight = this;
 			isFirstEvade = false;
-			en.io.ServerWrite ("===" +en.ActiveInvistigators [en.clock.GetCurPlayer() ].GetTitle ()+ "  "+ en.sysstr.GetString (SSType.MonsterEncounterVerb) + "  " +prot.GetTitle() + " ==="+ Environment.NewLine  , 12, true);
-			prot.PrintServer ();
+			en.io.SetFormMode (FormMode.Log);  
+			en.io.PrintToLog ("===" +en.ActiveInvistigators [en.clock.GetCurPlayer() ].GetTitle ()+ "  "+ en.sysstr.GetString (SSType.MonsterEncounterVerb) + "  " +prot.GetTitle() + " ==="+ Environment.NewLine  , 12, true);
+			prot.Print ();
 			string str = en.sysstr.GetString (SSType.EvadeOrFight1) + "  " + prot.GetEvadeTitle () + " " + en.sysstr.GetString (SSType.EvadeOrFight2) + " " + prot.GetFightTitle();  
 			en.io.YesNoStart (str,en.sysstr.GetString(SSType.EvadeButton ) , en.sysstr.GetString(SSType.FightButton ), EvadeCheck, HorrorCheck);  
 
 		}
 
 		private void EvadeCheck()
-		{  isFirstEvade = true;
-			en.io.ServerWrite (Environment.NewLine); 
+		{  isFirstEvade = true;  
+			en.io.PrintToLog (Environment.NewLine); 
 			new SkillTest (en, SkillTestType.Evade, prot.GetEvadeModif (), AfterEvadeCheck, 1, true, SkillTestType.Sneak);    
 
 		}
@@ -117,8 +118,8 @@ namespace mmxAH
 
 		private void HorrorCheck()
 		{    en.ActiveInvistigators[ en.clock.GetCurPlayer()].isCanMove =false;
-			en.ActiveInvistigators[ en.clock.GetCurPlayer()].MovementPoints=0;
-			en.io.ServerWrite (Environment.NewLine);
+			en.ActiveInvistigators[ en.clock.GetCurPlayer()].MovementPoints=0; 
+			en.io.PrintToLog (Environment.NewLine);
 			if (prot.GetIsHorror ())
 			{
 				new SkillTest (en, SkillTestType.Horror, prot.GetHorrorModif (), AfterHorrorCheck, 1, true, SkillTestType.Will);    
@@ -132,7 +133,8 @@ namespace mmxAH
 
 
 		private void AfterHorrorCheck( short suc)
-		{ if (suc == 0)
+		{en.io.SetFormMode (FormMode.Log);  
+			if (suc == 0)
 			{
 				EffSanityLose l = new EffSanityLose (en);
 				l.ChangeDemageCount (prot.GetSanityDemage ());
@@ -140,7 +142,7 @@ namespace mmxAH
 
 			} else
 				if (prot.GetExtraSanity () != 0)
-			{ en.io.ServerWrite (Environment.NewLine + "(" + en.sysstr.GetString (SSType.ExtraHorror) + ")", 12, true);    
+			{ en.io.PrintToLog (Environment.NewLine + "(" + en.sysstr.GetString (SSType.ExtraHorror) + ")", 12, true);    
 				EffSanityLose l = new EffSanityLose (en);
 				l.ChangeDemageCount (prot.GetExtraSanity ());
 				l.Execute (FleeOrFight); 
@@ -159,7 +161,8 @@ namespace mmxAH
 
 		}
 		public void DoCombatCheck()
-		{ en.io.ServerWrite (Environment.NewLine); 
+		{ 
+			en.io.PrintToLog (Environment.NewLine); 
 			new SkillTest (en, SkillTestType.Combat ,  prot.GetCombatModif () , AfterCombatCheck, prot.GetTougness() , true, SkillTestType.Fight, itemModif  );    
 		}
 
@@ -168,7 +171,7 @@ namespace mmxAH
 		{ if (suc >= prot.GetTougness ())
 			{ if (prot.GetExtraCombat () != 0)
 				{  MakeATrofy (); 
-					en.io.ServerWrite (Environment.NewLine + "(" + en.sysstr.GetString (SSType.ExtraCombat) + ")", 12, true);    
+					en.io.PrintToLog (Environment.NewLine + "(" + en.sysstr.GetString (SSType.ExtraCombat) + ")", 12, true);    
 					EffStaminaLose l = new EffStaminaLose (en);
 					l.ChangeDemageCount (prot.GetExtraCombat ());
 					l.Execute (EndEncounter); 
@@ -200,7 +203,7 @@ namespace mmxAH
 
 		private void FleeCheck()
 		{ 
-			en.io.ServerWrite (Environment.NewLine); 
+			en.io.PrintToLog (Environment.NewLine); 
 			new SkillTest (en, SkillTestType.Evade, prot.GetEvadeModif (), AfterFleeCheck, 1, true, SkillTestType.Sneak);    
 
 		}
@@ -220,8 +223,8 @@ namespace mmxAH
 
 		public void EndEncounter()
 		{ 
-			en.io.ServerWrite(Environment.NewLine); 
-			en.io.ServerWrite(Environment.NewLine); 
+			en.io.PrintToLog(Environment.NewLine); 
+			en.io.PrintToLog(Environment.NewLine); 
 			RPAfterEncounter(); 
 
 		}
@@ -232,7 +235,7 @@ namespace mmxAH
 		}
 
 		public void PrintToMap( byte label)
-		{ en.io.ClientWrite(prot.GetTitle() , 12,true,true,label); 
+		{ en.io.Print(prot.GetTitle() , 12,true,true,label); 
 
 		}
 
@@ -256,13 +259,10 @@ namespace mmxAH
 
 		public void Print()
 		{
-			prot.PrintServer ();
+			prot.Print ();
 		}
 
-		public void PrintClient()
-		{ prot.PrintClient (); 
 
-		}
 
 		public void MakeATrofy()
 		{  if ( locnum!= -1)
@@ -285,7 +285,7 @@ namespace mmxAH
 
 		public void PrintAsTrofy()
 		{
-			en.io.ClientWrite (prot.GetTitle () + "  (" + prot.GetTougness () + ")");  
+			en.io.Print (prot.GetTitle () + "  (" + prot.GetTougness () + ")");  
 		}
 
 		public void AddItemModif( byte modifChange, bool isPhysical=false, bool  isMagic=false)
@@ -568,160 +568,84 @@ namespace mmxAH
 
 
 
-		public void PrintServer()
-		{
-			en.io.ServerWrite (Title, 14, true);
-			en.io.ServerWrite ("       " + en.sysstr.GetString (SSType.DS) + ": " + en.ds.GetTitle (dsindex) );
-			en.io.ServerWrite ("       " + en.sysstr.GetMonsterMovementString(moveType));
-
-			if( isUndead)
-				en.io.ServerWrite ("       " + en.sysstr.GetString(SSType.Undead), 12, true,true);
-			if( isSpawn)
-				en.io.ServerWrite ("       " + en.sysstr.GetString(SSType.Spawn), 12, true,true);
-			if( isMask)
-				en.io.ServerWrite ("       " + en.sysstr.GetString(SSType.Mask), 12, true,true);
-			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.Awerness), 12, true);
-			en.io.ServerWrite ("  ");
-			if (EvadeModif > 0)
-				en.io.ServerWrite ("+");
-			en.io.ServerWrite (EvadeModif.ToString ());
-			if( isAmbush)
-				en.io.ServerWrite ("       "+ en.sysstr.GetString (SSType.Ambush ), 12, true);
-
-			en.io.ServerWrite (Environment.NewLine+ en.sysstr.GetString (SSType.HorrorModif )+ "   ", 12, true);
-			if (InsteadEncEffect != null)
-			{ en.io.ServerWrite ("-" + Environment.NewLine);
-			  en.io.ServerWrite (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
-			  en.io.ServerWrite ("-" + Environment.NewLine);
-
-			} else
-			{
-				if (isHorrorCheck)
-				{
-					if (HorrorModif >= 0)
-						en.io.ServerWrite ("+"); 
-					en.io.ServerWrite (HorrorModif.ToString ());
-					en.io.ServerWrite ("        " + en.sysstr.GetString (SSType.HorrorDemage) + "   ", 12, true);
-					en.io.ServerWrite (HorrorDemage.ToString ());
-					if (ExtraHorror != 0)
-						en.io.ServerWrite ("        " + en.sysstr.GetString (SSType.ExtraHorror) + " " + ExtraHorror, 12, true);
-					en.io.ServerWrite (Environment.NewLine);   
-
-				} else
-					en.io.ServerWrite ("-" + Environment.NewLine);
-
-				en.io.ServerWrite (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
-				if (CombatModif >= 0) 
-					en.io.ServerWrite ("+"); 
-				en.io.ServerWrite (CombatModif.ToString ());
-				en.io.ServerWrite ("        " + en.sysstr.GetString (SSType.CombatDemage) + "   ", 12, true);
-				if (CombatDemage == 0)
-					en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.MonsterDemageSpecial));
-				else
-					en.io.ServerWrite (CombatDemage.ToString ());
-				if (ExtraCombat != 0)
-					en.io.ServerWrite ("        " + en.sysstr.GetString (SSType.ExtraCombat) + " " + ExtraCombat, 12, true);
-				en.io.ServerWrite (Environment.NewLine);   
-			}
-			en.io.ServerWrite (en.sysstr.GetString (SSType.Tougness ), 12,true );
-			en.io.ServerWrite ("  ");
-			en.io.ServerWrite ( Tougness.ToString());
-
-			if( MR)
-				en.io.ServerWrite ("       "+ en.sysstr.GetString (SSType.MR ), 12, true);
-			if( MI)
-				en.io.ServerWrite ("       "+ en.sysstr.GetString (SSType.MI ), 12, true);
-			if( PR)
-				en.io.ServerWrite ("       "+ en.sysstr.GetString (SSType.PR ), 12, true);
-			if( PI)
-				en.io.ServerWrite ("       "+ en.sysstr.GetString (SSType.PI ), 12, true);
-			en.io.ServerWrite (Environment.NewLine);
-			if( isEndless)
-				en.io.ServerWrite ( en.sysstr.GetString (SSType.Endless )+ Environment.NewLine , 12, true);
-			foreach (string str in SpecAbilText)
-				en.io.ServerPrintTag (str + Environment.NewLine); 
-			en.io.ServerWrite (Environment.NewLine); 
 
 
-		}
-
-
-		public void PrintClient()
+		public void Print()
 		{ if (isPrinted)
 				return;
 			else
 				isPrinted = true;
-			en.io.ClientWrite (Title, 14, true);
-			en.io.ClientWrite ("       " + en.sysstr.GetString (SSType.DS) + ": " + en.ds.GetTitle (dsindex) );
-			en.io.ClientWrite ("       " + en.sysstr.GetMonsterMovementString(moveType));
+			en.io.Print (Title, 14, true);
+			en.io.Print ("       " + en.sysstr.GetString (SSType.DS) + ": " + en.ds.GetTitle (dsindex) );
+			en.io.Print ("       " + en.sysstr.GetMonsterMovementString(moveType));
 
 			if( isUndead)
-				en.io.ClientWrite ("       " + en.sysstr.GetString(SSType.Undead), 12, true,true);
+				en.io.Print ("       " + en.sysstr.GetString(SSType.Undead), 12, true,true);
 			if( isSpawn)
-				en.io.ClientWrite ("       " + en.sysstr.GetString(SSType.Spawn), 12, true,true);
+				en.io.Print ("       " + en.sysstr.GetString(SSType.Spawn), 12, true,true);
 			if( isMask)
-				en.io.ClientWrite ("       " + en.sysstr.GetString(SSType.Mask), 12, true,true);
-			en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetString (SSType.Awerness), 12, true);
-			en.io.ClientWrite ("  ");
+				en.io.Print ("       " + en.sysstr.GetString(SSType.Mask), 12, true,true);
+			en.io.Print (Environment.NewLine+ en.sysstr.GetString (SSType.Awerness), 12, true);
+			en.io.Print ("  ");
 			if (EvadeModif > 0)
-				en.io.ClientWrite ("+");
-			en.io.ClientWrite (EvadeModif.ToString ());
+				en.io.Print ("+");
+			en.io.Print (EvadeModif.ToString ());
 			if( isAmbush)
-				en.io.ClientWrite ("       "+ en.sysstr.GetString (SSType.Ambush ), 12, true);
+				en.io.Print ("       "+ en.sysstr.GetString (SSType.Ambush ), 12, true);
 
-			en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetString (SSType.HorrorModif )+ "   ", 12, true);
+			en.io.Print (Environment.NewLine+ en.sysstr.GetString (SSType.HorrorModif )+ "   ", 12, true);
 			if (InsteadEncEffect != null)
-			{ en.io.ClientWrite ("-" + Environment.NewLine);
-				en.io.ClientWrite (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
-				en.io.ClientWrite ("-" + Environment.NewLine);
+			{ en.io.Print ("-" + Environment.NewLine);
+				en.io.Print (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
+				en.io.Print ("-" + Environment.NewLine);
 
 			} else
 			{
 				if (isHorrorCheck)
 				{
 					if (HorrorModif >= 0)
-						en.io.ClientWrite ("+"); 
-					en.io.ClientWrite (HorrorModif.ToString ());
-					en.io.ClientWrite ("        " + en.sysstr.GetString (SSType.HorrorDemage) + "   ", 12, true);
-					en.io.ClientWrite (HorrorDemage.ToString ());
+						en.io.Print ("+"); 
+					en.io.Print (HorrorModif.ToString ());
+					en.io.Print ("        " + en.sysstr.GetString (SSType.HorrorDemage) + "   ", 12, true);
+					en.io.Print (HorrorDemage.ToString ());
 					if (ExtraHorror != 0)
-						en.io.ClientWrite ("        " + en.sysstr.GetString (SSType.ExtraHorror) + " " + ExtraHorror, 12, true);
-					en.io.ClientWrite (Environment.NewLine);   
+						en.io.Print ("        " + en.sysstr.GetString (SSType.ExtraHorror) + " " + ExtraHorror, 12, true);
+					en.io.Print (Environment.NewLine);   
 
 				} else
-					en.io.ClientWrite ("-" + Environment.NewLine);
+					en.io.Print ("-" + Environment.NewLine);
 
-				en.io.ClientWrite (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
+				en.io.Print (en.sysstr.GetString (SSType.CombatModif) + "   ", 12, true);
 				if (CombatModif >= 0) 
-					en.io.ClientWrite ("+"); 
-				en.io.ClientWrite (CombatModif.ToString ());
-				en.io.ClientWrite ("        " + en.sysstr.GetString (SSType.CombatDemage) + "   ", 12, true);
+					en.io.Print ("+"); 
+				en.io.Print (CombatModif.ToString ());
+				en.io.Print ("        " + en.sysstr.GetString (SSType.CombatDemage) + "   ", 12, true);
 				if (CombatDemage == 0)
-					en.io.ClientWrite ("  " + en.sysstr.GetString (SSType.MonsterDemageSpecial));
+					en.io.Print ("  " + en.sysstr.GetString (SSType.MonsterDemageSpecial));
 				else
-					en.io.ClientWrite (CombatDemage.ToString ());
+					en.io.Print (CombatDemage.ToString ());
 				if (ExtraCombat != 0)
-					en.io.ClientWrite ("        " + en.sysstr.GetString (SSType.ExtraCombat) + " " + ExtraCombat, 12, true);
-				en.io.ClientWrite (Environment.NewLine);   
+					en.io.Print ("        " + en.sysstr.GetString (SSType.ExtraCombat) + " " + ExtraCombat, 12, true);
+				en.io.Print (Environment.NewLine);   
 			}
-			en.io.ClientWrite (en.sysstr.GetString (SSType.Tougness ), 12,true );
-			en.io.ClientWrite ("  ");
-			en.io.ClientWrite ( Tougness.ToString());
+			en.io.Print (en.sysstr.GetString (SSType.Tougness ), 12,true );
+			en.io.Print ("  ");
+			en.io.Print ( Tougness.ToString());
 
 			if( MR)
-				en.io.ClientWrite ("       "+ en.sysstr.GetString (SSType.MR ), 12, true);
+				en.io.Print ("       "+ en.sysstr.GetString (SSType.MR ), 12, true);
 			if( MI)
-				en.io.ClientWrite ("       "+ en.sysstr.GetString (SSType.MI ), 12, true);
+				en.io.Print ("       "+ en.sysstr.GetString (SSType.MI ), 12, true);
 			if( PR)
-				en.io.ClientWrite ("       "+ en.sysstr.GetString (SSType.PR ), 12, true);
+				en.io.Print ("       "+ en.sysstr.GetString (SSType.PR ), 12, true);
 			if( PI)
-				en.io.ClientWrite ("       "+ en.sysstr.GetString (SSType.PI ), 12, true);
-			en.io.ClientWrite (Environment.NewLine);
+				en.io.Print ("       "+ en.sysstr.GetString (SSType.PI ), 12, true);
+			en.io.Print (Environment.NewLine);
 			if( isEndless)
-				en.io.ClientWrite ( en.sysstr.GetString (SSType.Endless )+ Environment.NewLine , 12, true);
+				en.io.Print ( en.sysstr.GetString (SSType.Endless )+ Environment.NewLine , 12, true);
 			foreach (string str in SpecAbilText)
-				en.io.ClientPrintTag (str + Environment.NewLine); 
-			en.io.ClientWrite (Environment.NewLine); 
+				en.io.PrintTag (str + Environment.NewLine); 
+			en.io.Print (Environment.NewLine); 
 
 
 		}

@@ -37,7 +37,7 @@ namespace mmxAH
 			if (modif >= 0)
 				str += "+";
 			str+= modif+ " } ";
-			en.io.ServerWrite (str, 12, true);
+			en.io.PrintToLog (str, 12, true);
 
 			needSuc = needSuccess;  
 			RP = returnPoint;
@@ -51,7 +51,7 @@ namespace mmxAH
 
 
 		private void AfterRoll()
-		{ en.io.ServerWrite (en.sysstr.GetString (SSType.TotalSuccesses1) + " " + successes + " " + en.sysstr.GetString (SSType.TotalSuccesses2) + Environment.NewLine);  
+		{ en.io.PrintToLog (en.sysstr.GetString (SSType.TotalSuccesses1) + " " + successes + " " + en.sysstr.GetString (SSType.TotalSuccesses2) + Environment.NewLine);  
 
 			if (successes >= needSuc || needSuc == 255)
 				Finish ();
@@ -62,10 +62,10 @@ namespace mmxAH
 		private void Finish()
 		{
 			if (successes >= needSuc)
-				en.io.ServerWrite (en.sysstr.GetString (SSType.SkillCheck) + " " + en.sysstr.GetString (SSType.SCPass)+ ". ", 12, true); 
+				en.io.PrintToLog (en.sysstr.GetString (SSType.SkillCheck) + " " + en.sysstr.GetString (SSType.SCPass)+ ". ", 12, true); 
 			else
 				if( needSuc != 255) // не таблица по успехам
-					en.io.ServerWrite (en.sysstr.GetString (SSType.SkillCheck) + " " + en.sysstr.GetString (SSType.SCFail)+ ". ", 12, true); 
+					en.io.PrintToLog (en.sysstr.GetString (SSType.SkillCheck) + " " + en.sysstr.GetString (SSType.SCFail)+ ". ", 12, true); 
 
 			RP( successes); 
           

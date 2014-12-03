@@ -47,7 +47,7 @@ namespace mmxAH
 		}
 		public override void Execute ()
 		{
-			chooseFunc.BeginInvoke (Param, null,null);
+			chooseFunc (Param);
 		}
 
 	}
@@ -61,14 +61,14 @@ namespace mmxAH
 		}
 		public override  void Execute()
 		{
-			fu.BeginInvoke(null,null) ;
+			fu() ;
 		}
 
 
 	}
 
 
-	[Synchronization] 
+
 	public class IOClass
 	{   public IOMode mode;
 		public string PauseTitle, ChooseEndTitle, YesTitle, NoTitle, QuestTitle;
@@ -78,12 +78,7 @@ namespace mmxAH
 		private FormMode frmMode;
 		private List< LogEntry > log; 
 		private GameEngine en;
-		private byte sideCode=0; //0-netral, 1-Server, 2-server
-		private bool isServerUpdate = false;
 		private MainMenuForm mmFrm;
-
-
-		private FormMode serverFormMode;
 		public IOClass (WorkForm frmp, GameEngine eng, MainMenuForm frmMM)
 		{
 		  mode= IOMode.Stop;
@@ -99,7 +94,9 @@ namespace mmxAH
 		{  FAfterPause=f;
 		   PauseTitle=title; 
 		   mode=IOMode.Pause; 
-			isServerUpdate = true;  
+			if (frmMode == FormMode.Log)
+				ShowLog (); 
+
 
          
 
@@ -112,22 +109,24 @@ namespace mmxAH
 		  NoTitle=aNo;
 		  QuestTitle=q; 
 		  mode= IOMode.YesNo; 
-			isServerUpdate = true; 
+			if (frmMode == FormMode.Log)
+				ShowLog (); 
+
 
 		}
 
 
 		public void PauseEnd ()
 		{ mode= IOMode.Stop; 
-			FAfterPause.BeginInvoke (null, null); 
+			FAfterPause(); 
 		}
 
 		public void Answer( bool a)
 		{  mode=IOMode.Stop; 
 			if(a)
-				FYes.BeginInvoke(null, null) ;
+				FYes() ;
 			else
-				FNo.BeginInvoke(null, null);
+				FNo();
 
 		}
 
@@ -137,7 +136,8 @@ namespace mmxAH
 			QuestTitle=question;
 			ChooseEndTitle=buttonName;
 		    options =opts;
-			isServerUpdate = true; 
+			if (frmMode == FormMode.Log)
+				ShowLog (); 
 
 
 		}
@@ -160,10 +160,8 @@ namespace mmxAH
 			FYes.BeginInvoke(null,null) ;
 		}
 
-		public void ClientWrite (string Text, byte fontsize=12, bool isBold=false, bool isItalic=false, byte  label=1, string ChooseColor="Black")
-		{  if (sideCode != 1) 
-				return;
-
+		public void Print (string Text, byte fontsize=12, bool isBold=false, bool isItalic=false, byte  label=1, string ChooseColor="Black")
+		{  
 
 			frm.ShowLabelText (Text, fontsize, isBold, isItalic, label, ChooseColor); 
 			if ( frmMode == FormMode.Log)
@@ -172,22 +170,20 @@ namespace mmxAH
 
 
 
-		public void ServerWrite (string Text, byte fontsize=12, bool isBold=false, bool isItalic=false, byte  label=1, string ChooseColor="Black")
-		{ do
-			{
+		public void PrintToLog (string Text, byte fontsize=12, bool isBold=false, bool isItalic=false, byte  label=1, string ChooseColor="Black")
+		{ 
 
-			} while( sideCode != 0);
-
-			sideCode = 2;
-			SetServerFormMode (FormMode.Log);  
-		
-
-
-
-
-		
 			log.Add ( new LogEntry(Text, fontsize, isBold,isItalic, label, ChooseColor ));   
-			sideCode = 0; 
+			frmMode = FormMode.Log;
+			
+		
+
+
+
+
+		
+
+
 
 		}
 
@@ -227,9 +223,8 @@ namespace mmxAH
 		}
 
 		public void SetFormMode( FormMode md)
-		{  if (sideCode != 0)
-				return;
-			sideCode = 1;
+		{ 
+
 			frmMode = md;
 			switch (md)
 			{ case FormMode.Log: ShowLog (); break; 
@@ -239,13 +234,12 @@ namespace mmxAH
 			case FormMode.Monsters: PrintMonsters (); break; 
 			case FormMode.Status:{frm.mapMode (false); en.status.Print (); } break;   
 			}
-			sideCode = 0;
+
 
 		}
 
 		public void Set3LabelView()
-		{  if (sideCode != 1)
-				return;
+		{  
 			frmMode = FormMode.Map;
 			frm.mapMode (true); 
 
@@ -262,8 +256,8 @@ namespace mmxAH
 			do
 			{
 				en.ActiveInvistigators [i]. Print (); 
-				ClientWrite (Environment.NewLine);
-				ClientWrite (Environment.NewLine);
+				Print (Environment.NewLine);
+				Print (Environment.NewLine);
 				i++;
 				if( i== en.GetPlayersNumber())
 					i=0;
@@ -277,42 +271,14 @@ namespace mmxAH
 			foreach (MonsterPrototype  pr in en.MonsterPrototypes)
 				pr.isPrinted = false; 
 			foreach (MonsterIndivid m  in en.ActiveMonsters)
-				m.PrintClient (); 
+				m.Print (); 
 		} 
 
 
 
-		public void CheckServerUpdate()
-		{ //вызываеться из таймера Основной формы
 
-				
-				
+	
 
-
-			if (isServerUpdate)
-			{
-			 
-				frm.RefreshControls ();
-				SetFormMode (serverFormMode);
-				isServerUpdate = false;
-			}
-
-
-			
-				
-		
-
-
-
-
-
-		}
-
-		public void SetServerFormMode( FormMode mode)
-		{
-			serverFormMode = mode;
-
-		}
 
 	
 		public void SetSaveEnable(bool mode)
@@ -377,7 +343,7 @@ namespace mmxAH
 		}
 
 
-		public void ClientPrintTag( string str)
+		public void PrintTag( string str)
 		{ string str_print = "";
 			int bi, ii;
 			do
@@ -385,27 +351,27 @@ namespace mmxAH
 				ii=str.IndexOf ("{i}");
 				if ( bi== ii) // только если обоих нету
 				{
-					ClientWrite (str);
+					Print (str);
 					str = "";
 				}
 				else if( bi != -1 && ii != -1)
 					{
 						if( bi> ii) //курсив раньше
 					{ str_print= str.Substring(0,ii); 
-						en.io.ClientWrite(str_print);
+						Print(str_print);
 						str= str.Substring( ii+3);
 						ii=str.IndexOf ("{i}");
 						str_print= str.Substring(0,ii); 
-						en.io.ClientWrite(str_print,12,false,true);
+						Print(str_print,12,false,true);
 						str= str.Substring( ii+3);
 						}
 						else  //жирный раньше
 					{str_print= str.Substring(0,bi); 
-						en.io.ClientWrite(str_print);
+						Print(str_print);
 						str= str.Substring( bi+3);
 						ii=str.IndexOf ("{b}");
 						str_print= str.Substring(0,ii); 
-						en.io.ClientWrite(str_print,12,true);
+						Print(str_print,12,true);
 						str= str.Substring( ii+3);
 
 						}
@@ -413,21 +379,21 @@ namespace mmxAH
 					else if( bi != -1)
 					{ // только жирность
 					str_print= str.Substring(0,bi); 
-					en.io.ClientWrite(str_print);
+					Print(str_print);
 					str= str.Substring( bi+3);
 					ii=str.IndexOf ("{b}");
 					str_print= str.Substring(0,ii); 
-					en.io.ClientWrite(str_print,12,true);
+					Print(str_print,12,true);
 					str= str.Substring( ii+3);
 					}
 					else
 					{ // только курсив
 					str_print= str.Substring(0,ii); 
-					en.io.ClientWrite(str_print);
+					Print(str_print);
 					str= str.Substring( ii+3);
 					ii=str.IndexOf ("{i}");
 					str_print= str.Substring(0,ii); 
-					en.io.ClientWrite(str_print,12,false,true);
+					Print(str_print,12,false,true);
 					str= str.Substring( ii+3);
 					}
 
@@ -437,65 +403,7 @@ namespace mmxAH
 			} while(str != "");
 		}
 
-		public void ServerPrintTag( string str)
-		{ string str_print = "";
-			int bi, ii;
-			do
-			{ bi=str.IndexOf ("{b}");
-				ii=str.IndexOf ("{i}");
-				if ( bi== ii) // только если обоих нету
-				{
-					ServerWrite (str);
-					str = "";
-				}
-				else if( bi != -1 && ii != -1)
-				{
-					if( bi> ii) //курсив раньше
-					{ str_print= str.Substring(0,ii); 
-						en.io.ServerWrite(str_print);
-						str= str.Substring( ii+3);
-						ii=str.IndexOf ("{i}");
-						str_print= str.Substring(0,ii); 
-						en.io.ServerWrite(str_print,12,false,true);
-						str= str.Substring( ii+3);
-					}
-					else  //жирный раньше
-					{str_print= str.Substring(0,bi); 
-						en.io.ServerWrite(str_print);
-						str= str.Substring( bi+3);
-						ii=str.IndexOf ("{b}");
-						str_print= str.Substring(0,ii); 
-						en.io.ServerWrite(str_print,12,true);
-						str= str.Substring( ii+3);
 
-					}
-				}
-				else if( bi != -1)
-				{ // только жирность
-					str_print= str.Substring(0,bi); 
-					en.io.ServerWrite(str_print);
-					str= str.Substring( bi+3);
-					ii=str.IndexOf ("{b}");
-					str_print= str.Substring(0,ii); 
-					en.io.ServerWrite(str_print,12,true);
-					str= str.Substring( ii+3);
-				}
-				else
-				{ // только курсив
-					str_print= str.Substring(0,ii); 
-					en.io.ServerWrite(str_print);
-					str= str.Substring( ii+3);
-					ii=str.IndexOf ("{i}");
-					str_print= str.Substring(0,ii); 
-					en.io.ServerWrite(str_print,12,false,true);
-					str= str.Substring( ii+3);
-				}
-
-
-
-
-			} while(str != "");
-		}
 
 	}
 }

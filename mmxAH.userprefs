@@ -1,12 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/GameEngine.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/MythosCard.cs">
     <Files>
-      <File FileName="mmxAH/GameEngine.cs" Line="204" Column="4" />
-      <File FileName="mmxAH/MapOfCity.cs" Line="74" Column="1" />
-      <File FileName="mmxAH/Locathion.cs" Line="767" Column="43" />
-      <File FileName="mmxAH/Effect.cs" Line="110" Column="88" />
-      <File FileName="mmxAH/GlobalActhions.cs" Line="1" Column="1" />
+      <File FileName="mmxAH/MythosCard.cs" Line="155" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -149,9 +149,9 @@ namespace mmxAH
 
 			private void PrintPlacement()
 			{
-				en.io.ServerWrite (Title, 12, true);
-				en.io.ServerWrite (" "+ en.sysstr.GetString (SSType.isPlacedTo)+ " " );
-				en.io.ServerWrite (charA [curPos] + "/" + charB[curPos]+ Environment.NewLine , 12, false, true);    
+				en.io.PrintToLog (Title, 12, true);
+				en.io.PrintToLog (" "+ en.sysstr.GetString (SSType.isPlacedTo)+ " " );
+				en.io.PrintToLog (charA [curPos] + "/" + charB[curPos]+ Environment.NewLine , 12, false, true);    
 
 			}
 
@@ -239,8 +239,8 @@ namespace mmxAH
 		{
 			//Нельзя автодобовления из-за вожможной замены после devour
 			investnum= newInvestNum;
-			en.io.ServerWrite (en.sysstr.GetString (SSType.Investigitor) + " " + (investnum+1) + ": ");
-			en.io.ServerWrite (DisplayName + Environment.NewLine, 12, false, true);   
+			en.io.PrintToLog (en.sysstr.GetString (SSType.Investigitor) + " " + (investnum+1) + ": ");
+			en.io.PrintToLog (DisplayName + Environment.NewLine, 12, false, true);   
 
 			locnum = setupi.StartLoc;
 			en.locs [locnum].AddInvestigator (investnum);
@@ -272,9 +272,9 @@ namespace mmxAH
 		public void MoveTo (short locindex)
 		{ MovementPoints -= ((ArchemArea) en.locs[locindex]).GetCost();
 
-			en.io.ServerWrite  ( DisplayName+ "  "+ en.sysstr.GetString( SSType.MoveToFact)+ " ");
-			en.io.ServerWrite (en.locs[locindex].GetMoveToTitle(), 12, false, true);
-			en.io.ServerWrite (" .  " +en.sysstr.GetString(SSType.RemainMP) + "  "+ MovementPoints+ Environment.NewLine);
+			en.io.PrintToLog  ( DisplayName+ "  "+ en.sysstr.GetString( SSType.MoveToFact)+ " ");
+			en.io.PrintToLog (en.locs[locindex].GetMoveToTitle(), 12, false, true);
+			en.io.PrintToLog (" .  " +en.sysstr.GetString(SSType.RemainMP) + "  "+ MovementPoints+ Environment.NewLine);
 			SetLocathion (locindex);
 			en.map.Print(); 
 			en.locs[locindex].Move ();
@@ -291,7 +291,7 @@ namespace mmxAH
 				clues += count;
 
 				
-			en.io.ServerWrite  (Pronoun + "  "+ en.sysstr.GetString (SSType.NowHas) +  "  " + en.sysstr.GetNumberClueToken (clues) + "."+ Environment.NewLine );      
+			en.io.PrintToLog  (Pronoun + "  "+ en.sysstr.GetString (SSType.NowHas) +  "  " + en.sysstr.GetNumberClueToken (clues) + "."+ Environment.NewLine );      
            
 
 		}
@@ -305,9 +305,9 @@ namespace mmxAH
 			else
 				clues -= count;
 
-			en.io.ServerWrite (DisplayName + "  " + en.sysstr.GetString (SSType.DiscardFact) + " ");  
-			 en.io.ServerWrite (en.sysstr.GetNumberClueToken(count),12,false,false,1,"Green");
-			en.io.ServerWrite (" ( " + clues + " " + en.sysstr.GetString (SSType.Remain)+"). " );
+			en.io.PrintToLog (DisplayName + "  " + en.sysstr.GetString (SSType.DiscardFact) + " ");  
+			 en.io.PrintToLog (en.sysstr.GetNumberClueToken(count),12,false,false,1,"Green");
+			en.io.PrintToLog (" ( " + clues + " " + en.sysstr.GetString (SSType.Remain)+"). " );
 
 
 		}
@@ -387,54 +387,54 @@ namespace mmxAH
 		}
 
 		public void Print()
-		{  en.io.ClientWrite(DisplayName,12, false, true);
-			en.io.ClientWrite ("," + Occupashion );
+		{  en.io.Print(DisplayName,12, false, true);
+			en.io.Print ("," + Occupashion );
 			if(isDelayed) 
-				en.io.ClientWrite ("    "+en.sysstr.GetString( SSType.Delayed)   , 12, false,true); 
+				en.io.Print ("    "+en.sysstr.GetString( SSType.Delayed)   , 12, false,true); 
 			if(isExploredToken) 
-				en.io.ClientWrite ("    "+en.sysstr.GetString( SSType.ExploredToken)   , 12, false,true); 
+				en.io.Print ("    "+en.sysstr.GetString( SSType.ExploredToken)   , 12, false,true); 
 			if (investnum == en.clock.GetFirstPlayer ())
-				en.io.ClientWrite ("    "+en.sysstr.GetString( SSType.FirstPlayer)   , 12, true); 
-			en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetNumberClueToken (clues),12, false,false,1,"Green");     
-			en.io.ClientWrite ("  $" + Money + Environment.NewLine);   
-			en.io.ClientWrite (en.sysstr.GetString(SSType.Sanity)    + ": ", 12, true,false,1, "Blue");
-			en.io.ClientWrite ( curSanity + "/ " + maxSanity + Environment.NewLine,12,false,false,1,"Blue"); 
-			en.io.ClientWrite (en.sysstr.GetString(SSType.Stamina)    + ": ", 12, true, false,1, "Red");
-			en.io.ClientWrite ( curStamina + "/ " + maxStamina + Environment.NewLine,12,false, false,1, "Red");
-			en.io.ClientWrite (en.sysstr.GetString(SSType.Focus)   + ": ", 12, true);
-			en.io.ClientWrite (Focus+ Environment.NewLine );  
+				en.io.Print ("    "+en.sysstr.GetString( SSType.FirstPlayer)   , 12, true); 
+			en.io.Print (Environment.NewLine+ en.sysstr.GetNumberClueToken (clues),12, false,false,1,"Green");     
+			en.io.Print ("  $" + Money + Environment.NewLine);   
+			en.io.Print (en.sysstr.GetString(SSType.Sanity)    + ": ", 12, true,false,1, "Blue");
+			en.io.Print ( curSanity + "/ " + maxSanity + Environment.NewLine,12,false,false,1,"Blue"); 
+			en.io.Print (en.sysstr.GetString(SSType.Stamina)    + ": ", 12, true, false,1, "Red");
+			en.io.Print ( curStamina + "/ " + maxStamina + Environment.NewLine,12,false, false,1, "Red");
+			en.io.Print (en.sysstr.GetString(SSType.Focus)   + ": ", 12, true);
+			en.io.Print (Focus+ Environment.NewLine );  
 
 
-			en.io.ClientWrite  (en.sysstr.GetString(SSType.Speed )  + "/" +en.sysstr.GetString(SSType.Sneak ) + Environment.NewLine); 
-			en.io.ClientWrite (SpeedSneak.PrintCharA () + STInfo.PrintInfo (SkillTestType.Speed, en.sysstr));
-			en.io.ClientWrite(en.GlobalModifs.PrintInfo(SkillTestType.Speed, en.sysstr) +Environment.NewLine,12,true  ); 
-			en.io.ClientWrite (SpeedSneak.PrintCharB()+STInfo.PrintInfo(SkillTestType.Sneak,en.sysstr)+STInfo.PrintInfo(SkillTestType.Evade, en.sysstr) ); 
-			en.io.ClientWrite(en.GlobalModifs.PrintInfo(SkillTestType.Sneak,en.sysstr) +en.GlobalModifs.PrintInfo(SkillTestType.Evade, en.sysstr)+ Environment.NewLine,12,true  );
-			en.io.ClientWrite  (Environment.NewLine + en.sysstr.GetString(SSType.Fight )  + "/" +en.sysstr.GetString(SSType.Will ) + Environment.NewLine); 
-			en.io.ClientWrite (FightWill.PrintCharA()+STInfo.PrintInfo(SkillTestType.Fight, en.sysstr)+STInfo.PrintInfo(SkillTestType.Combat,en.sysstr)  ); 
-			en.io.ClientWrite (en.GlobalModifs.PrintInfo(SkillTestType.Fight, en.sysstr)+en.GlobalModifs.PrintInfo(SkillTestType.Combat,en.sysstr)+Environment.NewLine,12,true  ); 
-			en.io.ClientWrite (FightWill.PrintCharB()+STInfo.PrintInfo(SkillTestType.Will,en.sysstr)+STInfo.PrintInfo(SkillTestType.Horror, en.sysstr) ); 
-			en.io.ClientWrite (en.GlobalModifs.PrintInfo(SkillTestType.Will,en.sysstr)+en.GlobalModifs.PrintInfo(SkillTestType.Horror, en.sysstr)+Environment.NewLine,12,true  ); 
-			en.io.ClientWrite  (Environment.NewLine + en.sysstr.GetString(SSType.Lore )  + "/" +en.sysstr.GetString(SSType.Luck ) + Environment.NewLine); 
-			en.io.ClientWrite (LoreLuck.PrintCharA()+STInfo.PrintInfo(SkillTestType.Lore,en.sysstr)+STInfo.PrintInfo(SkillTestType.SpellCast , en.sysstr)  ); 
-			en.io.ClientWrite (en.GlobalModifs.PrintInfo(SkillTestType.Lore,en.sysstr)+en.GlobalModifs.PrintInfo(SkillTestType.SpellCast , en.sysstr)+Environment.NewLine,12,true  ); 
-			en.io.ClientWrite (LoreLuck.PrintCharB()+STInfo.PrintInfo(SkillTestType.Luck, en.sysstr)  ); 
-			en.io.ClientWrite (en.GlobalModifs.PrintInfo(SkillTestType.Luck, en.sysstr)+Environment.NewLine  ); 
+			en.io.Print  (en.sysstr.GetString(SSType.Speed )  + "/" +en.sysstr.GetString(SSType.Sneak ) + Environment.NewLine); 
+			en.io.Print (SpeedSneak.PrintCharA () + STInfo.PrintInfo (SkillTestType.Speed, en.sysstr));
+			en.io.Print(en.GlobalModifs.PrintInfo(SkillTestType.Speed, en.sysstr) +Environment.NewLine,12,true  ); 
+			en.io.Print (SpeedSneak.PrintCharB()+STInfo.PrintInfo(SkillTestType.Sneak,en.sysstr)+STInfo.PrintInfo(SkillTestType.Evade, en.sysstr) ); 
+			en.io.Print(en.GlobalModifs.PrintInfo(SkillTestType.Sneak,en.sysstr) +en.GlobalModifs.PrintInfo(SkillTestType.Evade, en.sysstr)+ Environment.NewLine,12,true  );
+			en.io.Print  (Environment.NewLine + en.sysstr.GetString(SSType.Fight )  + "/" +en.sysstr.GetString(SSType.Will ) + Environment.NewLine); 
+			en.io.Print (FightWill.PrintCharA()+STInfo.PrintInfo(SkillTestType.Fight, en.sysstr)+STInfo.PrintInfo(SkillTestType.Combat,en.sysstr)  ); 
+			en.io.Print (en.GlobalModifs.PrintInfo(SkillTestType.Fight, en.sysstr)+en.GlobalModifs.PrintInfo(SkillTestType.Combat,en.sysstr)+Environment.NewLine,12,true  ); 
+			en.io.Print (FightWill.PrintCharB()+STInfo.PrintInfo(SkillTestType.Will,en.sysstr)+STInfo.PrintInfo(SkillTestType.Horror, en.sysstr) ); 
+			en.io.Print (en.GlobalModifs.PrintInfo(SkillTestType.Will,en.sysstr)+en.GlobalModifs.PrintInfo(SkillTestType.Horror, en.sysstr)+Environment.NewLine,12,true  ); 
+			en.io.Print  (Environment.NewLine + en.sysstr.GetString(SSType.Lore )  + "/" +en.sysstr.GetString(SSType.Luck ) + Environment.NewLine); 
+			en.io.Print (LoreLuck.PrintCharA()+STInfo.PrintInfo(SkillTestType.Lore,en.sysstr)+STInfo.PrintInfo(SkillTestType.SpellCast , en.sysstr)  ); 
+			en.io.Print (en.GlobalModifs.PrintInfo(SkillTestType.Lore,en.sysstr)+en.GlobalModifs.PrintInfo(SkillTestType.SpellCast , en.sysstr)+Environment.NewLine,12,true  ); 
+			en.io.Print (LoreLuck.PrintCharB()+STInfo.PrintInfo(SkillTestType.Luck, en.sysstr)  ); 
+			en.io.Print (en.GlobalModifs.PrintInfo(SkillTestType.Luck, en.sysstr)+Environment.NewLine  ); 
 
 
 			if (specCards.Count != 0)
 			{
-				en.io.ClientWrite (Environment.NewLine + en.sysstr.GetString(SSType.SpecialCards)  + Environment.NewLine, 12, true);
+				en.io.Print (Environment.NewLine + en.sysstr.GetString(SSType.SpecialCards)  + Environment.NewLine, 12, true);
 				foreach (SpecialCard sc in specCards)
 					sc.Print ();
 			}
 
 			if (monsterTrofies .Count != 0)
 			{
-				en.io.ClientWrite (Environment.NewLine + en.sysstr.GetString(SSType.MonsterTrofies )  + Environment.NewLine, 12, true);
+				en.io.Print (Environment.NewLine + en.sysstr.GetString(SSType.MonsterTrofies )  + Environment.NewLine, 12, true);
 				for (int i = 0; i < monsterTrofies.Count; i++)
 				{ if (i != 0)
-						en.io.ClientWrite (","); 
+						en.io.Print (","); 
 
 				   monsterTrofies [i].PrintAsTrofy() ;
 
@@ -443,11 +443,11 @@ namespace mmxAH
 
 
 			if (gateTrofies.Count != 0)
-			{  en.io.ClientWrite (Environment.NewLine + en.sysstr.GetString(SSType.GateTrofies)  +  " ("+ gateTrofies.Count + "):"+  Environment.NewLine, 12, true);
+			{  en.io.Print (Environment.NewLine + en.sysstr.GetString(SSType.GateTrofies)  +  " ("+ gateTrofies.Count + "):"+  Environment.NewLine, 12, true);
 				for (int i = 0; i < gateTrofies .Count; i++)
 				{ if (i != 0)
-					en.io.ClientWrite (","); 
-					en.io.ClientWrite(gateTrofies  [i].GetShortDiscripthion())  ;
+					en.io.Print (","); 
+					en.io.Print(gateTrofies  [i].GetShortDiscripthion())  ;
 
 				}
 			}
@@ -542,7 +542,7 @@ namespace mmxAH
 
 			opts.Add( new IOOpthionWithoutParam ("End Upkeep",en.clock.NextPlayer ));
 
-			en.io.SetServerFormMode (FormMode.Investigators);  
+			en.io.SetFormMode (FormMode.Investigators);  
 			en.io.StartChoose (opts, en.sysstr.GetString (SSType.ChooseActhioPromt), en.sysstr.GetString (SSType.ChooseActhionButton)); 
 		}
 
@@ -553,8 +553,8 @@ namespace mmxAH
 
 
 
-			en.io.ServerWrite (DisplayName + " " + en.sysstr.GetString (SSType.Gain) + " $  " + count + ", ");
-		    en.io.ServerWrite ( Pronoun + "  "+ en.sysstr.GetString (SSType.NowHas) +  "  $  " + Money + ".");      
+			en.io.PrintToLog (DisplayName + " " + en.sysstr.GetString (SSType.Gain) + " $  " + count + ", ");
+		    en.io.PrintToLog ( Pronoun + "  "+ en.sysstr.GetString (SSType.NowHas) +  "  $  " + Money + ".");      
 
 
 		}
@@ -568,8 +568,8 @@ namespace mmxAH
 			else
 				Money -= count;
 
-			en.io.ServerWrite (DisplayName  + "  "+ en.sysstr.GetString (SSType.Lose)+ "  $ "+  count);
-			en.io.ServerWrite (" ( $ " + Money + " " + en.sysstr.GetString (SSType.Remain)+"). " );
+			en.io.PrintToLog (DisplayName  + "  "+ en.sysstr.GetString (SSType.Lose)+ "  $ "+  count);
+			en.io.PrintToLog (" ( $ " + Money + " " + en.sysstr.GetString (SSType.Remain)+"). " );
 
 
 		}
@@ -585,9 +585,9 @@ namespace mmxAH
 			else
 				curSanity  -= count;
 
-			en.io.ServerWrite (DisplayName + "  " + en.sysstr.GetString (SSType.Lose) + " ");
-			en.io.ServerWrite (count+  " " + en.sysstr.GetString(SSType.Sanity),12, false,false,1,"Blue");
-			en.io.ServerWrite (" ( " +curSanity + " " + en.sysstr.GetString(SSType.Sanity)+ " "+ en.sysstr.GetString (SSType.Remain)+"). " );
+			en.io.PrintToLog (DisplayName + "  " + en.sysstr.GetString (SSType.Lose) + " ");
+			en.io.PrintToLog (count+  " " + en.sysstr.GetString(SSType.Sanity),12, false,false,1,"Blue");
+			en.io.PrintToLog (" ( " +curSanity + " " + en.sysstr.GetString(SSType.Sanity)+ " "+ en.sysstr.GetString (SSType.Remain)+"). " );
 
 			if( curSanity == 0)
 			{
@@ -609,9 +609,9 @@ namespace mmxAH
 			else
 				curStamina  -= count;
 
-			en.io.ServerWrite (DisplayName + "  " + en.sysstr.GetString (SSType.Lose) + " ");
-			en.io.ServerWrite (count+  " " + en.sysstr.GetString(SSType.Stamina ),12, false,false,1,"Red");
-			en.io.ServerWrite (" ( " +curStamina + " " + en.sysstr.GetString(SSType.Stamina)+ " "+ en.sysstr.GetString (SSType.Remain)+"). " );
+			en.io.PrintToLog (DisplayName + "  " + en.sysstr.GetString (SSType.Lose) + " ");
+			en.io.PrintToLog (count+  " " + en.sysstr.GetString(SSType.Stamina ),12, false,false,1,"Red");
+			en.io.PrintToLog (" ( " +curStamina + " " + en.sysstr.GetString(SSType.Stamina)+ " "+ en.sysstr.GetString (SSType.Remain)+"). " );
 
 			if( curStamina == 0)
 			{
@@ -625,21 +625,21 @@ namespace mmxAH
 
 		public void Setup_Sliders()
 		{  en.clock.PrintCurPhase ();
-			en.io.SetServerFormMode (FormMode.Investigators);  
+			en.io.SetFormMode (FormMode.Investigators);  
 			en.io.StartChoose (SpeedSneak.SetupChoses (Setup_Slider_1), en.sysstr.GetString (SSType.SetYourSlider) + " " + SpeedSneak.GetTitle (),  en.sysstr.GetString( SSType.ChooseActhionButton ));    
 		}
 
 		private void Setup_Slider_1(short p)
 		{
 			SpeedSneak.SetToPlace ((byte)p);  
-			en.io.SetServerFormMode (FormMode.Investigators);  
+			en.io.SetFormMode (FormMode.Investigators);  
 			en.io.StartChoose (FightWill.SetupChoses (Setup_Slider_2), en.sysstr.GetString (SSType.SetYourSlider) + " " + FightWill.GetTitle (),  en.sysstr.GetString( SSType.ChooseActhionButton ));    
 
 		}
 
 		private void Setup_Slider_2(short p)
 		{ FightWill.SetToPlace ((byte)p);  
-			en.io.SetServerFormMode (FormMode.Investigators);  
+			en.io.SetFormMode (FormMode.Investigators);  
 			en.io.StartChoose (LoreLuck.SetupChoses (Setup_Slider_3), en.sysstr.GetString (SSType.SetYourSlider) + " " + LoreLuck.GetTitle (),  en.sysstr.GetString( SSType.ChooseActhionButton ));    
 
 
@@ -664,7 +664,7 @@ namespace mmxAH
 			if (isDelayed)
 			{ isDelayed = false;
 				isCanMove = false; 
-			  en.io.ServerWrite (DisplayName + " " + en.sysstr.GetString (SSType.DelaydEnd)+ Environment.NewLine);   
+			  en.io.PrintToLog (DisplayName + " " + en.sysstr.GetString (SSType.DelaydEnd)+ Environment.NewLine);   
 				MovementPoints = 0; 
 			} else
 			{ isCanMove = true;
@@ -681,7 +681,7 @@ namespace mmxAH
 				} else
 					MovementPoints = 0;
 			}
-			en.io.SetServerFormMode (FormMode.Map );  
+			en.io.SetFormMode (FormMode.Map );  
 			en.locs [locnum].Move(); 
 		
 
@@ -689,8 +689,8 @@ namespace mmxAH
 
 		public void Delayed()
 		{ isDelayed = true;
-			en.io.ServerWrite (DisplayName, 12,false, true);
-			en.io.ServerWrite (" " + en.sysstr.GetString (SSType.DelayedStart)+ Environment.NewLine);   
+			en.io.PrintToLog (DisplayName, 12,false, true);
+			en.io.PrintToLog (" " + en.sysstr.GetString (SSType.DelayedStart)+ Environment.NewLine);   
 
 		}
 

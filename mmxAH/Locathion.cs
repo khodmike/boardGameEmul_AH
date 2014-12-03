@@ -218,7 +218,7 @@ namespace mmxAH
 		}
 		public override void Move ()
 		{ byte invest = en.clock.GetCurPlayer ();
-			en.io.SetServerFormMode (FormMode.Ow);
+			en.io.SetFormMode (FormMode.Ow);
 			if (! en.ActiveInvistigators [invest].isCanMove)
 			{
 				en.clock.NextPlayer ();
@@ -234,9 +234,9 @@ namespace mmxAH
 			if (investigators.IndexOf (invest) != -1 )
 			{ investigators.Remove(invest);
 			 investigatorsArea2.Add(invest);
-				en.io.ServerWrite (en.ActiveInvistigators [invest].GetTitle(), 12, false, true); 
-				en.io.ServerWrite (" "+en.sysstr.GetString (SSType.MoveToFact)+ " ");
-				en.io.ServerWrite (displayName + "  "+  en.sysstr.GetString (SSType.OWArea) + "  2.", 12, true); 
+				en.io.PrintToLog (en.ActiveInvistigators [invest].GetTitle(), 12, false, true); 
+				en.io.PrintToLog (" "+en.sysstr.GetString (SSType.MoveToFact)+ " ");
+				en.io.PrintToLog (displayName + "  "+  en.sysstr.GetString (SSType.OWArea) + "  2.", 12, true); 
 				en.clock.NextPlayer ();
 			}
 
@@ -305,7 +305,7 @@ namespace mmxAH
 				str += en.colors.GetTitle (colors [i]);
 			}
 			str += ")" ;
-			en.io.ClientWrite(str, 14, true, false, label); 
+			en.io.Print(str, 14, true, false, label); 
 
 			  str= Environment.NewLine + en.sysstr.GetString(SSType.OWArea)+ " 1: ";
                if (investigators.Count == 0)
@@ -313,7 +313,7 @@ namespace mmxAH
 			   else
                foreach( byte invest in investigators )
 					str+= "  "+ en.ActiveInvistigators[invest].PrintToMap();  
-				en.io.ClientWrite(str, 12, false, false, label); 
+				en.io.Print(str, 12, false, false, label); 
 
 
 
@@ -323,10 +323,10 @@ namespace mmxAH
 			    else
                foreach( byte invest in investigatorsArea2 )
 					str+= "  "+ en.ActiveInvistigators[invest].GetTitle();  
-				en.io.ClientWrite(str, 12, false, false, label); 
+				en.io.Print(str, 12, false, false, label); 
 
 
-			en.io.ClientWrite(Environment.NewLine, 12, false, false, label); 
+			en.io.Print(Environment.NewLine, 12, false, false, label); 
 
 		}
 
@@ -554,7 +554,7 @@ protected string GateAndClueTitle;
 			else
 			{  if( noMonsters) 
 					opts.Add( new IOOpthionWithoutParam(en.sysstr.GetString(SSType.MovementEndPromt), en.clock.EndMovementSegment));    
-				en.io.SetServerFormMode (FormMode.Map ); 
+				en.io.SetFormMode (FormMode.Map ); 
 				en.io.StartChoose (opts,  en.sysstr.GetString (SSType.RemainMP )+ "  "+ inv.MovementPoints + Environment.NewLine +  en.sysstr.GetString (SSType.ChooseActhioPromt), en.sysstr.GetString (SSType.ChooseActhionButton));   
 			}
 		}
@@ -605,20 +605,20 @@ protected string GateAndClueTitle;
 
 		protected void PrintClosed( byte label)
 		{ if(isClosed)
-			en.io.ClientWrite (en.sysstr.GetString(SSType.ClosedFact), 12, true, false, label);  
+			en.io.Print (en.sysstr.GetString(SSType.ClosedFact), 12, true, false, label);  
 
 		}
 
 		protected void PrintInvestAndMonsters ( byte label)
-		{ en.io.ClientWrite( Environment.NewLine, 10, false, false, label); 
+		{ en.io.Print( Environment.NewLine, 10, false, false, label); 
 
 			foreach( byte invnum in investigators)
-				en.io.ClientWrite (en.ActiveInvistigators[invnum].PrintToMap() +Environment.NewLine, 12, false, true, label);
+				en.io.Print (en.ActiveInvistigators[invnum].PrintToMap() +Environment.NewLine, 12, false, true, label);
 
 			foreach (MonsterIndivid m in monsters)
 			{
 				m.PrintToMap (label); 
-				en.io.ClientWrite (Environment.NewLine,12,false,false, label); 
+				en.io.Print (Environment.NewLine,12,false,false, label); 
 			}
 
 
@@ -688,11 +688,11 @@ protected string GateAndClueTitle;
 
 		public void AfterMoveClues2( short number)
 		{ string str = en.ActiveInvistigators [en.clock.GetCurPlayer ()].GetTitle() + "  "+ en.sysstr.GetString(SSType.Get) ;
-			en.io.ServerWrite   (str); 
+			en.io.PrintToLog   (str); 
 			str = " " + en.sysstr.GetNumberClueToken (number);
-			en.io.ServerWrite   (str,12,false,false,1,"Green"); 
+			en.io.PrintToLog   (str,12,false,false,1,"Green"); 
 			str = " "+ GateAndClueTitle+ ", " ;
-			en.io.ServerWrite   (str); 
+			en.io.PrintToLog   (str); 
 			clues -= (byte)number;
 			en.ActiveInvistigators [en.clock.GetCurPlayer ()].AddClues ((byte)number);
 		  en.clock.NextPlayer (); 
@@ -702,8 +702,8 @@ protected string GateAndClueTitle;
 
 		public virtual void MythosClues()
 		{  clues++;
-			en.io.ServerWrite (en.sysstr.GetString (SSType.ClueAppear));
-			en.io.ServerWrite("  " + GateAndClueTitle+ "."+ Environment.NewLine  ,12,false,true);
+			en.io.PrintToLog (en.sysstr.GetString (SSType.ClueAppear));
+			en.io.PrintToLog("  " + GateAndClueTitle+ "."+ Environment.NewLine  ,12,false,true);
 
 			if (investigators.Count == 0)
 			{
@@ -729,11 +729,11 @@ protected string GateAndClueTitle;
 		}
 	private  void MythosClues3( short invNum)
 		{ string str = en.ActiveInvistigators [invNum].GetTitle() + "  "+ en.sysstr.GetString(SSType.Get) ;
-			en.io.ServerWrite   (str); 
+			en.io.PrintToLog   (str); 
 			str = " " + en.sysstr.GetNumberClueToken (1);
-			en.io.ServerWrite   (str,12,false,false,1,"Green"); 
+			en.io.PrintToLog   (str,12,false,false,1,"Green"); 
 			str = " "+ GateAndClueTitle+ ", " ;
-			en.io.ServerWrite   (str); 
+			en.io.PrintToLog   (str); 
 			clues--;
 			en.ActiveInvistigators [invNum].AddClues (1);
 			en.curs.resolvingMythos.Step3 (); 
@@ -773,9 +773,9 @@ protected string GateAndClueTitle;
 			if (en.status.IsMonserToPlace (m))
 			{
 				m.AddToMap (LocathionIndex);
-				en.io.ServerWrite (m.GetTitle (), 12, true);
-				en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.MonsterPlacedVerb));
-				en.io.ServerWrite ("  " + GateAndClueTitle + ".  ", 12, false, true); 
+				en.io.PrintToLog (m.GetTitle (), 12, true);
+				en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.MonsterPlacedVerb));
+				en.io.PrintToLog ("  " + GateAndClueTitle + ".  ", 12, false, true); 
 				en.status.PrintMonserCountServer (); 
 
 			}
@@ -849,19 +849,19 @@ protected string GateAndClueTitle;
 
 		public void PrintDistrickt (byte label, byte row)
 		{
-			en.io.ClientWrite ((row+1).ToString ()+ ". ", 16, true, false, label);
+			en.io.Print ((row+1).ToString ()+ ". ", 16, true, false, label);
 			this.Print (label);
 			foreach (short li in LocathionInDistr)
-			{ en.io.ClientWrite( Environment.NewLine, 10, false, false, label);   
+			{ en.io.Print( Environment.NewLine, 10, false, false, label);   
 				en.locs [li].Print (label);
 			}
 
-			en.io.ClientWrite( Environment.NewLine+ Environment.NewLine , 10, false, false, label);   
+			en.io.Print( Environment.NewLine+ Environment.NewLine , 10, false, false, label);   
 
 		}
 
 		public override void Print (byte label)
-		{ en.io.ClientWrite (displayName , 16, true, false, label);
+		{ en.io.Print (displayName , 16, true, false, label);
 
 			PrintInvestAndMonsters(label); 
 		}
@@ -938,7 +938,7 @@ protected string GateAndClueTitle;
 
 		public override void Print (byte label)
 		{
-			en.io.ClientWrite (displayName , 14, true, false, label);
+			en.io.Print (displayName , 14, true, false, label);
 			PrintClosed (label); 
 			PrintInvestAndMonsters(label); 
 		
@@ -989,14 +989,14 @@ protected string GateAndClueTitle;
 
 		public override void  Print( byte label )
 		{
-			en.io.ClientWrite (displayName , 14, true, false, label);
+			en.io.Print (displayName , 14, true, false, label);
 			if( isSealed)
-				en.io.ClientWrite ( "  "+ en.sysstr.GetString(SSType.SealedFact)  , 14, false, true, label);
+				en.io.Print ( "  "+ en.sysstr.GetString(SSType.SealedFact)  , 14, false, true, label);
 			PrintClosed (label); 
 			if( clues != 0)
-				en.io.ClientWrite (Environment.NewLine+ en.sysstr.GetNumberClueToken(clues)  , 14, false, false, label);
+				en.io.Print (Environment.NewLine+ en.sysstr.GetNumberClueToken(clues)  , 14, false, false, label);
 			if (gate != null)
-				en.io.ClientWrite (Environment.NewLine + gate.GetMediumDiscripthion (), 12,false, false,label);  
+				en.io.Print (Environment.NewLine + gate.GetMediumDiscripthion (), 12,false, false,label);  
 			PrintInvestAndMonsters(label); 
  
 		}
@@ -1064,9 +1064,9 @@ protected string GateAndClueTitle;
 
 		public bool OpenGate()
 		{ if (isSealed)
-			{ en.io.ServerWrite (en.sysstr.GetString (SSType.GateCant1));
-				en.io.ServerWrite( "  "+ GateAndClueTitle  + "  ", 12, false, true); 
-				en.io.ServerPrintTag (en.sysstr.GetString (SSType.GateCant2)+ Environment.NewLine ); 
+			{ en.io.PrintToLog (en.sysstr.GetString (SSType.GateCant1));
+				en.io.PrintToLog( "  "+ GateAndClueTitle  + "  ", 12, false, true); 
+				en.io.PrintTag (en.sysstr.GetString (SSType.GateCant2)+ Environment.NewLine ); 
 				return true;
 
 			}
@@ -1107,9 +1107,9 @@ protected string GateAndClueTitle;
 				base.MythosClues ();
 			else
 			{ 
-				en.io.ServerWrite (en.sysstr.GetString (SSType.ClueCouldNotAppear1));
-				en.io.ServerWrite("  " + GateAndClueTitle+ "  " ,12,false,true);
-				en.io.ServerWrite (en.sysstr.GetString (SSType.ClueCouldNotAppear2)+ Environment.NewLine );
+				en.io.PrintToLog (en.sysstr.GetString (SSType.ClueCouldNotAppear1));
+				en.io.PrintToLog("  " + GateAndClueTitle+ "  " ,12,false,true);
+				en.io.PrintToLog (en.sysstr.GetString (SSType.ClueCouldNotAppear2)+ Environment.NewLine );
 				en.curs.resolvingMythos.Step3(); 
 
 			}
@@ -1185,8 +1185,8 @@ protected string GateAndClueTitle;
 
 			}
 			isSealed = true;
-			en.io.ServerWrite (displayName, 12, false, true);
-			en.io.ServerWrite ("  " + en.sysstr.GetString (SSType.SealedMessage));
+			en.io.PrintToLog (displayName, 12, false, true);
+			en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.SealedMessage));
 			en.status.AddSealed (); 
 		}
 

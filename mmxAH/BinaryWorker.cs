@@ -14,7 +14,7 @@ namespace mmxAH
 		}
 
 		public  void ToBin()
-		{ en.io.ClientWrite("Output file name : "+ filePath+ Environment.NewLine);
+		{ en.io.Print("Output file name : "+ filePath+ Environment.NewLine);
 		BinaryWriter wr;
 			try
 			{
@@ -37,10 +37,10 @@ namespace mmxAH
 			}
 			catch( Exception e)
 			{
-				en.io.ClientWrite("Error:"+ e.Message,16,true);
+				en.io.Print("Error:"+ e.Message,16,true);
 			}
 
-			en.io.ClientWrite("Binary Converthion succesfully complete. "+ Environment.NewLine);
+			en.io.Print("Binary Converthion succesfully complete. "+ Environment.NewLine);
 
 		}
 
