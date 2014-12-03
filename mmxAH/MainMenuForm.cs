@@ -128,6 +128,7 @@ namespace mmxAH
 			frm= new WorkForm(en);
 			if (! en.io.LoadSaveFile ("test"))
 				Application.Exit ();
+			frm.RefreshControls (); 
 		}
 
 		private void SaveGameClick ( object sender, EventArgs arg)

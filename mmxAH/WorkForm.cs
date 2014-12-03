@@ -329,7 +329,7 @@ namespace mmxAH
 		}
 
 
-		private void RefreshControls ()
+		public void RefreshControls ()
 		{
 
 
