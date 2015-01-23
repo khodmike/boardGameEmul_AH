@@ -174,7 +174,7 @@ namespace mmxAH
 
 		}
 
-		private  void Clear()
+		protected virtual  void Clear()
 		{ en.curs.resolvingMythos = null;
 			en.mythosDeck.Discard (this);
 			en.clock.EndTurn (); 

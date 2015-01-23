@@ -52,48 +52,27 @@ namespace mmxAH
 
 
 		public void NextPlayer()
-		{  byte tempCurPlayer= curPlayer;
-			tempCurPlayer++;
-			if (tempCurPlayer == en.GetPlayersNumber() )
-				tempCurPlayer = 0;
-			if ((tempCurPlayer == firstPlayer && en.pref.StopOnPhase) || en.pref.StopOnSegment)
-			{
-				en.io.SetSaveEnable (true); 
-				en.io.Pause (NextPlayer2); 
-			} else
-				NextPlayer2 (); 
-		}
-
-
-		private void NextPlayer2()
-		{ en.io.SetSaveEnable(false); 
-			curPlayer++;
+		{   curPlayer++;
 			if (curPlayer == en.GetPlayersNumber() )
 				curPlayer = 0;
 			if (curPlayer == firstPlayer)
-			{
 				NextPhase ();
+
+			if ((curPlayer == firstPlayer && en.pref.StopOnPhase) || en.pref.StopOnSegment)
+			{ 
+				en.io.SetSaveEnable (true); 
+				en.io.Pause (BeginSegment); 
 			} else
-				NextSegment(); 
-
-
-
+				BeginSegment (); 
 		}
 
-		public void EndTurn()
-		{if (en.pref.StopOnTurn)
-			{
-				en.io.SetSaveEnable (true);
-				en.io.Pause (EndTurn2); 
-			} else
-			{
-				EndTurn2 (); 
-			}
 
-		}
 
-		private  void EndTurn2()
-		{ en.io.SetSaveEnable (false);
+
+
+
+		public   void EndTurn()
+		{
 
 			if (curTurn != 0)
 			{ 	firstPlayer++;
@@ -107,7 +86,12 @@ namespace mmxAH
 			curTurn++;
 			
 			curPhase =Phases.Upkeep;  
-			en.ActiveInvistigators [firstPlayer].Upkeep (); 
+			if (en.pref.StopOnTurn)
+			{
+				en.io.SetSaveEnable (true); 
+				en.io.Pause (BeginSegment); 
+			} else
+				BeginSegment ();
 
 		}
 
@@ -124,21 +108,17 @@ namespace mmxAH
 			case Phases.Movement : {curPhase = Phases.AhEnc ;} break; 
 			case Phases.AhEnc  : {curPhase = Phases.OwEnc  ;} break;
 			case Phases.OwEnc  : {curPhase = Phases.Mythos  ;} break;
-			case Phases.Mythos:
-				{ // только при загрузке из сейва
-					EndTurn2 ();
-					return; 
-				}break;
+			
 
 
 
 			}
-			NextSegment ();
 
 		}
 
-		private void NextSegment()
-		{ Investigator invest = en.ActiveInvistigators [curPlayer ];
+		private void BeginSegment()
+		{ en.io.SetSaveEnable(false); 
+			Investigator invest = en.ActiveInvistigators [curPlayer ];
 			switch (curPhase)
 		{  case Phases.SetupRandom:{invest.SetupRandom (); } break;
 			case Phases.SetupSliders: {invest.Setup_Sliders ();}break;
@@ -212,10 +192,7 @@ namespace mmxAH
 
 
 		public void ResumeFromSave()
-		{  if (curPhase == Phases.Mythos)
-				EndTurn2 ();
-			else
-			NextPlayer2(); 
+		{  BeginSegment();
 
 		}
 
@@ -223,7 +200,7 @@ namespace mmxAH
 		public void StartRandomSetup()
 		{ curPlayer=0;
 			curPhase = Phases.SetupRandom;
-			NextSegment (); 
+			BeginSegment (); 
 
 		}
 
