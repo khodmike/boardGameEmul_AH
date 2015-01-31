@@ -1,15 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/IOClass.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/MonsterSurgeActhion.cs">
     <Files>
-      <File FileName="mmxAH/MythosCard.cs" Line="131" Column="11" />
-      <File FileName="mmxAH/WorkForm.cs" Line="332" Column="9" />
-      <File FileName="mmxAH/GameEngine.cs" Line="249" Column="1" />
-      <File FileName="mmxAH/IOClass.cs" Line="135" Column="1" />
-      <File FileName="mmxAH/PhasesClock.cs" Line="220" Column="1" />
-      <File FileName="mmxAH/SystemStrings.cs" Line="207" Column="1" />
-      <File FileName="mmxAH/Investigator.cs" Line="508" Column="1" />
-      <File FileName="mmxAH/MainMenuForm.cs" Line="131" Column="27" />
+      <File FileName="mmxAH/MonsterSurgeActhion.cs" Line="64" Column="20" />
+      <File FileName="mmxAH/GlobalActhions.cs" Line="56" Column="4" />
+      <File FileName="mmxAH/GlobalStatus.cs" Line="156" Column="16" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

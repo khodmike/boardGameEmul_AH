@@ -5,7 +5,7 @@ namespace mmxAH
 {
 	public class GlobalStatus
 	{ GameEngine en;
-		private  byte CurDoom, CurGate, CurMonsters, CurOut, CurTerror, CurSealed;
+		private  byte CurDoom,  CurMonsters, CurOut, CurTerror, CurSealed;
 		private byte MaxDoom, MaxGate, MaxMonsters, MaxOut;
 		private const byte Terror1=3, Terror2=6, Terror3=9, MaxTerror=10, MaxSealed=6;
 		private short CluesToSealed;
@@ -19,7 +19,7 @@ namespace mmxAH
 			en.io.Print (en.sysstr.GetString (SSType.DoomTrack), 12, true);
 		  en.io.Print (" " + CurDoom + " / " + MaxDoom+ "."+ Environment.NewLine );  
 			en.io.Print ( en.sysstr.GetString (SSType.OpenGates ), 12, true);
-			en.io.Print (" " + CurGate + " / " + MaxGate+ "."+ Environment.NewLine ); 
+			en.io.Print (" " + en.openGates.Count   + " / " + MaxGate+ "."+ Environment.NewLine ); 
 			en.io.Print (en.sysstr.GetString (SSType.MonsterInArchem   ), 12, true);
 			en.io.Print (" " + CurMonsters + " / " + MaxMonsters + "."+ Environment.NewLine );
 			en.io.Print (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
@@ -45,7 +45,6 @@ namespace mmxAH
 
 		public void Reset()
 		{ CurDoom=0;
-			CurGate = 0; 
 			CurMonsters = 0;
 			CurOut = 0;
 			CurTerror = 0;
@@ -96,11 +95,11 @@ namespace mmxAH
 
 
 		public bool NewGate()
-		{ CurGate ++;
+		{
 			en.io.PrintToLog (" " + en.sysstr.GetString (SSType.OpenGates ), 12, true);
-			en.io.PrintToLog (" " + CurGate + " / " + MaxGate+ "."+ Environment.NewLine );  
+			en.io.PrintToLog (" " + en.openGates.Count  + " / " + MaxGate+ "."+ Environment.NewLine );  
 
-			if (CurGate >= MaxGate)
+			if (en.openGates.Count  >= MaxGate)
 			{ en.ga.Awekeen ();
 				return false;
 
@@ -112,21 +111,7 @@ namespace mmxAH
 
 		public bool IsMonserToPlace(MonsterIndivid m)
 		{ if (CurMonsters ==  MaxMonsters)
-			{   if (CurOut == MaxOut)
-				{
-					en.io.PrintToLog (en.sysstr.GetString (SSType.OutscirtsIsClear) + Environment.NewLine);
-					CurOut = 0;
-					en.MonstersCup.Add (m);
-					en.ResetOutscirts ();
-					TerrorIncrise (); 
-				} else
-				{  CurOut++;
-					en.Outscirts.Add (m); 
-					en.io.PrintToLog (m.GetTitle (), 12, true);
-					en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.PlacedToOut )+ " . ");
-					en.io.PrintToLog (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
-					en.io.PrintToLog (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );
-				}
+			{   PlacedToOut (m); 
 				return false;
 
 			} else
@@ -134,6 +119,42 @@ namespace mmxAH
 				CurMonsters++;
 				return true;
 			}
+		}
+
+
+		private void PlacedToOut( MonsterIndivid m)
+		{
+			if (CurOut == MaxOut)
+			{
+				en.io.PrintToLog (en.sysstr.GetString (SSType.OutscirtsIsClear) + Environment.NewLine);
+				CurOut = 0;
+				en.MonstersCup.Add (m);
+				en.ResetOutscirts ();
+				TerrorIncrise (); 
+			} else
+			{  CurOut++;
+				en.Outscirts.Add (m); 
+				en.io.PrintToLog (m.GetTitle (), 12, true);
+				en.io.PrintToLog ("  " + en.sysstr.GetString (SSType.PlacedToOut )+ " . ");
+				en.io.PrintToLog (en.sysstr.GetString (SSType.MonsterInOutscirts   ), 12, true);
+				en.io.PrintToLog (" " + CurOut + " / " + MaxOut + "."+ Environment.NewLine );
+
+
+			}
+
+		}
+
+
+		public bool PlacedToOutscirts()
+		{ MonsterIndivid m= en.MonstersCup.Draw ();
+			if (m == null)
+			{
+				en.ga.Awekeen ();  
+				return false;
+			}
+			PlacedToOut (m);
+			return true;
+
 		}
 
 
@@ -161,7 +182,6 @@ namespace mmxAH
 		public void ToSave(BinaryWriter wr)
 		{ 
 			wr.Write (CurDoom);
-			wr.Write (CurGate);
 			wr.Write (CurMonsters);
 			wr.Write (CurOut);
 			wr.Write (CurTerror);
@@ -172,7 +192,6 @@ namespace mmxAH
 
 		public void FromSave( BinaryReader rd)
 		{ CurDoom = rd.ReadByte ();
-		  CurGate = rd.ReadByte ();
 		  CurMonsters= rd.ReadByte ();
 		  CurOut = rd.ReadByte ();
 		  CurTerror = rd.ReadByte ();
@@ -196,10 +215,9 @@ namespace mmxAH
 
 
 		public void ClosedGate()
-		{ if (CurGate > 0)
-				CurGate--;
+		{ 
 			en.io.PrintToLog (en.sysstr.GetString (SSType.OpenGates    ), 12, true);
-			en.io.PrintToLog (" " + CurGate + " / " + MaxGate + "."+ Environment.NewLine );
+			en.io.PrintToLog (" " + (en.openGates.Count-1)  + " / " + MaxGate + "."+ Environment.NewLine );
 
 		}
 
@@ -212,6 +230,11 @@ namespace mmxAH
 		public void RemoveMonsterInArchem()
 		{ if (CurMonsters > 0)
 				CurMonsters--; 
+
+		}
+
+		public byte MonstersCouldBePlacedBefreLim()
+		{   return (byte) (MaxMonsters - CurMonsters);
 
 		}
 	}

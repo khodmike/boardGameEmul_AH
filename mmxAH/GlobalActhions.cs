@@ -69,7 +69,7 @@ namespace mmxAH
 
 		public void MonsterSurge( short startLoc)
 		{
-			en.curs.resolvingMythos.Step2 ();
+			new MonsterSurgeActhion (en,startLoc).Execute (); 
 
 		}
 
