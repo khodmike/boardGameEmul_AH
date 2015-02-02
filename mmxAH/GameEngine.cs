@@ -120,7 +120,20 @@ namespace mmxAH
 
 
 		private void Test ()
-		{
+		{ short gl = map.GetNumberByCodeName("scienceBild"); 
+			((ArchemUnstableLoc)locs [gl]).OpenGate ();
+			gl = map.GetNumberByCodeName("cave"); 
+			((ArchemUnstableLoc)locs [gl]).OpenGate ();
+			gl = map.GetNumberByCodeName("indsqr"); 
+			((ArchemUnstableLoc)locs [gl]).OpenGate ();
+			gl = map.GetNumberByCodeName("road"); 
+			((ArchemUnstableLoc)locs [gl]).OpenGate ();
+			gl = map.GetNumberByCodeName("woods"); 
+			((ArchemUnstableLoc)locs [gl]).OpenGate ();
+			gl = map.GetNumberByCodeName("graveyard"); 
+			((ArchemUnstableLoc)locs [gl]).OpenGate ();
+
+			mythosDeck.Draw ().Execute();
 
 
 		}

@@ -47,7 +47,7 @@ namespace mmxAH
 
 		private void  PlaceMonsters()
 		{ //ЗАГЛУШКА
-			en.io.PrintToLog(" MonsterSurge "+ MonstersInEachGate + "  " + MonstersToOutscirts + " " + isExtraMonsterToSurgeGate   ,14); 
+			//en.io.PrintToLog(" MonsterSurge "+ MonstersInEachGate + "  " + MonstersToOutscirts + " " + isExtraMonsterToSurgeGate   ,14); 
 			if (isExtraMonsterToSurgeGate)
 			if (! ((ArchemUnstableLoc)en.locs [surgeLoc]).MonseterPlaced ())
 				return;
