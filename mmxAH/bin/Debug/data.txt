@@ -134,7 +134,7 @@ stab hospital
 
 //inveswtigators
 //count
-2
+4
 //indiv-ent-start( Amanda Sharp)
 //max-san
 5
@@ -215,6 +215,85 @@ admin
 //indiv-ent-end
 
 
+//indiv-ent-start("Ashcan" Pete)
+//max-san
+4
+//max-sta
+6
+//start_locathion
+docks
+//start_clues
+3
+//start $
+1
+//number and codenames of other fix posseshion
+0
+//draw_common
+1
+//draw_unice
+1
+//draw_spells
+0
+//draw_skills
+1
+//focus
+1
+//speed
+0 1 2 3
+//sneak
+6 5 4 3
+//fight
+2 3 4 5
+//will
+5 4 3 2
+//lore
+0 1 2 3
+//luck
+3 2 1 0
+//number and descriptrhion of s.a.
+0
+//indiv-ent-end
+
+
+//indiv-ent-start(Carolyn Fern)
+//max-san
+6
+//max-sta
+4
+//start_locathion
+asylium
+//start_clues
+1
+//start $
+7
+//number and codenames of other fix posseshion
+0
+//draw_common
+2
+//draw_unice
+2
+//draw_spells
+0
+//draw_skills
+1
+//focus
+2
+//speed
+0 1 2 3
+//sneak
+3 2 1 0
+//fight
+1 2 3 4
+//will
+4 3 2 1
+//lore
+2 3 4 5
+//luck
+5 4 3 2
+//number and descriptrhion of s.a.
+0
+//indiv-ent-end
+
 
 //monsters
 29
@@ -227,8 +306,6 @@ circle fly
 0
 0
 3
-
-
 
 
 cultist
