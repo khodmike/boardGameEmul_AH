@@ -1,10 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/MonsterSurgeActhion.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="mmxAH/GameEngine.cs">
     <Files>
-      <File FileName="mmxAH/MonsterSurgeActhion.cs" Line="64" Column="20" />
-      <File FileName="mmxAH/GlobalActhions.cs" Line="56" Column="4" />
-      <File FileName="mmxAH/GlobalStatus.cs" Line="156" Column="16" />
+      <File FileName="mmxAH/MonsterSurgeActhion.cs" Line="50" Column="6" />
+      <File FileName="mmxAH/GameEngine.cs" Line="133" Column="43" />
+      <File FileName="mmxAH/MapOfCity.cs" Line="70" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

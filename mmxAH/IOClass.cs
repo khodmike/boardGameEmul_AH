@@ -7,15 +7,6 @@ namespace mmxAH
 {  
 
 
-	public enum IOMode 
-	{ Pause=1,
-	  YesNo,
-	  Choose,
-	  Stop,
-      StandAloneActhion
-
-	}
-
 
 	public enum FormMode
 	{ Log=1,
@@ -70,7 +61,7 @@ namespace mmxAH
 
 
 	public class IOClass
-	{   public IOMode mode;
+	{  
 		public string PauseTitle, ChooseEndTitle, YesTitle, NoTitle, QuestTitle;
 		public List<IOOption> options; 
 		private Func FAfterPause, FYes, FNo;
@@ -81,7 +72,7 @@ namespace mmxAH
 		private MainMenuForm mmFrm;
 		public IOClass (WorkForm frmp, GameEngine eng, MainMenuForm frmMM)
 		{
-		  mode= IOMode.Stop;
+		 
 			frmMode = FormMode.Log;
 			frm = frmp;
 			log = new List<LogEntry> (); 
@@ -92,11 +83,9 @@ namespace mmxAH
 
 		public void Pause( Func f, string title="Next")
 		{  FAfterPause=f;
-		   PauseTitle=title; 
-		   mode=IOMode.Pause; 
 			if (frmMode == FormMode.Log)
 				ShowLog (); 
-
+			frm.StartPause (title); 
 
          
 
@@ -105,24 +94,20 @@ namespace mmxAH
 		public void YesNoStart (string q, string aYes, string aNo, Func y, Func n)
 		{ FYes=y;
 		  FNo=n;
-		  YesTitle=aYes;
-		  NoTitle=aNo;
-		  QuestTitle=q; 
-		  mode= IOMode.YesNo; 
-			if (frmMode == FormMode.Log)
+		  if (frmMode == FormMode.Log)
 				ShowLog (); 
 
-
+			frm.StartYesNo (q, aYes, aNo);  
 		}
 
 
 		public void PauseEnd ()
-		{ mode= IOMode.Stop; 
+		{ 
 			FAfterPause(); 
 		}
 
 		public void Answer( bool a)
-		{  mode=IOMode.Stop; 
+		{ 
 			if(a)
 				FYes() ;
 			else
@@ -132,33 +117,32 @@ namespace mmxAH
 
 		public void StartChoose( List<IOOption> opts, string question="Select acthion", string buttonName="Confirm")
 		{
-			mode= IOMode.Choose;
-			QuestTitle=question;
-			ChooseEndTitle=buttonName;
+
+
 		    options =opts;
 			if (frmMode == FormMode.Log)
 				ShowLog (); 
+			List<string> titles= new List<string>();
+			foreach (IOOption opt in opts)
+				titles.Add (opt.Title);
+			frm.StartChoose (question, titles, buttonName);   
 
 
 		}
 
 		public void ChooseEnd (int selectedOption)
-		{mode= IOMode.Stop;
+		{
 		 options[selectedOption].Execute();
 
 
 		}
 
 		public void StandAloneStart( Func f)
-		{ FYes=f; 
-			mode= IOMode.StandAloneActhion; 
+		{  FYes.BeginInvoke(null,null) ;
 
 		}
 
-		public void StandAloneResponse()
-		{ mode= IOMode.Stop; 
-			FYes.BeginInvoke(null,null) ;
-		}
+
 
 		public void Print (string Text, byte fontsize=12, bool isBold=false, bool isItalic=false, byte  label=1, string ChooseColor="Black")
 		{  

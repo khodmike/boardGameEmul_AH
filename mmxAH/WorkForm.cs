@@ -13,6 +13,7 @@ namespace mmxAH
 		private Button btnYes, btnNo, btnChoose, btnStatus, btnLog, btnInvest, btnMonsters, btnAo, btnOW, btnArchemMap;
 		private int MaxX, MaxY;
 		private GameEngine en;
+		private bool isPauseMode=false;
 		public WorkForm (GameEngine eng, bool isAloneMode=false)
 		{
 			en = eng;
@@ -84,7 +85,7 @@ namespace mmxAH
 			btnMonsters= CreateButton (BtnMonstersClick, 50, 77, true, en.sysstr.GetString(SSType.ButtonMonsters));
 			btnOW= CreateButton (BtnOWClick, 10, 80, true, en.sysstr.GetString(SSType.ButtonOW));
 			btnArchemMap= CreateButton (BtnArchemMapClick, 20, 80, true, en.sysstr.GetString(SSType.ButtonArchemMap));
-			this.Shown += frmShow  ;  
+
 
 
 
@@ -144,12 +145,15 @@ namespace mmxAH
 		private void BtnYesClick( object sender, EventArgs arg)
 		{  
 			ClearControls();
-			if(en.io.mode == IOMode.Pause)
-				en.io.PauseEnd(); 
+			if (isPauseMode)
+			{
+				isPauseMode = false; 
+				en.io.PauseEnd (); 
+			}
 				else
 				en.io.Answer(true);
 		
-			RefreshControls (); 
+
 
 		}
 
@@ -158,7 +162,7 @@ namespace mmxAH
 		{  
 			ClearControls(); 
 			en.io.Answer(false);
-			RefreshControls (); 
+
 
 
 		}
@@ -168,7 +172,7 @@ namespace mmxAH
 		{  
 			ClearControls(); 
 			en.io.ChooseEnd(libChoose.SelectedIndex);  
-			RefreshControls (); 
+
 
 
 
@@ -323,60 +327,44 @@ namespace mmxAH
 
 		}
 
-		private void frmShow( object sender, EventArgs e)
-		{ RefreshControls();
+
+		public void StartPause( string title)
+		{ btnYes.Visible = true;
+			btnYes.Text = title;    
+			isPauseMode = true; 
 
 		}
 
 
-		public void RefreshControls ()
+		public void StartYesNo( string title, string YesAnswer, string NoAnswer)
 		{
-
-
-			if (en.io.mode == IOMode.Pause)
-			{
-				btnYes.Visible = true;
-				btnYes.Text = en.io.PauseTitle;     
-
-			}
-
-			if (en.io.mode == IOMode.StandAloneActhion)
-			{
-				en.io.StandAloneResponse(); 
-
-			}
-
-			if (en.io.mode == IOMode.YesNo)
-			{
-				btnYes.Visible = true;
-				btnYes.Text = en.io.YesTitle; 
-				btnNo.Visible = true;
-				btnNo.Text = en.io.NoTitle;
-				lblQ.Visible = true; 
-				lblQ.Text = en.io.QuestTitle;  
-
-				
-			}
-
-			if (en.io.mode == IOMode.Choose)
-			{ lblQ.Visible = true; 
-			  lblQ.Text = en.io.QuestTitle;
-			  libChoose.Visible=true; 
-			  libChoose.Items.Clear();
-              foreach( IOOption opt in en.io.options)
-				{
-					libChoose.Items.Add (opt.Title);  
-				}
-
-				btnChoose.Text= en.io.ChooseEndTitle; 
-				btnChoose.Visible=true; 
-				btnChoose.Enabled=false;
-			}
-			this.Invalidate();
-			return;
-
+			btnYes.Visible = true;
+			btnYes.Text = YesAnswer; 
+			btnNo.Visible = true;
+			btnNo.Text = NoAnswer;
+			lblQ.Visible = true; 
+			lblQ.Text = title;  
 
 		}
+
+		public void StartChoose( string title, System.Collections.Generic.List<string> chooses, string buttonTitle)
+		{ lblQ.Visible = true; 
+			lblQ.Text = title;
+			libChoose.Visible=true; 
+			libChoose.Items.Clear();
+			foreach( string str in chooses)
+			{
+				libChoose.Items.Add (str);  
+			}
+
+			btnChoose.Text= buttonTitle; 
+			btnChoose.Visible=true; 
+			btnChoose.Enabled=false;
+		
+		
+
+		}
+
 
 
 
