@@ -9,6 +9,8 @@ namespace mmxAH
 	   private RichTextBox lblLeft, lblMid, lblRight;
 		private Label lblQ;
 		private ComboBox libChoose;
+		private CheckedListBox boxMultiChoose;
+		private byte neededMultiChooseCount=0;
 		public byte dec;
 		private Button btnYes, btnNo, btnChoose, btnStatus, btnLog, btnInvest, btnMonsters, btnAo, btnOW, btnArchemMap;
 		private int MaxX, MaxY;
@@ -85,8 +87,16 @@ namespace mmxAH
 			btnMonsters= CreateButton (BtnMonstersClick, 50, 77, true, en.sysstr.GetString(SSType.ButtonMonsters));
 			btnOW= CreateButton (BtnOWClick, 10, 80, true, en.sysstr.GetString(SSType.ButtonOW));
 			btnArchemMap= CreateButton (BtnArchemMapClick, 20, 80, true, en.sysstr.GetString(SSType.ButtonArchemMap));
+			libChoose.MaxDropDownItems = 5;
+			boxMultiChoose  = new CheckedListBox ();
 
-
+			boxMultiChoose.Location = new Point (MaxX * 2 / 10, MaxY * 86 / 100);
+			boxMultiChoose.Height = MaxY * 5/ 100;
+			boxMultiChoose.Width=MaxX*4/10;
+			boxMultiChoose.ItemCheck  += BoxMultiChooseSelected;   
+			boxMultiChoose.Visible = false;
+			this.Controls.Add (boxMultiChoose); 
+		
 
 
 		 
@@ -171,6 +181,16 @@ namespace mmxAH
 		private void BtnChooseClick( object sender, EventArgs arg)
 		{  
 			ClearControls(); 
+			if (neededMultiChooseCount != 0)
+			{ neededMultiChooseCount = 0;
+			 System.Collections .Generic.List<short> outCodes = new System.Collections.Generic.List<short> ();
+				for (int i=0; i<boxMultiChoose.CheckedIndices.Count; i++) 
+					outCodes.Add ((short)boxMultiChoose.CheckedIndices [i]);
+				en.io.MultiChooseEnd (outCodes);  
+				
+
+			}
+			else
 			en.io.ChooseEnd(libChoose.SelectedIndex);  
 
 
@@ -229,6 +249,22 @@ namespace mmxAH
 
 		}
 
+
+		private void BoxMultiChooseSelected( object sender, ItemCheckEventArgs  arg)
+		{  
+			byte checkCount= (byte) boxMultiChoose.CheckedItems.Count;
+			if (arg.NewValue == CheckState.Checked)
+				checkCount ++;
+			else
+				checkCount--; 
+
+			if (checkCount  == neededMultiChooseCount)   
+				btnChoose.Enabled = true;
+			else
+				btnChoose.Enabled = false;
+
+
+		}
 
 
 
@@ -323,6 +359,7 @@ namespace mmxAH
 		 btnNo.Visible = false;
 		 lblQ.Visible=false; 
 		 libChoose.Visible=false;
+			boxMultiChoose.Visible = false;  
 		 btnChoose.Visible=false; 
 
 		}
@@ -364,6 +401,28 @@ namespace mmxAH
 		
 
 		}
+
+
+		public void StartMultiChoose( string title, System.Collections.Generic.List<string> chooses,  byte needCount, string buttonTitle)
+		{ lblQ.Visible = true; 
+			lblQ.Text = title;
+			boxMultiChoose.Visible=true; 
+			boxMultiChoose.Items.Clear();
+			foreach( string str in chooses)
+			{
+			 boxMultiChoose.Items.Add (str);  
+			}
+
+			btnChoose.Text= buttonTitle; 
+			btnChoose.Visible=true; 
+			btnChoose.Enabled=false;
+			neededMultiChooseCount = needCount;  
+
+
+
+		}
+
+
 
 
 

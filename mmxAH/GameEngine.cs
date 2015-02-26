@@ -6,6 +6,11 @@ namespace mmxAH
 { public delegate void Func();
 	public delegate  void FuncWithParam( short param);
 	public delegate bool FuncBoolReturn(short param);
+	public delegate void FuncMulthiChooseRet( List<short> InCodes);
+
+
+
+
 	public class GameEngine
 	{   public PairMeneger  ds, colors;
 		private List<Limits> lims;
@@ -128,15 +133,19 @@ namespace mmxAH
 			((ArchemUnstableLoc)locs [gl]).OpenGate ();
 			gl = map.GetNumberByCodeName("road"); 
 			((ArchemUnstableLoc)locs [gl]).OpenGate ();
-			gl = map.GetNumberByCodeName("woods"); 
+			/*gl = map.GetNumberByCodeName("woods"); 
 			((ArchemUnstableLoc)locs [gl]).OpenGate ();
 			gl = map.GetNumberByCodeName("graveyard"); 
 			((ArchemUnstableLoc)locs [gl]).OpenGate ();
-
+			while  ( ActiveMonsters.Count !=0 )
+				ActiveMonsters [0].Discard (true); */
 			mythosDeck.Draw ().Execute();
 
 
+
 		}
+
+	
 
 
 	
@@ -213,7 +222,7 @@ namespace mmxAH
 
 			}
 			Test ();
-			clock.StartRandomSetup ();
+			//clock.StartRandomSetup ();
 		}
 
        

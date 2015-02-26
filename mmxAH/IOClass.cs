@@ -58,13 +58,25 @@ namespace mmxAH
 
 	}
 
+	public struct MultiChooseOpthion
+	{ public string title;
+		public short InnerCode;
+
+		public MultiChooseOpthion ( string T, short ic)
+		{ title = T;
+			InnerCode = ic; 
+
+		}
+	}
 
 
 	public class IOClass
 	{  
-		public string PauseTitle, ChooseEndTitle, YesTitle, NoTitle, QuestTitle;
-		public List<IOOption> options; 
+
+		private List<IOOption> options; 
+		private List<MultiChooseOpthion> MCOpts;
 		private Func FAfterPause, FYes, FNo;
+		private FuncMulthiChooseRet MCRet;
 		 private WorkForm frm;
 		private FormMode frmMode;
 		private List< LogEntry > log; 
@@ -142,7 +154,28 @@ namespace mmxAH
 
 		}
 
+		public void MulthiChooceStart( List< MultiChooseOpthion> opts, string promt,  byte neededCount,  FuncMulthiChooseRet rp, string ButtonCapiton="Choose")
+		{ MCOpts = opts;
+		  MCRet = rp;
+		  List<string> titles = new List<string> ();
+			foreach (MultiChooseOpthion opt in opts)
+				titles.Add (opt.title);
+			if (frmMode == FormMode.Log)
+				ShowLog (); 
+			frm.StartMultiChoose (promt, titles, neededCount, ButtonCapiton);  
+         
 
+
+		}
+
+
+	 public void MultiChooseEnd( List<short> outherCodes )
+		{ List<short> innerCodes = new List<short> ();
+			foreach (short oc in outherCodes)
+				innerCodes.Add (MCOpts [oc].InnerCode);
+			MCRet (innerCodes); 
+
+		}
 
 		public void Print (string Text, byte fontsize=12, bool isBold=false, bool isItalic=false, byte  label=1, string ChooseColor="Black")
 		{  

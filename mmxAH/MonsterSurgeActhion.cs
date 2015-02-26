@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace mmxAH
 {
@@ -41,10 +42,32 @@ namespace mmxAH
 
 
 		private void  PlayerChoose(  byte remainMonsters)
-		{
+		{ string promt= "There ";
+			if (remainMonsters == 1)
+				promt += "is 1 more monster ";
+			else
+				promt += "are " + remainMonsters + " more monsters";
+			promt += " to place. Where do your place it?";
+			List< MultiChooseOpthion> opts = new List<MultiChooseOpthion> ();
+			short curLoc;
+			foreach( GatePrototype g in en.openGates)
+			{ curLoc = g.GetArchemLoc (); 
+				if( curLoc != surgeLoc)
+					opts.Add( new MultiChooseOpthion( en.locs[curLoc].GetTitle(), curLoc));  
+			}
+
+			en.io.MulthiChooceStart (opts, promt, remainMonsters, ExecutePlayerChooce); 
+
 
 		}
 
+		private void ExecutePlayerChooce( List<short> locsIndexs)
+		{  foreach (short li in locsIndexs)
+				if (! ((ArchemArea)en.locs [li]).MonseterPlaced ())
+					return;
+			PlaceMonsters (); 
+
+		}
 		private void  PlaceMonsters()
 		{ //ЗАГЛУШКА
 			//en.io.PrintToLog(" MonsterSurge "+ MonstersInEachGate + "  " + MonstersToOutscirts + " " + isExtraMonsterToSurgeGate   ,14); 
