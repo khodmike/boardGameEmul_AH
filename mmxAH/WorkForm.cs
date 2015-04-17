@@ -199,43 +199,50 @@ namespace mmxAH
 		}
 
 		private void BtnStatusClick( object sender, EventArgs arg)
-		{  en.io.SetFormMode (FormMode.Status);  
+		{  en.io.SetFormMode (FormMode.Status); 
+			en.io.UpdateForm (); 
 
 
 		}
 
 		private void BtnLogClick( object sender, EventArgs arg)
 		{  en.io.SetFormMode (FormMode.Log);  
+			en.io.UpdateForm (); 
 
 
 		}
 
 		private void BtnInvestClick( object sender, EventArgs arg)
 		{  en.io.SetFormMode (FormMode.Investigators );  
+			en.io.UpdateForm (); 
 
 
 		}
 
 		private void BtnAOClick( object sender, EventArgs arg)
 		{  en.io.SetFormMode (FormMode.Ao );  
+			en.io.UpdateForm (); 
 
 
 		}
 
 		private void BtnMonstersClick( object sender, EventArgs arg)
 		{  en.io.SetFormMode (FormMode.Monsters);  
+			en.io.UpdateForm (); 
 
 
 		}
 
 		private void BtnOWClick( object sender, EventArgs arg)
-		{  en.io.SetFormMode (FormMode.Ow);  
+		{  en.io.SetFormMode (FormMode.Ow); 
+			en.io.UpdateForm (); 
 
 
 		}
 
 		private void BtnArchemMapClick( object sender, EventArgs arg)
 		{  en.io.SetFormMode (FormMode.Map );  
+			en.io.UpdateForm (); 
 
 
 		}

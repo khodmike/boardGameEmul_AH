@@ -79,7 +79,7 @@ namespace mmxAH
 		private FuncMulthiChooseRet MCRet;
 		 private WorkForm frm;
 		private FormMode frmMode;
-		private List< LogEntry > log; 
+		private List< LogEntry > log, curModeToPrint; 
 		private GameEngine en;
 		private MainMenuForm mmFrm;
 		public IOClass (WorkForm frmp, GameEngine eng, MainMenuForm frmMM)
@@ -95,8 +95,7 @@ namespace mmxAH
 
 		public void Pause( Func f, string title="Next")
 		{  FAfterPause=f;
-			if (frmMode == FormMode.Log)
-				ShowLog (); 
+			UpdateForm (); 
 			frm.StartPause (title); 
 
          
@@ -106,8 +105,7 @@ namespace mmxAH
 		public void YesNoStart (string q, string aYes, string aNo, Func y, Func n)
 		{ FYes=y;
 		  FNo=n;
-		  if (frmMode == FormMode.Log)
-				ShowLog (); 
+			UpdateForm ();
 
 			frm.StartYesNo (q, aYes, aNo);  
 		}
@@ -132,8 +130,7 @@ namespace mmxAH
 
 
 		    options =opts;
-			if (frmMode == FormMode.Log)
-				ShowLog (); 
+			UpdateForm (); 
 			List<string> titles= new List<string>();
 			foreach (IOOption opt in opts)
 				titles.Add (opt.Title);
@@ -160,8 +157,8 @@ namespace mmxAH
 		  List<string> titles = new List<string> ();
 			foreach (MultiChooseOpthion opt in opts)
 				titles.Add (opt.title);
-			if (frmMode == FormMode.Log)
-				ShowLog (); 
+		
+			UpdateForm (); 
 			frm.StartMultiChoose (promt, titles, neededCount, ButtonCapiton);  
          
 
@@ -179,10 +176,13 @@ namespace mmxAH
 
 		public void Print (string Text, byte fontsize=12, bool isBold=false, bool isItalic=false, byte  label=1, string ChooseColor="Black")
 		{  
+			LogEntry le = new LogEntry (Text, fontsize, isBold, isItalic, label, ChooseColor);
 
-			frm.ShowLabelText (Text, fontsize, isBold, isItalic, label, ChooseColor); 
-			if ( frmMode == FormMode.Log)
-				log.Add ( new LogEntry(Text, fontsize, isBold,isItalic, label, ChooseColor ));   
+
+			if (frmMode == FormMode.Log)
+				log.Add (le);
+			else
+				curModeToPrint.Add (le); 
 		}
 
 
@@ -210,14 +210,23 @@ namespace mmxAH
 
 		
 
-			LogEntry le;
-			for (int i=0; i< log.Count; i++)
-			{ le= log[i];
+	
+			foreach(LogEntry le in log)
+			{ 
 				frm.ShowLabelText (le.Text, le.size, le.isBold, le.isItalic, le.label, le.cl);    
 			}
 
 			frmMode = FormMode.Log; 
 		}
+
+		private void ShowNonLogMode()
+		{ 
+			foreach(LogEntry le in curModeToPrint )
+			{ 
+				frm.ShowLabelText (le.Text, le.size, le.isBold, le.isItalic, le.label, le.cl);    
+			}
+
+	    }
 
 		private struct LogEntry
 		{ public string Text;
@@ -243,15 +252,24 @@ namespace mmxAH
 		{ 
 
 			frmMode = md;
-			switch (md)
-			{ case FormMode.Log: ShowLog (); break; 
-			case FormMode.Map: en.map.Print ();  break;
-			case FormMode.Investigators: PrintInvist (); break;
-			case FormMode.Ow:{frm.mapMode (false); en.ows.Print (); } break;   
-			case FormMode.Monsters: PrintMonsters (); break; 
-			case FormMode.Status:{frm.mapMode (false); en.status.Print (); } break;   
-			}
+			if (frmMode != FormMode.Log)
+				curModeToPrint = new List<LogEntry> ();  
 
+
+		}
+
+		public void UpdateForm()
+		{ switch (frmMode )
+			{ case FormMode.Log: ShowLog (); break; 
+			case FormMode.Map:
+				{
+					en.map.Print ();
+					ShowNonLogMode (); }  break;
+				case FormMode.Investigators: PrintInvist (); break;
+			case FormMode.Ow:{en.ows.Print (); frm.mapMode (false); ShowNonLogMode ();  } break;   
+				case FormMode.Monsters: PrintMonsters (); break; 
+			case FormMode.Status:{frm.mapMode (false); en.status.Print (); ShowNonLogMode ();  } break;   
+			}
 
 		}
 
@@ -268,7 +286,7 @@ namespace mmxAH
 		}
 
 		private void PrintInvist()
-		{ frm.mapMode (false);
+		{ 
 			byte i = en.clock.GetCurPlayer (); 
 			do
 			{
@@ -280,15 +298,19 @@ namespace mmxAH
 					i=0;
 			}
 			while( i != en.clock.GetCurPlayer ()); 
+			frm.mapMode (false);
+			ShowNonLogMode ();
 		} 
 
 
 		private void PrintMonsters()
-		{ frm.mapMode (false);
+		{ 
 			foreach (MonsterPrototype  pr in en.MonsterPrototypes)
 				pr.isPrinted = false; 
 			foreach (MonsterIndivid m  in en.ActiveMonsters)
 				m.Print (); 
+			frm.mapMode (false);
+			ShowNonLogMode (); 
 		} 
 
 
